@@ -78,17 +78,16 @@
 			}
 			
 		}else{
-			//literally list all users with actions
-			$userList=$db->doQueryWithoutArgs($query);
 			
-			//echo $db->mysqli->error;
-			
-			foreach($userList as $userData){
-				$user=$userData;
-				$user['actions']=array("method"=>"GET", "url"=>"/user/".$userData['id']);
-				
-				$users[]=$user;
+			if($is_post){
+				//register a new user
+				if(isset($_POST['mail'])&&isset($_POST['captcha'])){
+					registerUser($_POST['mail'], $_POST['captcha']);
+				}
+			}else{
+				addError(getMessages()->ERROR_API_USER_LIST_ALL);
 			}
+			
 		}
 		
 		$JSON["users"]=$users;

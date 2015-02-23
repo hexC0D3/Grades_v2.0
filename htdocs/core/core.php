@@ -6,15 +6,13 @@ if(!defined('grades_loaded')){
 }
 	
 /*
-	* Starting with the grades core file by defining our absolute paths and including our config
+	* Starting with the grades core file by defining our absolute paths
 */
 
 define("AJAX_DIR", ROOT_DIR  .'ajax/');
 define("CSS_DIR" , ROOT_DIR  .'css/');
 define("FONT_DIR", ROOT_DIR  .'fonts/');
 define("IMG_DIR" , ROOT_DIR  .'img/');
-
-require_once 'config.php';
 
 /*
 	* Now we include the database

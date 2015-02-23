@@ -57,30 +57,42 @@ function isMailRegistered($mail){
 }
 
 /** Registers a user **/
-function registerUser($mail){
+function registerUser($mail, $captach_val){
 	if(!isMailRegistered($mail)){
 		//start with registering itself
 		global $db;
 		
-		if($db->doQueryWithArgs("INSERT INTO users(mail, password) VALUES(?, 'registering')", array($mail), "s")==true){
+		$ch=curl_init();
+		curl_setopt($ch, CURLOPT_URL, 'https://www.google.com/recaptcha/api/siteverify');
+		curl_setopt($ch,CURLOPT_POST, 3);
+		curl_setopt($ch,CURLOPT_POSTFIELDS, 'secret=6Le-hQITAAAAAP-AiMlRkPXUGW8vx4fb6oXWhZre&response='.$captach_val."&remoteip=".$_SERVER['REMOTE_ADDR']);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		$json=curl_exec($ch);
+		$obj=json_decode($json);
+		
+		if($obj->success==true){
+			if($db->doQueryWithArgs("INSERT INTO users(mail, password) VALUES(?, 'registering')", array($mail), "s")==true){
 			
-			$token=addPasswordResetToken($mail);
-			
-			if($token!=false){
+				$token=addPasswordResetToken($mail);
 				
-				sendMail($mail, SUPPORT_MAIL, getMessages()->MAIL_SUPPORT_NAME, getMessages()->MAIL_REGISTER_SUBJECT,
-				getMessages()->MAIL_REGISTER_BODY_PART.
-				" <a href='".DOMAIN."/?".http_build_query(array('token'=>$token, 'mail'=>$mail)).">".
-				getMessages()->MAIL_REGISTER_BODY_LINK."</a><br/>".getMessages()->MAIL_REGARDS);
+				if($token!=false){
+					
+					sendMail($mail, SUPPORT_MAIL, getMessages()->MAIL_SUPPORT_NAME, getMessages()->MAIL_REGISTER_SUBJECT,
+					getMessages()->MAIL_REGISTER_BODY_PART.
+					" <a href='".DOMAIN."/?".http_build_query(array('token'=>$token, 'mail'=>$mail)).">".
+					getMessages()->MAIL_REGISTER_BODY_LINK."</a><br/>".getMessages()->MAIL_REGARDS);
+					
+				}else{
+					addError(getMessages()->ERROR_RESET_PW_UNKNOWN);
+				}
+	
 				
+				return true;
 			}else{
-				addError(getMessages()->ERROR_RESET_PW_UNKNOWN);
+				addError(getMessages()->ERROR_GEN_TOKEN);
 			}
-
-			
-			return true;
 		}else{
-			addError(getMessages()->ERROR_GEN_TOKEN);
+			addError(getMessages()->ERROR_REGISTER_INVALID_CAPTCHA);
 		}
 	}
 	return false;

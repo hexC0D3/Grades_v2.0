@@ -18,9 +18,27 @@
 				//Register
 				$this->ERROR_REGISTER_MAIL_ALREADY_IN_USE=_("The entered E-Mail address is already in use!");
 				$this->ERROR_REGISTER_UNKNOWN=_("Unknown error while registering in, please contact our support!");
+				$this->ERROR_REGISTER_INVALID_CAPTCHA=_("Your captcha is invalid! Please re-enter it.");
 				
 				//Token generation
 				$this->ERROR_GEN_TOKEN=_("Unknown error while generating a token! Please contact our support!");
+				
+				//API
+					//Versions
+						$this->ERROR_API_VERSIONS_INVALID=_("The requested api version doesn't exist!");
+					//User
+						//List
+						$this->ERROR_API_USER_LIST_ALL=_("You cannot list all users! Please use a filter.");
+						
+			//Texts
+				//Input
+					$this->TEXT_INPUT_MAIL=_("yourname@domain.tld");
+				//Submit
+					$this->TEXT_SUBMIT_REGISTERING=_("Register");
+				
+				//Static
+					//Get Started
+						$this->TEXT_STATIC_GET_STARTED=_("Get Started");
 				
 			//Mail messages
 			

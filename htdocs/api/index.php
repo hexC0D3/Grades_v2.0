@@ -1,13 +1,27 @@
 <?php
-	require 'load.php';
+	require '../load.php';
 	
 	$is_get=false;
 	$is_post=false;
 	$is_put=false;
 	$is_delete=false;
 	
+	$versions=array("v1"=>"1.0");
+	$version=false;
+	
+	if(isset($_GET['version'])&&isset($versions[$_GET['version']])){
+		$version=$versions[$_GET['version']];
+	}else{
+		addError(getMessages()->ERROR_API_VERSIONS_INVALID);
+		
+		header('Content-Type: application/json');
+		$JSON["errors"]=getErrors();
+	
+		die(json_encode($JSON));
+	}
+	
 	$CONTENT_TYPE="";
-	$JSON=array("version"=>"1.0");
+	$JSON=array("version"=>$version);
 	
 	if($_SERVER['REQUEST_METHOD'] == 'GET'){
 		//get
@@ -42,27 +56,27 @@
 	if(isset($_GET['type'])){
 		if($_GET['type']=='user'){
 			
-			require_once CORE_DIR.'ajax/users.php';
+			require_once CORE_DIR.'ajax/'.$version.'/user/user.php';
 			
 		}else if($_GET['type']=='group'){
 			
-			require_once CORE_DIR.'ajax/groups.php';
+			require_once CORE_DIR.'ajax/'.$version.'/group/group.php';
 			
 		}else if($_GET['type']=='event'){
 			
-			require_once CORE_DIR.'ajax/events.php';
+			require_once CORE_DIR.'ajax/'.$version.'/event/event.php';
 			
 		}else if($_GET['type']=='subject'){
 			
-			require_once CORE_DIR.'ajax/subjects.php';
+			require_once CORE_DIR.'ajax/'.$version.'/subject/subject.php';
 			
 		}else if($_GET['type']=='mark'){
 			
-			require_once CORE_DIR.'ajax/marks.php';
+			require_once CORE_DIR.'ajax/'.$version.'/mark/mark.php';
 			
 		}else if($_GET['type']=='notification'){
 			
-			require_once CORE_DIR.'ajax/notifications.php';
+			require_once CORE_DIR.'ajax/'.$version.'/notification/notification.php';
 			
 		}
 	}
