@@ -1,0 +1,141 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Grades\n"
+"POT-Creation-Date: 2015-02-27 08:52+0100\n"
+"PO-Revision-Date: 2015-02-27 08:53+0100\n"
+"Last-Translator: Nico Hauser <me@tyratox.ch>\n"
+"Language-Team: \n"
+"Language: de_DE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.7.1\n"
+"X-Poedit-Basepath: .\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-SearchPath-0: ../../..\n"
+"X-Poedit-SearchPathExcluded-0: ../../../ajax\n"
+"X-Poedit-SearchPathExcluded-1: ../../../lang\n"
+
+#: ../../../messages.php:14
+msgid "Invalid Request Method!"
+msgstr ""
+
+#: ../../../messages.php:17
+msgid "Invalid E-Mail address"
+msgstr ""
+
+#: ../../../messages.php:20
+msgid "Unknown error while logging in!"
+msgstr ""
+
+#: ../../../messages.php:23
+msgid "The entered E-Mail address is already in use and was verified!"
+msgstr ""
+
+#: ../../../messages.php:24
+msgid ""
+"The entered E-Mail address is already in use but wasn't verified! You may "
+"try again in 10 minutes."
+msgstr ""
+
+#: ../../../messages.php:25
+msgid "Unknown error while registering in, please contact our support!"
+msgstr ""
+
+#: ../../../messages.php:26
+msgid "Your captcha is invalid! Please re-enter it."
+msgstr ""
+
+#: ../../../messages.php:29
+msgid "Unknown error while generating a token! Please contact our support!"
+msgstr ""
+
+#: ../../../messages.php:32
+msgid "Hi script-kiddie! "
+msgstr ""
+
+#: ../../../messages.php:33
+msgid "Please send all required fields"
+msgstr ""
+
+#: ../../../messages.php:34
+msgid "You don't have the permission to do that!"
+msgstr ""
+
+#: ../../../messages.php:35
+msgid "Unknown error! Please report this."
+msgstr ""
+
+#: ../../../messages.php:38
+msgid "The requested api version doesn't exist!"
+msgstr ""
+
+#: ../../../messages.php:42
+msgid "Your code is invalid! Please request a new one."
+msgstr ""
+
+#: ../../../messages.php:44
+msgid "Your passwords needs to have more than 5 letters!"
+msgstr ""
+
+#: ../../../messages.php:46
+msgid "You cannot list all users! Please use a filter."
+msgstr ""
+
+#: ../../../messages.php:48
+msgid "You're already a member of this group!"
+msgstr ""
+
+#: ../../../messages.php:52
+msgid "yourname@domain.tld"
+msgstr ""
+
+#: ../../../messages.php:54
+msgid "Register"
+msgstr ""
+
+#: ../../../messages.php:58
+msgid "Get Started"
+msgstr ""
+
+#: ../../../messages.php:62
+msgid "Grades - Support"
+msgstr ""
+
+#: ../../../messages.php:64
+msgid "Hi"
+msgstr ""
+
+#: ../../../messages.php:65
+msgid "Regards"
+msgstr ""
+
+#: ../../../messages.php:65
+msgid "Your Grades Team"
+msgstr ""
+
+#: ../../../messages.php:68
+msgid "Grades Support - Registration"
+msgstr ""
+
+#: ../../../messages.php:69
+msgid ""
+"You have successfully registered yourself in the grade management system "
+"'Grades'. To complete your registration you just need enter the following "
+"verification code:"
+msgstr ""
+
+#: ../../../messages.php:72
+msgid "Grades Support - Password Reset"
+msgstr ""
+
+#: ../../../messages.php:73
+msgid ""
+"A reset of your password has been requested! If you still want to reset it, "
+"then please click on the following link."
+msgstr ""
+
+#: ../../../messages.php:74
+msgid "Reset Password"
+msgstr ""

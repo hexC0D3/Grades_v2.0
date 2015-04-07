@@ -20,7 +20,8 @@
 		die(json_encode($JSON));
 	}
 	
-	$CONTENT_TYPE="";
+	global $JSON;
+	
 	$JSON=array("version"=>$version);
 	
 	if($_SERVER['REQUEST_METHOD'] == 'GET'){
@@ -38,19 +39,30 @@
 		$is_delete=true;
 		parse_str(file_get_contents("php://input"),$_DELETE);
 	}else{
-		addError("Unknown request method!");
+		addError(getMessages()->ERROR_INVALID_REQUEST_METHOD);
+	}
+	
+	function getPseudoGetParams($key){
+		global $_PSEUDO_GET;
+		if(!isset($_PSEUDO_GET)){
+			$pseudo_get=explode("?", $_SERVER['REQUEST_URI']);
+			if(count($pseudo_get)>1){
+				parse_str($pseudo_get[1], $_PSEUDO_GET);
+			}
+		}
+		
+		if(isset($_PSEUDO_GET[$key])){
+			return $_PSEUDO_GET[$key];
+		}
+		
+		return array();
 	}
 	
 	function getFilters(){
-		$filter=explode("?", $_SERVER['REQUEST_URI']);
-		if(count($filter)>1&&strpos($filter[1], 'filter')!==false){
-			parse_str($filter[1], $filters);
-			if(isset($filters['filters'])){
-				return $filters['filters'];
-			}
-		}
-		return false;
+		return getPseudoGetParams('filters');
 	}
+	
+	$SESSION_TOKEN = getPseudoGetParams('session_token');
 	
 	
 	if(isset($_GET['type'])){
@@ -82,12 +94,6 @@
 	}
 	
 	header('Content-Type: application/json');
-	
-	/*if(empty($CONTENT_TYPE)){
-		header('Content-Type: application/json');
-	}else{
-		header('Content-Type: application/json+'.$CONTENT_TYPE);
-	}*/
 	
 	$JSON["errors"]=getErrors();
 	

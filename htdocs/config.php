@@ -15,7 +15,7 @@ define('DB_USER', 'root');
 /** Your database password */
 define('DB_PASSWORD', 'toor');
 
-/** Your database host, if you don't know what to do try localhost */
+/** Your database host, if you don't know what to do try localhost/127.0.0.1 */
 define('DB_HOST', '127.0.0.1');
 
 ?>

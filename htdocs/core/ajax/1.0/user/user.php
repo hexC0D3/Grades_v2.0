@@ -8,88 +8,142 @@
 					
 				}else if($is_put){
 					//update settings
+					
+					if(isset($_PUT['setting'])){
+						
+					}
+				}else{
+					addError(getMessages()->ERROR_API_REQUIRED_FIELDS);
+				}
+			}else if($_GET['action']=='verify'||$_GET['action']=='reset_pw'){
+				if($is_post){
+					if(filter_var($_GET['id'], FILTER_VALIDATE_EMAIL)){
+						$mail=$_GET['id'];
+						
+						if(isset($_POST['code'])&&isset($_POST['password'])){
+							//try to set a password for a user
+							resetPassword($mail, $_POST['code'], $_POST['password']);
+							
+						}else{
+							addError(getMessages()->ERROR_API_REQUIRED_FIELDS);
+						}
+					}else{
+						addError(getMessages()->ERROR_MAIL_INVALID);
+					}
+				}else{
+					addError(getMessages()->ERROR_API_REQUIRED_FIELDS);
+				}
+			}else if($_GET['action']=='login'){
+				if($is_post){
+					if(filter_var($_GET['id'], FILTER_VALIDATE_EMAIL)){
+						$mail=$_GET['id'];
+						if(isset($_POST['password'])){
+							logInUser($mail, $_POST['password']);
+						}else{
+							addError(getMessages()->ERROR_API_REQUIRED_FIELDS);
+						}
+					}else{
+						addError(getMessages()->ERROR_MAIL_INVALID);
+					}
+				}else{
+					addError(getMessages()->ERROR_API_REQUIRED_FIELDS);
 				}
 			}
 		}else{
 			//get user informations
 			
-			$CONTENT_TYPE="user";
-			global $db;
-			
-			$user_data=$db->doQueryWithArgs("SELECT users.id, user_meta.first_name, user_meta.last_name, user_meta.birthday, user_meta.about FROM users LEFT JOIN user_meta ON users.id=user_meta.user_id WHERE users.id=?", array($_GET['id']), "i");
-			
-			if(count($user_data)==1){
-				$user_data=$user_data[0];
-			
-				$user_data["actions"]=array();
+			if(isUserLoggedIn()){
+				$CONTENT_TYPE="user";
+				global $db;
 				
+				$user_data=$db->doQueryWithArgs("SELECT users.id, user_meta.first_name, user_meta.last_name, user_meta.birthday, user_meta.about FROM users LEFT JOIN user_meta ON users.id=user_meta.user_id WHERE users.id=?", array($_GET['id']), "i")[0];
+				
+				$user_data["actions"]=array();
+					
 				$JSON["user"]=$user_data;
+				
+				
+			}else{
+				addError(getMessages()->ERROR_API_PRIVILEGES);
 			}
 			
 		}
 	}else{
 		
-		$CONTENT_TYPE="users";
+		if(isUserLoggedIn()){
+			$CONTENT_TYPE="users";
 		
-		global $db;
-		
-		$query="SELECT users.id, user_meta.first_name, user_meta.last_name from users LEFT JOIN user_meta ON users.id = user_meta.user_id WHERE 1=1";
-		
-		$users=array();
-		
-		$filters=getFilters();
-		if($filters!=false){
+			global $db;
 			
-			$args=array();
-			$types="";
+			$query="SELECT users.id, user_meta.first_name, user_meta.last_name from users LEFT JOIN user_meta ON users.id = user_meta.user_id WHERE 1=1";
 			
-			if(isset($filters['name'])){
-				$query.=" AND concat(user_meta.first_name, ' ', user_meta.last_name) LIKE ?";
-				$args[]="%".$filters['name']."%";
-				$types.="s";
-			}
-			if(isset($filters['mail'])){
-				$query.=" AND users.mail=?";
-				$args[]=$filters['mail'];
-				$types.="s";
-			}
+			$filters=getFilters();
 			
-			if(empty($args)){
-				$userList=$db->doQueryWithoutArgs($query);
-			}else{
-				$userList=$db->doQueryWithArgs($query, $args, $types);
-			}
+			/*
+				
+				* Return filtered user list
+				
+			*/
 			
-			if(isset($filters['group_id'])){
-				foreach($userList as $key => $userData){
-					$user=$userData;
-					if(false/*is user in group*/){
+			
+			if($filters!=false){
+				
+				$users=array();
+				
+				$args=array();
+				$types="";
+				
+				if(isset($filters['name'])){
+					$query.=" AND concat(user_meta.first_name, ' ', user_meta.last_name) LIKE ?";
+					$args[]="%".$filters['name']."%";
+					$types.="s";
+				}
+				if(isset($filters['mail'])){
+					$query.=" AND users.mail=?";
+					$args[]=$filters['mail'];
+					$types.="s";
+				}
+				
+				if(empty($args)){
+					$userList=$db->doQueryWithoutArgs($query);
+				}else{
+					$userList=$db->doQueryWithArgs($query, $args, $types);
+				}
+				
+				if(isset($filters['group_id'])){
+					foreach($userList as $key => $userData){
+						$user=$userData;
+						if(false/*is user in group*/){
+							$user['actions']=array("method"=>"GET", "action"=>"/user/".$userData['id']);
+							$users[]=$user;
+						}
+					}
+				}else{
+					foreach($userList as $key => $userData){
+						$user=$userData;
 						$user['actions']=array("method"=>"GET", "action"=>"/user/".$userData['id']);
+						
 						$users[]=$user;
 					}
 				}
+				
+				$JSON["users"]=$users;
+				
 			}else{
-				foreach($userList as $key => $userData){
-					$user=$userData;
-					$user['actions']=array("method"=>"GET", "action"=>"/user/".$userData['id']);
+				
+				if($is_post){
 					
-					$users[]=$user;
+					//register a new user
+					if(isset($_POST['mail'])&&isset($_POST['captcha'])){
+						registerUser($_POST['mail'], $_POST['captcha']);
+					}
+				}else{
+					addError(getMessages()->ERROR_API_USER_LIST_ALL);
 				}
+				
 			}
-			
 		}else{
-			
-			if($is_post){
-				//register a new user
-				if(isset($_POST['mail'])&&isset($_POST['captcha'])){
-					registerUser($_POST['mail'], $_POST['captcha']);
-				}
-			}else{
-				addError(getMessages()->ERROR_API_USER_LIST_ALL);
-			}
-			
+			addError(getMessages()->ERROR_API_PRIVILEGES);
 		}
-		
-		$JSON["users"]=$users;
 	}	
 ?>
