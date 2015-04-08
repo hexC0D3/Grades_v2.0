@@ -38,11 +38,11 @@ function logInUser($mail, $password){
 		}
 		$db->doQueryWithArgs("INSERT INTO login_tokens(user_id, login_token, ip) VALUES(?, ?, ?)", array($user["id"], $token, $_SERVER['REMOTE_ADDR']), "iss");
 		
-		$JSON['session_token']=$token:
+		$JSON['session_token']=$token;
 		
 		return true;
 	}
-	addError(getMessages()->ERROR_LOGIN_UNKNOWN);
+	addError(getMessages()->UNKNOWN_ERROR(1));
 	
 	return false;
 }
@@ -65,7 +65,7 @@ function isMailRegistered($mail){
 				addError(getMessages()->ERROR_REGISTER_MAIL_ALREADY_IN_USE_VERIFIED);
 			}
 		}else{
-			addError(getMessages()->ERROR_REGISTER_UNKNOWN);
+			addError(getMessages()->UNKNOWN_ERROR(2));
 		}
 	}else{
 		addError(getMessages()->ERROR_MAIL_INVALID);
@@ -99,7 +99,7 @@ function registerUser($mail, $captach_val){
 					"<br>".getMessages()->MAIL_REGARDS);
 					
 				}else{
-					addError(getMessages()->ERROR_RESET_PW_UNKNOWN);
+					addError(getMessages()->UNKNOWN_ERROR(3));
 				}
 	
 				
@@ -214,7 +214,7 @@ function currentUserCan($capability, $group_id){
 		$capabilityCache=array();
 	}
 	
-	if(isset($capabilityCache[getUser()][$group_id]){
+	if(isset($capabilityCache[getUser()][$group_id])){
 		$caps=$capabilityCache[getUser()][$group_id];
 	}else{
 		$caps=$db->doQueryWithArgs("SELECT capabilities FROM v_user_caps WHERE user_id=? AND group_id=?", array(getUser()["id"], $group_id), "ii")[0]["capabilities"];

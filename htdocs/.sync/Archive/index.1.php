@@ -12,8 +12,6 @@
 		<script src="res/js/angular.min.js" charset="utf-8"></script>
 		<script src="res/js/highcharts.js" charset="utf-8"></script>
 		
-		<script src="res/js/grades.js" charset="utf-8"></script>
-		
 		<link rel="stylesheet" href="res/css/grades.css" title="Grades CSS" type="text/css" media="all" charset="utf-8">
 		
 	</head>
@@ -22,7 +20,7 @@
 			
 		</header>
 		<main>
-			
+		
 		</main>
 		
 		<footer>

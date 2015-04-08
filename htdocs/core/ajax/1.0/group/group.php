@@ -23,11 +23,9 @@ if(isset($_GET['id']){
 						
 						$JSON["settings"][]=array(
 							'key'=>$group_option["option_key"],
-							'input_type'=>$group_option["input_type"],
 							'input_data_type'=>$group_option["input_data_type"],
 							'options'=>$group_option["options"],
-							'description'=>getMessages()->$group_option["description_translation_key"],
-							'users'=>$users
+							'description'=>getMessages()->$group_option["description_translation_key"]
 						);
 					}
 				}
@@ -39,23 +37,12 @@ if(isset($_GET['id']){
 						global $db;
 						$data=$db->doQueryWithArgs("SELECT id,input_data_type FROM group_type_options WHERE option_key=?", array($_PUT['option_key']), "s");
 						if(count($data)==0){
-							$id=$data[0]->id;
+							$data=$data[0];
 							
-							//validate value
-							$value=$data[0]->input_data_type;
-							$valid=false;
+							$id=$data->id;
 							
-							if($value=='number'){
-								$valid=is_numeric($value);
-							}else if($value=='text'){
-								$valid=is_string($value);
-								$value=htmlentities(stripslashes(strip_tags($value)));
-							}else if($value=='boolean'){
-								$value=(bool)$value;
-							}
-							
-							if($valid){
-								$db->doQueryWithArgs("REPLACE into group_options (group_type_option_id,value) values(?, ?)", array($id, $_PUT['value']), "i, s");
+							if(validateDynamicInput($_PUT['value'], $data->input_data_type)){
+								$db->doQueryWithArgs("REPLACE into group_options (group_type_option_id,value) values(?, ?)", array($id, $_PUT['value']), "is");
 							}else{
 								addError(getMessages()->ERROR_API_INVALID_INPUT);
 							}

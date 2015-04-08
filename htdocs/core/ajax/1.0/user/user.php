@@ -6,11 +6,51 @@
 				if($is_get){
 					//get all possible settings
 					
+					if(isUserLoggedIn()){
+						
+						global $db
+						
+						$JSON["settings"]=array();
+						
+						$metas=$db->doQueryWithArgs("SELECT user_meta.value,user_meta_options.* FROM user_meta LEFT JOIN user_meta_options ON user_meta.user_meta_option_id = user_meta_options.id WHERE user_meta.user_id=?", array(getUser()['id']), "i");
+						
+						foreach($metas as $meta){
+							$JSON["settings"][]=array(
+								'setting'=>$meta["option_key"],
+								'input_data_type'=>$meta["input_data_type"],
+								'options'=>$meta["options"],
+								'description'=>getMessages()->$meta["description_translation_key"]
+							);
+						}
+						
+					}else{
+						addError(getMessages()->ERROR_API_PRIVILEGES);
+					}
+					
 				}else if($is_put){
 					//update settings
 					
-					if(isset($_PUT['setting'])){
+					if(isset($_PUT['setting'])&&isset($_PUT['value'])){
+						global $db;
 						
+						$data=$db->doQueryWithArgs("SELECT id,input_data_type FROM user_meta_options WHERE option_key=?", array($_PUT['setting']), "s");
+						
+						if(count($data)==0){
+							$data=$data[0];
+							
+							$id=$data->id;
+							
+							if(validateDynamicInput($_PUT['value'], $data->input_data_type)){
+								$db->doQueryWithArgs("REPLACE into group_options (group_type_option_id,value) values(?, ?)", array($id, $_PUT['value']), "is");
+							}else{
+								addError(getMessages()->ERROR_API_INVALID_INPUT);
+							}
+							
+						}else{
+							addError(getMessages()->ERROR_API_INVALID_INPUT);
+						}
+					}else{
+						addError(getMessages()->ERROR_API_INVALID_INPUT);
 					}
 				}else{
 					addError(getMessages()->ERROR_API_REQUIRED_FIELDS);
@@ -53,7 +93,6 @@
 			//get user informations
 			
 			if(isUserLoggedIn()){
-				$CONTENT_TYPE="user";
 				global $db;
 				
 				$user_data=$db->doQueryWithArgs("SELECT users.id, user_meta.first_name, user_meta.last_name, user_meta.birthday, user_meta.about FROM users LEFT JOIN user_meta ON users.id=user_meta.user_id WHERE users.id=?", array($_GET['id']), "i")[0];
@@ -71,8 +110,6 @@
 	}else{
 		
 		if(isUserLoggedIn()){
-			$CONTENT_TYPE="users";
-		
 			global $db;
 			
 			$query="SELECT users.id, user_meta.first_name, user_meta.last_name from users LEFT JOIN user_meta ON users.id = user_meta.user_id WHERE 1=1";

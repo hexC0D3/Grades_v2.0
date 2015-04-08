@@ -87,7 +87,7 @@ require_once CORE_DIR."/messages.php";
 require_once 'auth.php';
 
 /*
-	* Some core helper functions
+	* Functions
 */
 
 /** Gets current page url **/
@@ -114,6 +114,24 @@ function require_all($pathToFolder){
 			require_once $path;
 		}
 	}
+}
+
+/** Validates dynamic option update values **/
+function validateDynamicInput($value, $type){
+	$valid=false;
+							
+	if($value=='number'){
+		$valid=is_numeric($value);
+	}else if($value=='text'){
+		$valid=is_string($value);
+		$value=htmlentities(stripslashes(strip_tags($value)));
+	}else if($value=='boolean'){
+		$value=(bool)$value;
+	}else if($value=='timestamp'){
+		$valid=((string) (int) $timestamp === $timestamp) && ($timestamp <= PHP_INT_MAX) && ($timestamp > 0);
+	}
+	
+	return $valid;
 }
 	
 ?>
