@@ -6,25 +6,19 @@
 				if($is_get){
 					//get all possible settings
 					
-					if(isUserLoggedIn()){
-						
-						global $db
-						
-						$JSON["settings"]=array();
-						
-						$metas=$db->doQueryWithArgs("SELECT user_meta.value,user_meta_options.* FROM user_meta LEFT JOIN user_meta_options ON user_meta.user_meta_option_id = user_meta_options.id WHERE user_meta.user_id=?", array(getUser()['id']), "i");
-						
-						foreach($metas as $meta){
-							$JSON["settings"][]=array(
-								'setting'=>$meta["option_key"],
-								'input_data_type'=>$meta["input_data_type"],
-								'options'=>$meta["options"],
-								'description'=>getMessages()->$meta["description_translation_key"]
-							);
-						}
-						
-					}else{
-						addError(getMessages()->ERROR_API_PRIVILEGES);
+					global $db
+					
+					$JSON["settings"]=array();
+					
+					$metas=$db->doQueryWithArgs("SELECT user_meta.value,user_meta_options.* FROM user_meta LEFT JOIN user_meta_options ON user_meta.user_meta_option_id = user_meta_options.id WHERE user_meta.user_id=?", array(getUser()['id']), "i");
+					
+					foreach($metas as $meta){
+						$JSON["settings"][]=array(
+							'setting'=>$meta["option_key"],
+							'input_data_type'=>$meta["input_data_type"],
+							'options'=>$meta["options"],
+							'description'=>getMessages()->$meta["description_translation_key"]
+						);
 					}
 					
 				}else if($is_put){
@@ -40,7 +34,10 @@
 							
 							$id=$data->id;
 							
-							if(validateDynamicInput($_PUT['value'], $data->input_data_type)){
+							$validation=validateDynamicInput($_PUT['value'], $data->input_data_type);
+							$_PUT['value']=$validation[1];
+							
+							if($validation[0]){
 								$db->doQueryWithArgs("REPLACE into group_options (group_type_option_id,value) values(?, ?)", array($id, $_PUT['value']), "is");
 							}else{
 								addError(getMessages()->ERROR_API_INVALID_INPUT);
@@ -92,95 +89,86 @@
 		}else{
 			//get user informations
 			
-			if(isUserLoggedIn()){
-				global $db;
+			global $db;
 				
-				$user_data=$db->doQueryWithArgs("SELECT users.id, user_meta.first_name, user_meta.last_name, user_meta.birthday, user_meta.about FROM users LEFT JOIN user_meta ON users.id=user_meta.user_id WHERE users.id=?", array($_GET['id']), "i")[0];
-				
-				$user_data["actions"]=array();
-					
-				$JSON["user"]=$user_data;
-				
-				
+			$user_data=$db->doQueryWithArgs("SELECT users.id, user_meta.first_name, user_meta.last_name, user_meta.birthday, user_meta.about FROM users LEFT JOIN user_meta ON users.id=user_meta.user_id WHERE users.id=?", array($_GET['id']), "i");
+			
+			if(count($groups) == 1){
+				$JSON["user"]=$user_data[0];
 			}else{
-				addError(getMessages()->ERROR_API_PRIVILEGES);
+				addError(getMessages()->ERROR_API_INVALID_INPUT);
 			}
 			
 		}
 	}else{
+		global $db;
+			
+		$query="SELECT users.id, user_meta.first_name, user_meta.last_name from users LEFT JOIN user_meta ON users.id = user_meta.user_id WHERE 1=1";
 		
-		if(isUserLoggedIn()){
-			global $db;
+		$filters=getFilters();
+		
+		/*
 			
-			$query="SELECT users.id, user_meta.first_name, user_meta.last_name from users LEFT JOIN user_meta ON users.id = user_meta.user_id WHERE 1=1";
+			* Return filtered user list
 			
-			$filters=getFilters();
+		*/
+		
+		
+		if($filters!=false){
 			
-			/*
-				
-				* Return filtered user list
-				
-			*/
+			$users=array();
 			
+			$args=array();
+			$types="";
 			
-			if($filters!=false){
-				
-				$users=array();
-				
-				$args=array();
-				$types="";
-				
-				if(isset($filters['name'])){
-					$query.=" AND concat(user_meta.first_name, ' ', user_meta.last_name) LIKE ?";
-					$args[]="%".$filters['name']."%";
-					$types.="s";
-				}
-				if(isset($filters['mail'])){
-					$query.=" AND users.mail=?";
-					$args[]=$filters['mail'];
-					$types.="s";
-				}
-				
-				if(empty($args)){
-					$userList=$db->doQueryWithoutArgs($query);
-				}else{
-					$userList=$db->doQueryWithArgs($query, $args, $types);
-				}
-				
-				if(isset($filters['group_id'])){
-					foreach($userList as $key => $userData){
-						$user=$userData;
-						if(false/*is user in group*/){
-							$user['actions']=array("method"=>"GET", "action"=>"/user/".$userData['id']);
-							$users[]=$user;
-						}
-					}
-				}else{
-					foreach($userList as $key => $userData){
-						$user=$userData;
+			if(isset($filters['name'])){
+				$query.=" AND concat(user_meta.first_name, ' ', user_meta.last_name) LIKE ?";
+				$args[]="%".$filters['name']."%";
+				$types.="s";
+			}
+			if(isset($filters['mail'])){
+				$query.=" AND users.mail=?";
+				$args[]=$filters['mail'];
+				$types.="s";
+			}
+			
+			if(empty($args)){
+				$userList=$db->doQueryWithoutArgs($query);
+			}else{
+				$userList=$db->doQueryWithArgs($query, $args, $types);
+			}
+			
+			if(isset($filters['group_id'])){
+				foreach($userList as $key => $userData){
+					$user=$userData;
+					if(false/*is user in group*/){
 						$user['actions']=array("method"=>"GET", "action"=>"/user/".$userData['id']);
-						
 						$users[]=$user;
 					}
 				}
-				
-				$JSON["users"]=$users;
-				
 			}else{
-				
-				if($is_post){
+				foreach($userList as $key => $userData){
+					$user=$userData;
+					$user['actions']=array("method"=>"GET", "action"=>"/user/".$userData['id']);
 					
-					//register a new user
-					if(isset($_POST['mail'])&&isset($_POST['captcha'])){
-						registerUser($_POST['mail'], $_POST['captcha']);
-					}
-				}else{
-					addError(getMessages()->ERROR_API_USER_LIST_ALL);
+					$users[]=$user;
 				}
-				
 			}
+			
+			$JSON["users"]=$users;
+			
 		}else{
-			addError(getMessages()->ERROR_API_PRIVILEGES);
+			
+			if($is_post){
+				
+				//register a new user
+				if(isset($_POST['mail'])&&isset($_POST['captcha'])){
+					registerUser($_POST['mail'], $_POST['captcha']);
+				}
+			}else{
+				addError(getMessages()->ERROR_API_USER_LIST_ALL);
+			}
+			
 		}
 	}	
 ?>

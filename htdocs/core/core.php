@@ -118,20 +118,50 @@ function require_all($pathToFolder){
 
 /** Validates dynamic option update values **/
 function validateDynamicInput($value, $type){
+	
 	$valid=false;
+	
+	$ids = array('user_id' => 'users', 'subject_id' => 'subjects', 'group_id' => 'groups');
 							
-	if($value=='number'){
-		$valid=is_numeric($value);
-	}else if($value=='text'){
-		$valid=is_string($value);
-		$value=htmlentities(stripslashes(strip_tags($value)));
-	}else if($value=='boolean'){
-		$value=(bool)$value;
-	}else if($value=='timestamp'){
-		$valid=((string) (int) $timestamp === $timestamp) && ($timestamp <= PHP_INT_MAX) && ($timestamp > 0);
+	if($type == 'number'){
+		$valid = is_numeric($value);
+		$value = (int)$value;
+	}else if($type=='text'){
+		$valid = is_string($value);
+		$value = htmlentities(stripslashes(strip_tags($value)));
+	}else if($type == 'boolean'){
+		$value = (bool)$value;
+	}else if($type == 'timestamp'){
+		$valid = ((string) (int) $value === $value) && ($value <= PHP_INT_MAX) && ($value > 0);
+	}else if($type == 'mark_calc_method' && is_numeric($value)){
+		
+		$value=(int)$value;
+		
+		$valid=in_array($value, array(0,1);
+
+		/*
+			* 0 : Swiss grade calculation, 1 => worst, 6 => best
+			* 1 : German grade calculation, 6 => worst, 1 => best
+			...	
+		*/
+
+	}else if(in_array($type, array_keys($ids)) && is_numeric($value)){
+		$value = (int)$value;
+		$table = $ids[$type];
+		
+		global $db;
+		
+		$data = $db->doQueryWithArgs("SELECT id FROM ".$table." WHERE id=?", array($value), "i");
+		
+		if(count($data) == 1){ /* Check if given id exists in table */
+			$valid = true;
+		}else{
+			addError(getMessages()->ERROR_API_INVALID_INPUT);
+		}
+		
 	}
 	
-	return $valid;
+	return array($valid, $value);
 }
 	
 ?>

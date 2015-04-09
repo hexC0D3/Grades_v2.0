@@ -206,6 +206,9 @@ function requestPasswordReset($mail){
 
 /** Check if current user has capability **/
 function currentUserCan($capability, $group_id){
+	
+	if(!isUserLoggedIn()){return false;}
+	
 	global $db, $capabilityCache;
 	
 	$caps=array();

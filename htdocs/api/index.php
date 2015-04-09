@@ -64,34 +64,41 @@
 	
 	$SESSION_TOKEN = getPseudoGetParams('session_token');
 	
-	
-	if(isset($_GET['type'])){
-		if($_GET['type']=='user'){
-			
-			require_once CORE_DIR.'ajax/'.$version.'/user/user.php';
-			
-		}else if($_GET['type']=='group'){
-			
-			require_once CORE_DIR.'ajax/'.$version.'/group/group.php';
-			
-		}else if($_GET['type']=='event'){
-			
-			require_once CORE_DIR.'ajax/'.$version.'/event/event.php';
-			
-		}else if($_GET['type']=='subject'){
-			
-			require_once CORE_DIR.'ajax/'.$version.'/subject/subject.php';
-			
-		}else if($_GET['type']=='mark'){
-			
-			require_once CORE_DIR.'ajax/'.$version.'/mark/mark.php';
-			
-		}else if($_GET['type']=='notification'){
-			
-			require_once CORE_DIR.'ajax/'.$version.'/notification/notification.php';
-			
+	//check if user is logged in or wants to login/register/reset_password, otherwise we block
+	if(isUserLoggedIn() || ($_GET['type']=='user' && in_array($_GET['action'], array('verify','reset_pw','login'))){
+		
+		if(isset($_GET['type'])){
+			if($_GET['type']=='user'){
+				
+				require_once CORE_DIR.'ajax/'.$version.'/user/user.php';
+				
+			}else if($_GET['type']=='group'){
+				
+				require_once CORE_DIR.'ajax/'.$version.'/group/group.php';
+				
+			}else if($_GET['type']=='event'){
+				
+				require_once CORE_DIR.'ajax/'.$version.'/event/event.php';
+				
+			}else if($_GET['type']=='subject'){
+				
+				require_once CORE_DIR.'ajax/'.$version.'/subject/subject.php';
+				
+			}else if($_GET['type']=='mark'){
+				
+				require_once CORE_DIR.'ajax/'.$version.'/mark/mark.php';
+				
+			}else if($_GET['type']=='notification'){
+				
+				require_once CORE_DIR.'ajax/'.$version.'/notification/notification.php';
+				
+			}
 		}
+		
+	}else{
+		addError(getMessages()->ERROR_API_PRIVILEGES);
 	}
+	
 	
 	header('Content-Type: application/json');
 	

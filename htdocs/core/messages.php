@@ -6,7 +6,7 @@
 	class Messages{
 		
 		public function UNKNOWN_ERROR($code){
-			return $this->ERROR_API_UNKNOWN." Code: ".$code;//3
+			return $this->ERROR_API_UNKNOWN." Code: ".$code;//5
 		}
 		
 		public function Messages(){
@@ -49,6 +49,9 @@
 						
 					//Groups
 					$this->ERROR_GROUPS_ALREADY_MEMBER=_("You're already a member of this group!");
+					$this->ERROR_GROUPS_ALREADY_EXISTS=_("This group name already exists!");
+					$this->ERROR_GROUPS_PARENT_NOT_EXISTING=_("The given parent doesn't exist!");
+					$this->ERROR_GROUPS_INVITE_ONLY=_("You can't join this gorup, it is invite only!");
 						
 						//Capabilities
 						$this->ERROR_GROUPS_CAPABILITY_ALREADY_ASSIGNED=_("This user already has the chosen capability!");
