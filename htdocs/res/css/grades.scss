@@ -53,13 +53,25 @@ nav ul li a{
 	width: 101%;
 	margin-left:-1%;
 }
-.row .col-md-6{
+.wX2{
+	@extend .col-md-6;
 	width: 49%;
 	margin-left: 1%;
-	height: 37.62vw;
 }
-.content-pante::before{
+.wX1{
+	@extend .col-md-3;
+	width: 24%;
+	margin-left: 1%;
+}
+.widget::before{
 	content: "";
 	display: block;
 	padding-top: 100%;
+}
+.content-pane.content{
+	position:  absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
 }
