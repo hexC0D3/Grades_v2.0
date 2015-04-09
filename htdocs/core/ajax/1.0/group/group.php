@@ -362,7 +362,7 @@ function deleteGroup($group_id){
 			deleteSubject($member['member_id']);
 		}
 		
-		$db->doQueryWithArgs("REMOVE RELATIO", , )
+		$db->doQueryWithArgs("DELETE FROM group_relations WHERE id=?",array($member['id']), "i");
 		
 	}
 }
@@ -372,7 +372,7 @@ function deleteEvent(){
 }
 
 function deleteSubject(){
-	
+	//foreach test foreach mark
 }
 
 function getGroupOptions($group_type_id){
