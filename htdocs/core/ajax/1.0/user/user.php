@@ -101,74 +101,69 @@
 			
 		}
 	}else{
-		global $db;
-			
-		$query="SELECT users.id, user_meta.first_name, user_meta.last_name from users LEFT JOIN user_meta ON users.id = user_meta.user_id WHERE 1=1";
 		
-		$filters=getFilters();
-		
-		/*
-			
-			* Return filtered user list
-			
-		*/
-		
-		
-		if($filters!=false){
-			
-			$users=array();
-			
-			$args=array();
-			$types="";
-			
-			if(isset($filters['name'])){
-				$query.=" AND concat(user_meta.first_name, ' ', user_meta.last_name) LIKE ?";
-				$args[]="%".$filters['name']."%";
-				$types.="s";
+		if($is_post){
+				
+			//register a new user
+			if(isset($_POST['mail'])&&isset($_POST['captcha'])){
+				registerUser($_POST['mail'], $_POST['captcha']);
 			}
-			if(isset($filters['mail'])){
-				$query.=" AND users.mail=?";
-				$args[]=$filters['mail'];
-				$types.="s";
-			}
+		}else{
+			global $db;
 			
-			if(empty($args)){
-				$userList=$db->doQueryWithoutArgs($query);
-			}else{
-				$userList=$db->doQueryWithArgs($query, $args, $types);
-			}
+			$query="SELECT users.id, user_meta.first_name, user_meta.last_name from users LEFT JOIN user_meta ON users.id = user_meta.user_id WHERE 1=1";
 			
-			if(isset($filters['group_id'])){
-				foreach($userList as $key => $userData){
-					$user=$userData;
-					if(false/*is user in group*/){
-						$user['actions']=array("method"=>"GET", "action"=>"/user/".$userData['id']);
+			$filters=getFilters();
+			
+			
+			if($filters!=false){
+				
+				$users=array();
+				
+				$args=array();
+				$types="";
+				
+				if(isset($filters['name'])){
+					$query.=" AND concat(user_meta.first_name, ' ', user_meta.last_name) LIKE ?";
+					$args[]="%".$filters['name']."%";
+					$types.="s";
+				}
+				if(isset($filters['mail'])){
+					$query.=" AND users.mail=?";
+					$args[]=$filters['mail'];
+					$types.="s";
+				}
+				
+				if(empty($args)){
+					$userList=$db->doQueryWithoutArgs($query);
+				}else{
+					$userList=$db->doQueryWithArgs($query, $args, $types);
+				}
+				
+				if(isset($filters['group_id'])){
+					foreach($userList as $key => $userData){
+						$user=$userData;
+						
+						$data = $db->doQueryWithArgs("SELECT COUNT(*) as count FROM group_relations WHERE member_id=? AND member_type_id=1", array($user['id']), "i");
+						
+						if(count($data) > 0){
+							$users[]=$user;
+						}
+					}
+				}else{
+					foreach($userList as $key => $userData){
+						$user=$userData;
+						
 						$users[]=$user;
 					}
 				}
-			}else{
-				foreach($userList as $key => $userData){
-					$user=$userData;
-					$user['actions']=array("method"=>"GET", "action"=>"/user/".$userData['id']);
-					
-					$users[]=$user;
-				}
-			}
-			
-			$JSON["users"]=$users;
-			
-		}else{
-			
-			if($is_post){
 				
-				//register a new user
-				if(isset($_POST['mail'])&&isset($_POST['captcha'])){
-					registerUser($_POST['mail'], $_POST['captcha']);
-				}
+				$JSON["users"]=$users;
+				
 			}else{
 				addError(getMessages()->ERROR_API_USER_LIST_ALL);
 			}
-			
 		}
+		
 	}	
 ?>

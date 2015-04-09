@@ -137,11 +137,12 @@ function validateDynamicInput($value, $type){
 		
 		$value=(int)$value;
 		
-		$valid=in_array($value, array(0,1);
+		$valid=in_array($value, array(0,1,2);
 
 		/*
-			* 0 : Swiss grade calculation, 1 => worst, 6 => best
-			* 1 : German grade calculation, 6 => worst, 1 => best
+			* 0 : switzerland, 1 => worst, 6 => best, 4 => ok
+			* 1 : switzerland, 1 => worst, 6 => best, 4 => ok, Saldopunkte 1x negativ
+			* 2 : switzerland, 1 => worst, 6 => best, 4 => ok, Saldopunkte 2x negativ
 			...	
 		*/
 

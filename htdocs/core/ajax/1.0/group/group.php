@@ -337,7 +337,54 @@ if(isset($_GET['id']){
 	}else if($is_get){
 		//list groups [filters]
 		
+		global $db;
+			
+		$query="BUILD QUERY";
 		
+		$filters=getFilters();
+		
+		
+		if($filters!=false){
+			
+			$groups=array();
+			
+			$args=array();
+			$types="";
+			
+			$query="SELECT groups.id,groups.title FROM groups LEFT JOIN group_types ON groups.type_id=group_types.id WHERE 1=1";
+			
+			if(isset($filters['group_parent_id'])){
+				
+				$query="SELECT groups.id,groups.title FROM (".
+					"SELECT * from group_relations LEFT JOIN groups ON group_relations.member_id=groups.id WHERE group_relations.group_id=? AND member_type=2".
+				") LEFT JOIN group_types ON groups.type_id=group_types.id WHERE 1=1";
+				$args[]=$filters['group_parent_id'];
+				$type.="i";
+				
+			}
+			
+			if(isset($filters['name'])){
+				$query.=" AND groups.name LIKE ?";
+				$args[]="%".$filters['name']."%";
+				$types.="s";
+			}
+			if(isset($filters['group_type_id'])){
+				$query.=" AND groups.type_id = ?";
+				$args[]=$filters['group_type'];
+				$types.="s";
+			}
+			
+			if(empty($args)){
+				$userList=$db->doQueryWithoutArgs($query);
+			}else{
+				$userList=$db->doQueryWithArgs($query, $args, $types);
+			}
+			
+			$JSON["groups"]=$users;
+			
+		}else{
+			addError(getMessages()->ERROR_API_USER_LIST_ALL);
+		}
 		
 	}else{
 		addError(getMessages()->ERROR_API_REQUIRED_FIELDS);
@@ -368,7 +415,7 @@ function deleteGroup($group_id){
 }
 
 function deleteEvent(){
-	
+	//
 }
 
 function deleteSubject(){
