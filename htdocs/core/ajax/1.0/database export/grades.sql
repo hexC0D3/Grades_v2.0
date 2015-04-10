@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 09. Apr 2015 um 14:30
+-- Erstellungszeit: 10. Apr 2015 um 16:43
 -- Server-Version: 5.6.22
 -- PHP-Version: 5.5.14
 
@@ -88,15 +88,9 @@ DELIMITER ;
 
 CREATE TABLE IF NOT EXISTS `events` (
   `id` bigint(20) unsigned NOT NULL,
-  `tiltle` varchar(256) NOT NULL,
-  `description` varchar(256) NOT NULL,
-  `priority` tinyint(3) unsigned NOT NULL,
-  `occupied` tinyint(1) unsigned NOT NULL,
-  `type_id` bigint(20) unsigned NOT NULL,
-  `timestamp_start` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `timestamp_stop` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `date` date NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `title` varchar(256) NOT NULL,
+  `type_id` bigint(20) unsigned NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -106,9 +100,10 @@ CREATE TABLE IF NOT EXISTS `events` (
 
 CREATE TABLE IF NOT EXISTS `event_options` (
   `id` bigint(20) unsigned NOT NULL,
+  `event_id` bigint(20) unsigned NOT NULL,
   `event_type_option_id` bigint(20) unsigned NOT NULL,
   `value` varchar(512) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -130,8 +125,12 @@ CREATE TABLE IF NOT EXISTS `event_types` (
 CREATE TABLE IF NOT EXISTS `event_type_options` (
   `id` bigint(20) unsigned NOT NULL,
   `event_type_id` bigint(20) unsigned NOT NULL,
-  `option_key` varchar(256) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+  `option_key` varchar(256) NOT NULL,
+  `input_data_type` varchar(32) NOT NULL,
+  `required` tinyint(1) NOT NULL,
+  `options` varchar(1024) NOT NULL,
+  `description_translation_key` varchar(255) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -143,9 +142,8 @@ CREATE TABLE IF NOT EXISTS `grades` (
   `id` bigint(20) unsigned NOT NULL,
   `user_id` bigint(20) unsigned NOT NULL,
   `event_id` bigint(20) unsigned NOT NULL,
-  `grade` float unsigned NOT NULL,
-  `weight` float unsigned NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `grade` float unsigned NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -156,7 +154,7 @@ CREATE TABLE IF NOT EXISTS `grades` (
 CREATE TABLE IF NOT EXISTS `groups` (
   `id` bigint(20) unsigned NOT NULL,
   `name` varchar(256) NOT NULL,
-  `invite_only` tinyint(1) unsigned NOT NULL,
+  `invite_only` varchar(1) NOT NULL,
   `type_id` bigint(20) unsigned NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
@@ -207,7 +205,7 @@ CREATE TABLE IF NOT EXISTS `group_relations` (
   `member_id` bigint(20) unsigned NOT NULL,
   `group_id` bigint(20) unsigned NOT NULL,
   `member_type` bigint(20) unsigned NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -288,7 +286,7 @@ CREATE TABLE IF NOT EXISTS `reset_tokens` (
 CREATE TABLE IF NOT EXISTS `subjects` (
   `id` bigint(20) unsigned NOT NULL,
   `name` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -330,42 +328,6 @@ CREATE TABLE IF NOT EXISTS `user_meta_options` (
   `description_translation_key` varchar(255) NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
--- --------------------------------------------------------
-
---
--- Stellvertreter-Struktur des Views `v_groups`
---
-CREATE TABLE IF NOT EXISTS `v_groups` (
-`group_id` bigint(20) unsigned
-,`group_name` varchar(256)
-,`group_type` varchar(256)
-);
-
--- --------------------------------------------------------
-
---
--- Stellvertreter-Struktur des Views `v_user_caps`
---
-CREATE TABLE IF NOT EXISTS `v_user_caps` (
-);
-
--- --------------------------------------------------------
-
---
--- Struktur des Views `v_groups`
---
-DROP TABLE IF EXISTS `v_groups`;
-
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_groups` AS select `groups`.`id` AS `group_id`,`groups`.`name` AS `group_name`,`group_types`.`title` AS `group_type` from (`groups` left join `group_types` on((`groups`.`type_id` = `group_types`.`id`)));
-
--- --------------------------------------------------------
-
---
--- Struktur des Views `v_user_caps`
---
-DROP TABLE IF EXISTS `v_user_caps`;
--- in Benutzung(#1356 - View 'grades.v_user_caps' references invalid table(s) or column(s) or function(s) or definer/invoker of view lack rights to use them)
-
 --
 -- Indizes der exportierten Tabellen
 --
@@ -380,7 +342,7 @@ ALTER TABLE `events`
 -- Indizes für die Tabelle `event_options`
 --
 ALTER TABLE `event_options`
-  ADD PRIMARY KEY (`id`), ADD KEY `event_options_link_event_type_id` (`event_type_option_id`);
+  ADD PRIMARY KEY (`id`), ADD KEY `eo_event_id` (`event_id`), ADD KEY `eo_event_type_option_id` (`event_type_option_id`);
 
 --
 -- Indizes für die Tabelle `event_types`
@@ -398,7 +360,7 @@ ALTER TABLE `event_type_options`
 -- Indizes für die Tabelle `grades`
 --
 ALTER TABLE `grades`
-  ADD PRIMARY KEY (`id`), ADD KEY `gr_user_id` (`user_id`), ADD KEY `gr_event` (`event_id`);
+  ADD PRIMARY KEY (`id`), ADD KEY `gr_user_id` (`user_id`), ADD KEY `gr_event_id` (`event_id`);
 
 --
 -- Indizes für die Tabelle `groups`
@@ -489,10 +451,15 @@ ALTER TABLE `user_meta_options`
 --
 
 --
+-- AUTO_INCREMENT für Tabelle `events`
+--
+ALTER TABLE `events`
+  MODIFY `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+--
 -- AUTO_INCREMENT für Tabelle `event_options`
 --
 ALTER TABLE `event_options`
-  MODIFY `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT für Tabelle `event_types`
 --
@@ -502,12 +469,12 @@ ALTER TABLE `event_types`
 -- AUTO_INCREMENT für Tabelle `event_type_options`
 --
 ALTER TABLE `event_type_options`
-  MODIFY `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=12;
 --
 -- AUTO_INCREMENT für Tabelle `grades`
 --
 ALTER TABLE `grades`
-  MODIFY `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT für Tabelle `groups`
 --
@@ -532,7 +499,7 @@ ALTER TABLE `group_options`
 -- AUTO_INCREMENT für Tabelle `group_relations`
 --
 ALTER TABLE `group_relations`
-  MODIFY `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT für Tabelle `group_types`
 --
@@ -562,7 +529,7 @@ ALTER TABLE `reset_tokens`
 -- AUTO_INCREMENT für Tabelle `subjects`
 --
 ALTER TABLE `subjects`
-  MODIFY `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT für Tabelle `users`
 --
@@ -587,7 +554,8 @@ ADD CONSTRAINT `events_link_event_type_id` FOREIGN KEY (`type_id`) REFERENCES `e
 -- Constraints der Tabelle `event_options`
 --
 ALTER TABLE `event_options`
-ADD CONSTRAINT `event_options_link_event_type_id` FOREIGN KEY (`event_type_option_id`) REFERENCES `event_types` (`id`) ON UPDATE CASCADE;
+ADD CONSTRAINT `eo_event_id` FOREIGN KEY (`event_id`) REFERENCES `events` (`id`) ON UPDATE CASCADE,
+ADD CONSTRAINT `eo_event_type_option_id` FOREIGN KEY (`event_type_option_id`) REFERENCES `event_type_options` (`id`);
 
 --
 -- Constraints der Tabelle `event_type_options`
@@ -599,7 +567,7 @@ ADD CONSTRAINT `event_type_options_link_event_type_id` FOREIGN KEY (`event_type_
 -- Constraints der Tabelle `grades`
 --
 ALTER TABLE `grades`
-ADD CONSTRAINT `gr_event` FOREIGN KEY (`event_id`) REFERENCES `events` (`id`),
+ADD CONSTRAINT `gr_event_id` FOREIGN KEY (`event_id`) REFERENCES `events` (`id`) ON UPDATE CASCADE,
 ADD CONSTRAINT `gr_user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON UPDATE CASCADE;
 
 --
@@ -626,7 +594,7 @@ ADD CONSTRAINT `group_options_link_options_id` FOREIGN KEY (`group_type_option_i
 --
 ALTER TABLE `group_relations`
 ADD CONSTRAINT `group_relations_link_group_id` FOREIGN KEY (`group_id`) REFERENCES `groups` (`id`) ON UPDATE CASCADE,
-ADD CONSTRAINT `group_relations_link_member_type` FOREIGN KEY (`member_type`) REFERENCES `group_types` (`id`) ON UPDATE CASCADE;
+ADD CONSTRAINT `group_relations_link_member_type` FOREIGN KEY (`member_type`) REFERENCES `group_member_types` (`id`) ON UPDATE CASCADE;
 
 --
 -- Constraints der Tabelle `group_types`
@@ -650,7 +618,7 @@ ADD CONSTRAINT `login_tokens_link_user_id` FOREIGN KEY (`user_id`) REFERENCES `u
 -- Constraints der Tabelle `notifications`
 --
 ALTER TABLE `notifications`
-ADD CONSTRAINT `ntfc_event_id` FOREIGN KEY (`event_id`) REFERENCES `events` (`id`);
+ADD CONSTRAINT `ntfc_event_id` FOREIGN KEY (`event_id`) REFERENCES `events` (`id`) ON UPDATE CASCADE;
 
 --
 -- Constraints der Tabelle `reset_tokens`
