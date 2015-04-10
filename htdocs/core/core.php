@@ -121,11 +121,14 @@ function validateDynamicInput($value, $type){
 	
 	$valid=false;
 	
-	$ids = array('user_id' => 'users', 'subject_id' => 'subjects', 'group_id' => 'groups');
+	$ids = array('user_id' => 'users', 'subject_id' => 'subjects', 'group_id' => 'groups', 'event_id' => 'events');
 							
-	if($type == 'number'){
+	if($type == 'int'){
 		$valid = is_numeric($value);
-		$value = (int)$value;
+		$value = (int)$value + 0;
+	}else if($type=='float'){
+		$valid = is_numeric($value);
+		$value = (float)$value + 0;
 	}else if($type=='text'){
 		$valid = is_string($value);
 		$value = htmlentities(stripslashes(strip_tags($value)));
@@ -146,23 +149,123 @@ function validateDynamicInput($value, $type){
 			...	
 		*/
 
-	}else if(in_array($type, array_keys($ids)) && is_numeric($value)){
-		$value = (int)$value;
-		$table = $ids[$type];
-		
+	}else{		
 		global $db;
 		
-		$data = $db->doQueryWithArgs("SELECT id FROM ".$table." WHERE id=?", array($value), "i");
+		$values=array();
+		$types="";
 		
-		if(count($data) == 1){ /* Check if given id exists in table */
-			$valid = true;
-		}else{
-			addError(getMessages()->ERROR_API_INVALID_INPUT);
+		$type_t=-1;
+		$AND = "";
+		
+		if (strpos($type,':') !== false) {
+			$ex = explode(":", $type);
+			$type = $ex[0];
+			$type_t = $ex[1];
+			
+			$data = null;
+			
+			if($type == "event_id"){
+				$data = $db->doQueryWithArgs("SELECT id FROM event_types WHERE title=?", array($type_t), "s");
+			}else if($type == "group_id"){
+				$data = $db->doQueryWithArgs("SELECT id FROM group_types WHERE title=?", array($type_t), "s");
+			}
+			
+			if($data != null){
+				if(count($data) == 1){
+					$id = $data[0]["id"];
+					
+					$AND = " AND type_id = ?";
+					$values[]=$id;
+					$types.="i";
+					
+				}else{
+					addError(getMessages()->UNKNOWN_ERROR(8));
+				}
+			}
 		}
 		
+		if(in_array($type, array_keys($ids)) && is_numeric($value)){
+			$value = (int)$value;
+			$table = $ids[$type];
+			
+			$values[]=$value;
+			$types.="i";
+			
+			$data = $db->doQueryWithArgs("SELECT id FROM ".$table." WHERE id=?".$AND, $values, $types);
+			
+			if(count($data) == 1){ /* Check if given id exists in table */
+				$valid = true;
+			}else{
+				addError(getMessages()->ERROR_API_INVALID_INPUT);
+			}
+		}
 	}
 	
 	return array($valid, $value);
+}
+
+/** Various delete functions **/
+function deleteGroup($group_id){
+	global $db;
+	//get all sub groups
+	
+	$members = $db->doQueryWithArgs("SELECT * FROM group_relations WHERE group_id=?", array($group_id), "i");
+	foreach($members as $member){
+		if($member['member_type') == 1){
+			//only delete relation
+		}else if($member['member_type'] == 2){
+			deleteGroup($member['member_id']);
+			
+		}else if($member['member_type'] == 3){
+			deleteEvent($member['member_id']);
+			
+		}else if($member['member_type'] == 4){
+			deleteSubject($member['member_id']);
+		}
+		
+		$db->doQueryWithArgs("DELETE FROM group_relations WHERE member_id=? AND member_type=?",array($member['id'],$member['member_type']), "ii");
+	}
+	
+	$db->doQueryWithArgs("DELETE FROM group_options WHERE group_id=?",array($group_id), "i");
+	$db->doQueryWithArgs("DELETE FROM groups WHERE id=?",array($group_id), "i");
+}
+
+function deleteEvent($event_id){
+	global $db;
+	$db->doQueryWithArgs("DELETE FROM event_options WHERE event_id=?",array($event_id), "i");
+	$db->doQueryWithArgs("DELETE FROM events WHERE id=?",array($event_id), "i");
+}
+
+function deleteSubject($subject_id){
+	global $db;
+	//foreach test foreach mark
+	
+	$db->doQueryWithArgs("DELETE FROM subjects WHERE id=?",array($subject_id), "i");
+}
+
+function isUserMemberOf($group_id){
+	global $db;
+	
+	//get direct parent group
+	
+	$data = $db->doQueryWithArgs("SELECT group_id FROM group_relations WHERE member_id=? AND member_type=1", array(getUser()['id']), "i");
+	
+	if(count($data) == 1){
+		$db->doQueryWithArgs("CALL `getParentGroups`(?, @p1);", array($data[0]["group_id"]), "i");
+		$data = $db->doQueryWithoutArgs("SELECT @p1 AS group_ids;");
+		if(count($data)==1){
+			$ids = explode(",", $data[0]['group_ids']);
+			return in_array($group_id, $ids);
+		}else{
+			addError(getMessages()->UNKNOWN_ERROR(9));
+		}
+
+	}else{
+		addError(getMessages()->UNKNOWN_ERROR(10));
+	}
+	
+	return false;
 }
 	
 ?>

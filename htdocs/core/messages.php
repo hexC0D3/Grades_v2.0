@@ -6,7 +6,7 @@
 	class Messages{
 		
 		public function UNKNOWN_ERROR($code){
-			return $this->ERROR_API_UNKNOWN." Code: ".$code;//5
+			return $this->ERROR_API_UNKNOWN." Code: ".$code;//13
 		}
 		
 		public function Messages(){
@@ -56,6 +56,13 @@
 						//Capabilities
 						$this->ERROR_GROUPS_CAPABILITY_ALREADY_ASSIGNED=_("This user already has the chosen capability!");
 						$this->ERROR_GROUPS_CAPABILITY_NOT_REMOVEABLE=_("This user doesn't have the chosen capability!");
+					
+						//List
+						$this->ERROR_API_GROUPS_LIST_ALL=_("You cannot list all groups! Please use a filter.");
+					
+					//Events
+						//List
+						$this->ERROR_API_EVENTS_LIST_ALL=_("You cannot list all events! Please use a filter.");
 						
 			//Texts
 				//Input
@@ -86,36 +93,76 @@
 			//Groups
 				//Global group options
 				$this->GROUP_OPTIONS_INVITE_ONLY_DESC=_("Enable this if you want, that not all grade members can freely join your group.");
+				$this->GROUP_OPTIONS_NAME_DESC=_("The name of this group.");
 				
 				//Capabilities
 				$this->GROUP_CAPABILITIES_MANAGE_CAPS=_("Gives a user the capability to manage the capabilities of users in this group.");
 				$this->GROUP_CAPABILITIES_MANAGE_OPTIONS=_("Gives a user the capability to manage the options of this group.");
-				$this->GROUP_CAPABILITIES_INVITE_USERS=_("Gives a user the capability to invite other users into this group.");
+				$this->GROUP_CAPABILITIES_ADD_MEMBERS=_("Gives a user the capability to add members to this group.");
 				$this->GROUP_CAPABILITIES_CREATE_EVENTS=_("Gives a user the capability to create group-wide events.");
 				$this->GROUP_CAPABILITIES_CREATE_SUBJECTS=_("Gives a user the capability to create group-wide subjects.");
 				
+			//Events
+				//Global event options
+				$this->GROUP_OPTIONS_TITLE_DESC=_("The title of this event.");
+				$this->GROUP_OPTIONS_DESCRIPTION_DESC=_("Give this event a short description.");
+				
+			//Subjects
+			$this->SUBJECT_OPTIONS_NAME_DESC=_("The name of this subject.");
+			
+			//Grades
+			$this->GRADE_OPTIONS_GRADE_DESC=_("The grade you received.");
 				
 			//Dynamic
 			
 				//Group Options
 				$this->DYNAMIC_GROUP_TYPE_OPTIONS_MARK_CALC_METHOD_DESC=_("The method this school uses to calculate your average grade.");
+				
+				$this->DYNAMIC_GROUP_TYPE_OPTIONS_MARK_CALC_METHOD_1=_();
+				$this->DYNAMIC_GROUP_TYPE_OPTIONS_MARK_CALC_METHOD_2=_();
+				$this->DYNAMIC_GROUP_TYPE_OPTIONS_MARK_CALC_METHOD_3=_();
+				
 				$this->DYNAMIC_GROUP_TYPE_OPTIONS_CLASS_ADMIN_DESC=_("The member of this class who's able to manage it.");
 				$this->DYNAMIC_GROUP_TYPE_OPTIONS_WEBSITE_DESC=_("This schools website URL.");
 				$this->DYNAMIC_GROUP_TYPE_OPTIONS_ADDRESS_DESC=_("This schools address.");
 				$this->DYNAMIC_GROUP_TYPE_OPTIONS_SCHOOL_ADMIN_DESC=_("The member of this school who's able to manage it.");
-				$this->DYNAMIC_GROUP_TYPE_OPTIONS_SUBJECT_ID=_("The subject this sub-class is related to.");
+				$this->DYNAMIC_GROUP_TYPE_OPTIONS_SUBJECT_DESC=_("The subject this sub-class is related to.");
 				
 				//User Options
-				$this->DYNAMIC_USER_OPTIONS_FIRST_NAME=_("First Name");
-				$this->DYNAMIC_USER_OPTIONS_LAST_NAME=_("Last Name");
+				$this->DYNAMIC_USER_OPTIONS_FIRST_NAME_DESC=_("Your First Name");
+				$this->DYNAMIC_USER_OPTIONS_LAST_NAME_DESC=_("Your Last Name");
 				
-				$this->DYNAMIC_USER_OPTIONS_GENDER=_("Gender");
+				$this->DYNAMIC_USER_OPTIONS_GENDER_DESC=_("What's your Gender?");
 				$this->DYNAMIC_USER_OPTIONS_GENDER_MALE=_("Male");
 				$this->DYNAMIC_USER_OPTIONS_GENDER_FEMALE=_("Female");
 				
-				$this->DYNAMIC_USER_OPTIONS_BIRTHDAY=_("Birthday");
+				$this->DYNAMIC_USER_OPTIONS_BIRTHDAY_DESC=_("When's you birthday?");
 				
-				$this->DYNAMIC_USER_OPTIONS_ABOUT=_("About");
+				$this->DYNAMIC_USER_OPTIONS_ABOUT_DESC=_("About me");
+				
+				//Event Options
+				$this->DYNAMIC_EVENT_TYPE_OPTIONS_TEST_LESSON_ID_DESC=_("The lesson this test takes place.");
+				$this->DYNAMIC_EVENT_TYPE_OPTIONS_TEST_GRADE_WEIGT_DESC=_("The grade weight this test has.");
+				
+				$this->DYNAMIC_EVENT_TYPE_OPTIONS_LESSON_SUBJECT_ID_DESC=_("The subject of this lesson.");
+				$this->DYNAMIC_EVENT_TYPE_OPTIONS_LESSON_TIME_FROM_DESC=_("The time this lesson starts.");
+				$this->DYNAMIC_EVENT_TYPE_OPTIONS_LESSON_TIME_TO_DESC=_("The time this lesson ends.");
+				
+				$this->DYNAMIC_EVENT_TYPE_OPTIONS_TASK_TIME_REMINDER_DESC=_("The time this lesson ends.");
+				
+				$this->DYNAMIC_EVENT_TYPE_OPTIONS_EVENT_FULL_DAY_DESC=_("Is this a full day event?");
+				$this->DYNAMIC_EVENT_TYPE_OPTIONS_EVENT_TIME_FROM_DESC=_("When does this event start?");
+				$this->DYNAMIC_EVENT_TYPE_OPTIONS_EVENT_TIME_TO_DESC=_("When does this event end?");
+				
+				$this->DYNAMIC_EVENT_TYPE_OPTIONS_EVENT_PRIORITY_DESC=_("What's the priority of this event?");
+				
+				$this->DYNAMIC_EVENT_TYPE_OPTIONS_EVENT_PRIORITY_0=_("Normal");
+				$this->DYNAMIC_EVENT_TYPE_OPTIONS_EVENT_PRIORITY_1=_("Higher");
+				$this->DYNAMIC_EVENT_TYPE_OPTIONS_EVENT_PRIORITY_2=_("Very High");
+				
+				$this->DYNAMIC_EVENT_TYPE_OPTIONS_EVENT_OCCUPIED_DESC=_("Are you occupied with this event?");
+				
+				
 		}
 	}
 	

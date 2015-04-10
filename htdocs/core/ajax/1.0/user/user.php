@@ -29,7 +29,7 @@
 						
 						$data=$db->doQueryWithArgs("SELECT id,input_data_type FROM user_meta_options WHERE option_key=?", array($_PUT['setting']), "s");
 						
-						if(count($data)==0){
+						if(count($data)==1){
 							$data=$data[0];
 							
 							$id=$data->id;
@@ -134,10 +134,10 @@
 					$types.="s";
 				}
 				
-				if(empty($args)){
-					$userList=$db->doQueryWithoutArgs($query);
-				}else{
+				if(!empty($args)){
 					$userList=$db->doQueryWithArgs($query, $args, $types);
+				}else{
+					addError(getMessages()->ERROR_API_USER_LIST_ALL);
 				}
 				
 				if(isset($filters['group_id'])){
