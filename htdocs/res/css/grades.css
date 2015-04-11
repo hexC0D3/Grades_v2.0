@@ -1129,8 +1129,8 @@ body > header {
     display: block; }
     body > header div.container div.nav {
       position: absolute;
-      left: 0;
-      right: 0;
+      left: 15px;
+      right: 15px;
       bottom: 230px;
       vertical-align: bottom; }
       body > header div.container div.nav h1 {
