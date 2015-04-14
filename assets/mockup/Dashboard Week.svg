@@ -1,0 +1,459 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="1440px" height="1024px" viewBox="0 0 1440 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.3 (11970) - http://www.bohemiancoding.com/sketch -->
+    <title>Desktop HD</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <filter x="-50%" y="-50%" width="200%" height="200%" filterUnits="objectBoundingBox" id="filter-1">
+            <feOffset dx="1" dy="1" in="SourceAlpha" result="shadowOffsetInner1"></feOffset>
+            <feGaussianBlur stdDeviation="5" in="shadowOffsetInner1" result="shadowBlurInner1"></feGaussianBlur>
+            <feComposite in="shadowBlurInner1" in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1" result="shadowInnerInner1"></feComposite>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.452301291 0" in="shadowInnerInner1" type="matrix" result="shadowMatrixInner1"></feColorMatrix>
+            <feMerge>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+                <feMergeNode in="shadowMatrixInner1"></feMergeNode>
+            </feMerge>
+        </filter>
+        <filter x="-50%" y="-50%" width="200%" height="200%" filterUnits="objectBoundingBox" id="filter-2">
+            <feOffset dx="0" dy="2" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="2.5" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.35 0" in="shadowBlurOuter1" type="matrix" result="shadowMatrixOuter1"></feColorMatrix>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+            </feMerge>
+        </filter>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="linearGradient-3">
+            <stop stop-color="#FFFFFF" stop-opacity="0.5" offset="0%"></stop>
+            <stop stop-color="#000000" stop-opacity="0.5" offset="100%"></stop>
+        </linearGradient>
+        <path id="path-4" d="M0.50057984,25.5 L215.456235,25.5"></path>
+        <filter x="-50%" y="-50%" width="200%" height="200%" filterUnits="objectBoundingBox" id="filter-5">
+            <feOffset dx="2" dy="0" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="3" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.35 0" in="shadowBlurOuter1" type="matrix" result="shadowMatrixOuter1"></feColorMatrix>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+            </feMerge>
+        </filter>
+        <path id="path-6" d="M0.50057984,25.5 L215.456235,25.5"></path>
+        <filter x="-50%" y="-50%" width="200%" height="200%" filterUnits="objectBoundingBox" id="filter-7">
+            <feOffset dx="2" dy="0" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="3" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.35 0" in="shadowBlurOuter1" type="matrix" result="shadowMatrixOuter1"></feColorMatrix>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+            </feMerge>
+        </filter>
+        <path id="path-8" d="M0.50057984,25.5 L215.456235,25.5"></path>
+        <filter x="-50%" y="-50%" width="200%" height="200%" filterUnits="objectBoundingBox" id="filter-9">
+            <feOffset dx="2" dy="0" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="3" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.35 0" in="shadowBlurOuter1" type="matrix" result="shadowMatrixOuter1"></feColorMatrix>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+            </feMerge>
+        </filter>
+        <path id="path-10" d="M0.50057984,25.5 L215.456235,25.5"></path>
+        <filter x="-50%" y="-50%" width="200%" height="200%" filterUnits="objectBoundingBox" id="filter-11">
+            <feOffset dx="2" dy="0" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="3" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.35 0" in="shadowBlurOuter1" type="matrix" result="shadowMatrixOuter1"></feColorMatrix>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+            </feMerge>
+        </filter>
+        <path id="path-12" d="M0.50057984,25.5 L215.456235,25.5"></path>
+        <filter x="-50%" y="-50%" width="200%" height="200%" filterUnits="objectBoundingBox" id="filter-13">
+            <feOffset dx="2" dy="0" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="3" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.35 0" in="shadowBlurOuter1" type="matrix" result="shadowMatrixOuter1"></feColorMatrix>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+            </feMerge>
+        </filter>
+        <filter x="-50%" y="-50%" width="200%" height="200%" filterUnits="objectBoundingBox" id="filter-14">
+            <feOffset dx="1" dy="1" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="1" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.35 0" in="shadowBlurOuter1" type="matrix" result="shadowMatrixOuter1"></feColorMatrix>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+            </feMerge>
+        </filter>
+        <circle id="path-15" cx="35" cy="35" r="35"></circle>
+    </defs>
+    <g id="Dashboard-Woche" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="Desktop-HD" sketch:type="MSArtboardGroup">
+            <rect id="Head" fill="#34495E" filter="url(#filter-1)" sketch:type="MSShapeGroup" x="0" y="0" width="1440" height="300"></rect>
+            <g id="Paper-lines" sketch:type="MSLayerGroup" transform="translate(0.000000, 10.000000)" stroke="#FFFFFF" stroke-opacity="0.15625" stroke-linecap="square">
+                <path d="M0,20 L1440,20" id="Line" sketch:type="MSShapeGroup"></path>
+                <path d="M0,60 L1440,60" id="Line-2" sketch:type="MSShapeGroup"></path>
+                <path d="M0,40 L1440,40" id="Line-3" stroke-dasharray="5" sketch:type="MSShapeGroup"></path>
+                <path d="M0,100 L1440,100" id="Line-10" sketch:type="MSShapeGroup"></path>
+                <path d="M0,80 L1440,80" id="Line-9" stroke-dasharray="5" sketch:type="MSShapeGroup"></path>
+                <path d="M0,140 L1440,140" id="Line-12" sketch:type="MSShapeGroup"></path>
+                <path d="M0,120 L1440,120" id="Line-11" stroke-dasharray="5" sketch:type="MSShapeGroup"></path>
+                <path d="M0,180 L1440,180" id="Line-14" sketch:type="MSShapeGroup"></path>
+                <path d="M0,160 L1440,160" id="Line-13" stroke-dasharray="5" sketch:type="MSShapeGroup"></path>
+                <path d="M0,220 L1440,220" id="Line-16" sketch:type="MSShapeGroup"></path>
+                <path d="M0,200 L1440,200" id="Line-15" stroke-dasharray="5" sketch:type="MSShapeGroup"></path>
+                <path d="M0,260 L1440,260" id="Line-18" sketch:type="MSShapeGroup"></path>
+                <path d="M0,240 L1440,240" id="Line-17" stroke-dasharray="5" sketch:type="MSShapeGroup"></path>
+                <path d="M0,280 L1440,280" id="Line-19" stroke-dasharray="5" sketch:type="MSShapeGroup"></path>
+                <path d="M0,1 L1440,1" id="Line-21" stroke-dasharray="5" sketch:type="MSShapeGroup"></path>
+            </g>
+            <text id="GRADES" sketch:type="MSTextLayer" font-family="Roboto" font-size="50" font-style="condensed" font-weight="260" fill="#FFFFFF">
+                <tspan x="136" y="62">GRADES</tspan>
+            </text>
+            <g id="Menu-Items" sketch:type="MSLayerGroup" transform="translate(753.000000, 50.000000)" font-weight="260" font-family="Roboto" font-size="15" sketch:alignment="right" font-style="condensed" fill="#FFFFFF">
+                <text id="MARIE-KOPPELFINGER" sketch:type="MSTextLayer">
+                    <tspan x="396.850586" y="14">MARIE KOPPELFINGER</tspan>
+                </text>
+                <text id="MEINE-NOTEN" sketch:type="MSTextLayer">
+                    <tspan x="136.422852" y="14">MEINE NOTEN</tspan>
+                </text>
+                <text id="MEINE-AUFGABEN" sketch:type="MSTextLayer">
+                    <tspan x="253.077637" y="14">MEINE AUFGABEN</tspan>
+                </text>
+                <text id="MEINE-GRUPPEN" sketch:type="MSTextLayer">
+                    <tspan x="0.665527344" y="14">MEINE GRUPPEN</tspan>
+                </text>
+            </g>
+            <g id="Widget_Heute" sketch:type="MSLayerGroup" transform="translate(138.000000, 101.000000)">
+                <rect id="Main-2" fill="#FFFFFF" filter="url(#filter-2)" sketch:type="MSShapeGroup" x="0" y="0" width="1168" height="910"></rect>
+                <text id="WOCHE-VOM-14-21.1.20" sketch:type="MSTextLayer" font-family="Roboto" font-size="30" font-weight="260" fill="#34495E">
+                    <tspan x="18" y="38">WOCHE VOM 14-21.1.2015</tspan>
+                </text>
+                <g id="times" transform="translate(22.000000, 69.000000)" font-size="15" font-family="Roboto" fill="#34495E" sketch:type="MSTextLayer" font-weight="260">
+                    <text id="07:00">
+                        <tspan x="0" y="64">07:00</tspan>
+                    </text>
+                    <text id="06:00">
+                        <tspan x="0" y="14">06:00</tspan>
+                    </text>
+                    <text id="08:00">
+                        <tspan x="0" y="119">08:00</tspan>
+                    </text>
+                    <text id="09:00">
+                        <tspan x="0" y="174">09:00</tspan>
+                    </text>
+                    <text id="10:00">
+                        <tspan x="0" y="229">10:00</tspan>
+                    </text>
+                    <text id="11:00">
+                        <tspan x="0" y="284">11:00</tspan>
+                    </text>
+                    <text id="12:00">
+                        <tspan x="0" y="339">12:00</tspan>
+                    </text>
+                    <text id="13:00">
+                        <tspan x="0" y="394">13:00</tspan>
+                    </text>
+                    <text id="14:00">
+                        <tspan x="0" y="449">14:00</tspan>
+                    </text>
+                    <text id="15:00">
+                        <tspan x="0" y="504">15:00</tspan>
+                    </text>
+                    <text id="16:00">
+                        <tspan x="0" y="559">16:00</tspan>
+                    </text>
+                    <text id="17:00">
+                        <tspan x="0" y="617">17:00</tspan>
+                    </text>
+                    <text id="18:00">
+                        <tspan x="0" y="675">18:00</tspan>
+                    </text>
+                    <text id="19:00">
+                        <tspan x="0" y="733">19:00</tspan>
+                    </text>
+                </g>
+                <g id="lines" transform="translate(68.000000, 79.000000)">
+                    <path d="M0.50057984,0.5 L215.456235,0.5" id="Line" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" sketch:type="MSShapeGroup"></path>
+                    <path d="M0.50057984,50.5 L215.456235,50.5" id="Line-4" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" sketch:type="MSShapeGroup"></path>
+                    <path d="M0.50057984,105.5 L215.456235,105.5" id="Line-5" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" sketch:type="MSShapeGroup"></path>
+                    <path d="M0.50057984,160.5 L215.456235,160.5" id="Line-6" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" sketch:type="MSShapeGroup"></path>
+                    <path d="M0.50057984,215.5 L215.456235,215.5" id="Line-7" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" sketch:type="MSShapeGroup"></path>
+                    <path d="M0.50057984,270.5 L215.456235,270.5" id="Line-8" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" sketch:type="MSShapeGroup"></path>
+                    <path d="M0.50057984,325.5 L215.456235,325.5" id="Line-20" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" sketch:type="MSShapeGroup"></path>
+                    <path d="M0.50057984,380.5 L215.456235,380.5" id="Line-22" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" sketch:type="MSShapeGroup"></path>
+                    <path d="M0.50057984,435.5 L215.456235,435.5" id="Line-23" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" sketch:type="MSShapeGroup"></path>
+                    <path d="M0.50057984,489.5 L215.456235,489.5" id="Line-24" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" sketch:type="MSShapeGroup"></path>
+                    <path d="M0.50057984,545.5 L215.456235,545.5" id="Line-25" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" sketch:type="MSShapeGroup"></path>
+                    <path d="M0.50057984,603.5 L215.456235,603.5" id="Line-26" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" sketch:type="MSShapeGroup"></path>
+                    <path d="M0.50057984,662.5 L215.456235,662.5" id="Line-27" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" sketch:type="MSShapeGroup"></path>
+                    <path d="M0.50057984,719.5 L215.456235,719.5" id="Line-28" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" sketch:type="MSShapeGroup"></path>
+                    <g id="Line-42">
+                        <use stroke-opacity="0.195652174" stroke="#34495E" stroke-width="1" stroke-linecap="square" stroke-dasharray="5" fill="none" sketch:type="MSShapeGroup" xlink:href="#path-4"></use>
+                        <use stroke="none" fill="url(#linearGradient-3)" fill-rule="evenodd" xlink:href="#path-4"></use>
+                    </g>
+                    <path d="M0.50057984,77.5 L215.456235,77.5" id="Line-41" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" stroke-dasharray="5" sketch:type="MSShapeGroup"></path>
+                    <path d="M0.50057984,133.5 L215.456235,133.5" id="Line-40" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" stroke-dasharray="5" sketch:type="MSShapeGroup"></path>
+                    <path d="M0.50057984,187.5 L215.456235,187.5" id="Line-39" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" stroke-dasharray="5" sketch:type="MSShapeGroup"></path>
+                    <path d="M0.50057984,242.5 L215.456235,242.5" id="Line-38" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" stroke-dasharray="5" sketch:type="MSShapeGroup"></path>
+                    <path d="M0.50057984,297.5 L215.456235,297.5" id="Line-37" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" stroke-dasharray="5" sketch:type="MSShapeGroup"></path>
+                    <path d="M0.50057984,352.5 L215.456235,352.5" id="Line-36" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" stroke-dasharray="5" sketch:type="MSShapeGroup"></path>
+                    <path d="M0.50057984,407.5 L215.456235,407.5" id="Line-35" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" stroke-dasharray="5" sketch:type="MSShapeGroup"></path>
+                    <path d="M0.50057984,462.5 L215.456235,462.5" id="Line-34" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" stroke-dasharray="5" sketch:type="MSShapeGroup"></path>
+                    <path d="M0.50057984,516.5 L215.456235,516.5" id="Line-33" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" stroke-dasharray="5" sketch:type="MSShapeGroup"></path>
+                    <path d="M0.50057984,572.5 L215.456235,572.5" id="Line-32" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" stroke-dasharray="5" sketch:type="MSShapeGroup"></path>
+                    <path d="M0.50057984,630.5 L215.456235,630.5" id="Line-31" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" stroke-dasharray="5" sketch:type="MSShapeGroup"></path>
+                    <path d="M0.50057984,691.5 L215.456235,691.5" id="Line-30" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" stroke-dasharray="5" sketch:type="MSShapeGroup"></path>
+                </g>
+                <g id="event" transform="translate(73.321819, 216.000000)" fill="#34495E" sketch:type="MSShapeGroup">
+                    <rect id="Rectangle-6" x="0" y="0" width="209.768367" height="93"></rect>
+                </g>
+                <g id="event-2" transform="translate(73.321819, 321.000000)" fill="#34495E" sketch:type="MSShapeGroup">
+                    <rect id="Rectangle-6" x="0" y="0" width="209.768367" height="44"></rect>
+                </g>
+                <g id="event-3" transform="translate(73.321819, 369.000000)" fill="#34495E" sketch:type="MSShapeGroup">
+                    <rect id="Rectangle-6" x="0" y="0" width="209.768367" height="44"></rect>
+                </g>
+                <g id="event-4" transform="translate(73.321819, 463.000000)" sketch:type="MSShapeGroup">
+                    <rect id="Rectangle-6" fill="#34495E" x="0" y="0" width="104.662441" height="93"></rect>
+                    <rect id="Rectangle-12" fill="#FF422E" filter="url(#filter-5)" x="0" y="0" width="1.33045476" height="93"></rect>
+                </g>
+                <g id="event-5" transform="translate(73.321819, 561.000000)" fill="#34495E" sketch:type="MSShapeGroup">
+                    <rect id="Rectangle-6" x="0" y="0" width="104.662441" height="44"></rect>
+                </g>
+                <g id="event-6" transform="translate(180.201685, 443.000000)" fill="#34495E" sketch:type="MSShapeGroup">
+                    <rect id="Rectangle-11" x="0" y="0" width="102.888501" height="140"></rect>
+                </g>
+                <g id="lines-copy" transform="translate(283.977156, 79.000000)">
+                    <path d="M0.50057984,0.5 L215.456235,0.5" id="Line" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" sketch:type="MSShapeGroup"></path>
+                    <path d="M0.50057984,50.5 L215.456235,50.5" id="Line-4" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" sketch:type="MSShapeGroup"></path>
+                    <path d="M0.50057984,105.5 L215.456235,105.5" id="Line-5" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" sketch:type="MSShapeGroup"></path>
+                    <path d="M0.50057984,160.5 L215.456235,160.5" id="Line-6" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" sketch:type="MSShapeGroup"></path>
+                    <path d="M0.50057984,215.5 L215.456235,215.5" id="Line-7" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" sketch:type="MSShapeGroup"></path>
+                    <path d="M0.50057984,270.5 L215.456235,270.5" id="Line-8" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" sketch:type="MSShapeGroup"></path>
+                    <path d="M0.50057984,325.5 L215.456235,325.5" id="Line-20" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" sketch:type="MSShapeGroup"></path>
+                    <path d="M0.50057984,380.5 L215.456235,380.5" id="Line-22" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" sketch:type="MSShapeGroup"></path>
+                    <path d="M0.50057984,435.5 L215.456235,435.5" id="Line-23" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" sketch:type="MSShapeGroup"></path>
+                    <path d="M0.50057984,489.5 L215.456235,489.5" id="Line-24" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" sketch:type="MSShapeGroup"></path>
+                    <path d="M0.50057984,545.5 L215.456235,545.5" id="Line-25" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" sketch:type="MSShapeGroup"></path>
+                    <path d="M0.50057984,603.5 L215.456235,603.5" id="Line-26" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" sketch:type="MSShapeGroup"></path>
+                    <path d="M0.50057984,662.5 L215.456235,662.5" id="Line-27" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" sketch:type="MSShapeGroup"></path>
+                    <path d="M0.50057984,719.5 L215.456235,719.5" id="Line-28" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" sketch:type="MSShapeGroup"></path>
+                    <g id="Line-42">
+                        <use stroke-opacity="0.195652174" stroke="#34495E" stroke-width="1" stroke-linecap="square" stroke-dasharray="5" fill="none" sketch:type="MSShapeGroup" xlink:href="#path-6"></use>
+                        <use stroke="none" fill="url(#linearGradient-3)" fill-rule="evenodd" xlink:href="#path-6"></use>
+                    </g>
+                    <path d="M0.50057984,77.5 L215.456235,77.5" id="Line-41" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" stroke-dasharray="5" sketch:type="MSShapeGroup"></path>
+                    <path d="M0.50057984,133.5 L215.456235,133.5" id="Line-40" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" stroke-dasharray="5" sketch:type="MSShapeGroup"></path>
+                    <path d="M0.50057984,187.5 L215.456235,187.5" id="Line-39" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" stroke-dasharray="5" sketch:type="MSShapeGroup"></path>
+                    <path d="M0.50057984,242.5 L215.456235,242.5" id="Line-38" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" stroke-dasharray="5" sketch:type="MSShapeGroup"></path>
+                    <path d="M0.50057984,297.5 L215.456235,297.5" id="Line-37" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" stroke-dasharray="5" sketch:type="MSShapeGroup"></path>
+                    <path d="M0.50057984,352.5 L215.456235,352.5" id="Line-36" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" stroke-dasharray="5" sketch:type="MSShapeGroup"></path>
+                    <path d="M0.50057984,407.5 L215.456235,407.5" id="Line-35" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" stroke-dasharray="5" sketch:type="MSShapeGroup"></path>
+                    <path d="M0.50057984,462.5 L215.456235,462.5" id="Line-34" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" stroke-dasharray="5" sketch:type="MSShapeGroup"></path>
+                    <path d="M0.50057984,516.5 L215.456235,516.5" id="Line-33" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" stroke-dasharray="5" sketch:type="MSShapeGroup"></path>
+                    <path d="M0.50057984,572.5 L215.456235,572.5" id="Line-32" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" stroke-dasharray="5" sketch:type="MSShapeGroup"></path>
+                    <path d="M0.50057984,630.5 L215.456235,630.5" id="Line-31" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" stroke-dasharray="5" sketch:type="MSShapeGroup"></path>
+                    <path d="M0.50057984,691.5 L215.456235,691.5" id="Line-30" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" stroke-dasharray="5" sketch:type="MSShapeGroup"></path>
+                </g>
+                <g id="event-copy" transform="translate(289.298975, 186.000000)" fill="#34495E" sketch:type="MSShapeGroup">
+                    <rect id="Rectangle-6" x="0" y="0" width="209.768367" height="93"></rect>
+                </g>
+                <g id="event-2-copy" transform="translate(289.298975, 341.000000)" fill="#34495E" sketch:type="MSShapeGroup">
+                    <rect id="Rectangle-6" x="0" y="0" width="209.768367" height="44"></rect>
+                </g>
+                <g id="event-3-copy" transform="translate(289.298975, 399.000000)" fill="#34495E" sketch:type="MSShapeGroup">
+                    <rect id="Rectangle-6" x="0" y="0" width="209.768367" height="44"></rect>
+                </g>
+                <g id="event-4-copy" transform="translate(289.298975, 473.000000)" sketch:type="MSShapeGroup">
+                    <rect id="Rectangle-6" fill="#34495E" x="0" y="0" width="104.662441" height="93"></rect>
+                    <rect id="Rectangle-12" fill="#FF422E" filter="url(#filter-7)" x="0" y="0" width="1.33045476" height="93"></rect>
+                </g>
+                <g id="event-5-copy" transform="translate(289.298975, 591.000000)" fill="#34495E" sketch:type="MSShapeGroup">
+                    <rect id="Rectangle-6" x="0" y="0" width="104.662441" height="44"></rect>
+                </g>
+                <g id="event-6-copy" transform="translate(396.178841, 533.000000)" fill="#34495E" sketch:type="MSShapeGroup">
+                    <rect id="Rectangle-11" x="0" y="0" width="102.888501" height="140"></rect>
+                </g>
+                <g id="lines-copy-2" transform="translate(499.954312, 79.000000)">
+                    <path d="M0.50057984,0.5 L215.456235,0.5" id="Line" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" sketch:type="MSShapeGroup"></path>
+                    <path d="M0.50057984,50.5 L215.456235,50.5" id="Line-4" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" sketch:type="MSShapeGroup"></path>
+                    <path d="M0.50057984,105.5 L215.456235,105.5" id="Line-5" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" sketch:type="MSShapeGroup"></path>
+                    <path d="M0.50057984,160.5 L215.456235,160.5" id="Line-6" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" sketch:type="MSShapeGroup"></path>
+                    <path d="M0.50057984,215.5 L215.456235,215.5" id="Line-7" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" sketch:type="MSShapeGroup"></path>
+                    <path d="M0.50057984,270.5 L215.456235,270.5" id="Line-8" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" sketch:type="MSShapeGroup"></path>
+                    <path d="M0.50057984,325.5 L215.456235,325.5" id="Line-20" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" sketch:type="MSShapeGroup"></path>
+                    <path d="M0.50057984,380.5 L215.456235,380.5" id="Line-22" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" sketch:type="MSShapeGroup"></path>
+                    <path d="M0.50057984,435.5 L215.456235,435.5" id="Line-23" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" sketch:type="MSShapeGroup"></path>
+                    <path d="M0.50057984,489.5 L215.456235,489.5" id="Line-24" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" sketch:type="MSShapeGroup"></path>
+                    <path d="M0.50057984,545.5 L215.456235,545.5" id="Line-25" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" sketch:type="MSShapeGroup"></path>
+                    <path d="M0.50057984,603.5 L215.456235,603.5" id="Line-26" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" sketch:type="MSShapeGroup"></path>
+                    <path d="M0.50057984,662.5 L215.456235,662.5" id="Line-27" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" sketch:type="MSShapeGroup"></path>
+                    <path d="M0.50057984,719.5 L215.456235,719.5" id="Line-28" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" sketch:type="MSShapeGroup"></path>
+                    <g id="Line-42">
+                        <use stroke-opacity="0.195652174" stroke="#34495E" stroke-width="1" stroke-linecap="square" stroke-dasharray="5" fill="none" sketch:type="MSShapeGroup" xlink:href="#path-8"></use>
+                        <use stroke="none" fill="url(#linearGradient-3)" fill-rule="evenodd" xlink:href="#path-8"></use>
+                    </g>
+                    <path d="M0.50057984,77.5 L215.456235,77.5" id="Line-41" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" stroke-dasharray="5" sketch:type="MSShapeGroup"></path>
+                    <path d="M0.50057984,133.5 L215.456235,133.5" id="Line-40" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" stroke-dasharray="5" sketch:type="MSShapeGroup"></path>
+                    <path d="M0.50057984,187.5 L215.456235,187.5" id="Line-39" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" stroke-dasharray="5" sketch:type="MSShapeGroup"></path>
+                    <path d="M0.50057984,242.5 L215.456235,242.5" id="Line-38" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" stroke-dasharray="5" sketch:type="MSShapeGroup"></path>
+                    <path d="M0.50057984,297.5 L215.456235,297.5" id="Line-37" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" stroke-dasharray="5" sketch:type="MSShapeGroup"></path>
+                    <path d="M0.50057984,352.5 L215.456235,352.5" id="Line-36" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" stroke-dasharray="5" sketch:type="MSShapeGroup"></path>
+                    <path d="M0.50057984,407.5 L215.456235,407.5" id="Line-35" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" stroke-dasharray="5" sketch:type="MSShapeGroup"></path>
+                    <path d="M0.50057984,462.5 L215.456235,462.5" id="Line-34" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" stroke-dasharray="5" sketch:type="MSShapeGroup"></path>
+                    <path d="M0.50057984,516.5 L215.456235,516.5" id="Line-33" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" stroke-dasharray="5" sketch:type="MSShapeGroup"></path>
+                    <path d="M0.50057984,572.5 L215.456235,572.5" id="Line-32" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" stroke-dasharray="5" sketch:type="MSShapeGroup"></path>
+                    <path d="M0.50057984,630.5 L215.456235,630.5" id="Line-31" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" stroke-dasharray="5" sketch:type="MSShapeGroup"></path>
+                    <path d="M0.50057984,691.5 L215.456235,691.5" id="Line-30" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" stroke-dasharray="5" sketch:type="MSShapeGroup"></path>
+                </g>
+                <g id="event-copy-2" transform="translate(505.276131, 196.000000)" fill="#34495E" sketch:type="MSShapeGroup">
+                    <rect id="Rectangle-6" x="0" y="0" width="209.768367" height="93"></rect>
+                </g>
+                <g id="event-2-copy-2" transform="translate(505.276131, 431.000000)" fill="#34495E" sketch:type="MSShapeGroup">
+                    <rect id="Rectangle-6" x="0" y="0" width="209.768367" height="44"></rect>
+                </g>
+                <g id="event-3-copy-2" transform="translate(505.276131, 369.000000)" fill="#34495E" sketch:type="MSShapeGroup">
+                    <rect id="Rectangle-6" x="0" y="0" width="209.768367" height="44"></rect>
+                </g>
+                <g id="event-4-copy-2" transform="translate(505.276131, 643.000000)" sketch:type="MSShapeGroup">
+                    <rect id="Rectangle-6" fill="#34495E" x="0" y="0" width="104.662441" height="93"></rect>
+                    <rect id="Rectangle-12" fill="#FF422E" filter="url(#filter-9)" x="0" y="0" width="1.33045476" height="93"></rect>
+                </g>
+                <g id="event-5-copy-2" transform="translate(505.276131, 541.000000)" fill="#34495E" sketch:type="MSShapeGroup">
+                    <rect id="Rectangle-6" x="0" y="0" width="104.662441" height="44"></rect>
+                </g>
+                <g id="event-6-copy-2" transform="translate(612.155996, 483.000000)" fill="#34495E" sketch:type="MSShapeGroup">
+                    <rect id="Rectangle-11" x="0" y="0" width="102.888501" height="140"></rect>
+                </g>
+                <g id="lines-copy-3" transform="translate(715.931468, 79.000000)">
+                    <path d="M0.50057984,0.5 L215.456235,0.5" id="Line" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" sketch:type="MSShapeGroup"></path>
+                    <path d="M0.50057984,50.5 L215.456235,50.5" id="Line-4" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" sketch:type="MSShapeGroup"></path>
+                    <path d="M0.50057984,105.5 L215.456235,105.5" id="Line-5" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" sketch:type="MSShapeGroup"></path>
+                    <path d="M0.50057984,160.5 L215.456235,160.5" id="Line-6" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" sketch:type="MSShapeGroup"></path>
+                    <path d="M0.50057984,215.5 L215.456235,215.5" id="Line-7" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" sketch:type="MSShapeGroup"></path>
+                    <path d="M0.50057984,270.5 L215.456235,270.5" id="Line-8" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" sketch:type="MSShapeGroup"></path>
+                    <path d="M0.50057984,325.5 L215.456235,325.5" id="Line-20" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" sketch:type="MSShapeGroup"></path>
+                    <path d="M0.50057984,380.5 L215.456235,380.5" id="Line-22" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" sketch:type="MSShapeGroup"></path>
+                    <path d="M0.50057984,435.5 L215.456235,435.5" id="Line-23" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" sketch:type="MSShapeGroup"></path>
+                    <path d="M0.50057984,489.5 L215.456235,489.5" id="Line-24" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" sketch:type="MSShapeGroup"></path>
+                    <path d="M0.50057984,545.5 L215.456235,545.5" id="Line-25" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" sketch:type="MSShapeGroup"></path>
+                    <path d="M0.50057984,603.5 L215.456235,603.5" id="Line-26" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" sketch:type="MSShapeGroup"></path>
+                    <path d="M0.50057984,662.5 L215.456235,662.5" id="Line-27" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" sketch:type="MSShapeGroup"></path>
+                    <path d="M0.50057984,719.5 L215.456235,719.5" id="Line-28" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" sketch:type="MSShapeGroup"></path>
+                    <g id="Line-42">
+                        <use stroke-opacity="0.195652174" stroke="#34495E" stroke-width="1" stroke-linecap="square" stroke-dasharray="5" fill="none" sketch:type="MSShapeGroup" xlink:href="#path-10"></use>
+                        <use stroke="none" fill="url(#linearGradient-3)" fill-rule="evenodd" xlink:href="#path-10"></use>
+                    </g>
+                    <path d="M0.50057984,77.5 L215.456235,77.5" id="Line-41" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" stroke-dasharray="5" sketch:type="MSShapeGroup"></path>
+                    <path d="M0.50057984,133.5 L215.456235,133.5" id="Line-40" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" stroke-dasharray="5" sketch:type="MSShapeGroup"></path>
+                    <path d="M0.50057984,187.5 L215.456235,187.5" id="Line-39" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" stroke-dasharray="5" sketch:type="MSShapeGroup"></path>
+                    <path d="M0.50057984,242.5 L215.456235,242.5" id="Line-38" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" stroke-dasharray="5" sketch:type="MSShapeGroup"></path>
+                    <path d="M0.50057984,297.5 L215.456235,297.5" id="Line-37" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" stroke-dasharray="5" sketch:type="MSShapeGroup"></path>
+                    <path d="M0.50057984,352.5 L215.456235,352.5" id="Line-36" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" stroke-dasharray="5" sketch:type="MSShapeGroup"></path>
+                    <path d="M0.50057984,407.5 L215.456235,407.5" id="Line-35" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" stroke-dasharray="5" sketch:type="MSShapeGroup"></path>
+                    <path d="M0.50057984,462.5 L215.456235,462.5" id="Line-34" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" stroke-dasharray="5" sketch:type="MSShapeGroup"></path>
+                    <path d="M0.50057984,516.5 L215.456235,516.5" id="Line-33" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" stroke-dasharray="5" sketch:type="MSShapeGroup"></path>
+                    <path d="M0.50057984,572.5 L215.456235,572.5" id="Line-32" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" stroke-dasharray="5" sketch:type="MSShapeGroup"></path>
+                    <path d="M0.50057984,630.5 L215.456235,630.5" id="Line-31" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" stroke-dasharray="5" sketch:type="MSShapeGroup"></path>
+                    <path d="M0.50057984,691.5 L215.456235,691.5" id="Line-30" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" stroke-dasharray="5" sketch:type="MSShapeGroup"></path>
+                </g>
+                <g id="event-copy-3" transform="translate(721.253287, 276.000000)" fill="#34495E" sketch:type="MSShapeGroup">
+                    <rect id="Rectangle-6" x="0" y="0" width="209.768367" height="93"></rect>
+                </g>
+                <g id="event-2-copy-3" transform="translate(721.253287, 211.000000)" fill="#34495E" sketch:type="MSShapeGroup">
+                    <rect id="Rectangle-6" x="0" y="0" width="209.768367" height="44"></rect>
+                </g>
+                <g id="event-3-copy-3" transform="translate(721.253287, 409.000000)" fill="#34495E" sketch:type="MSShapeGroup">
+                    <rect id="Rectangle-6" x="0" y="0" width="209.768367" height="44"></rect>
+                </g>
+                <g id="event-4-copy-3" transform="translate(721.253287, 503.000000)" sketch:type="MSShapeGroup">
+                    <rect id="Rectangle-6" fill="#34495E" x="0" y="0" width="104.662441" height="93"></rect>
+                    <rect id="Rectangle-12" fill="#FF422E" filter="url(#filter-11)" x="0" y="0" width="1.33045476" height="93"></rect>
+                </g>
+                <g id="event-5-copy-3" transform="translate(721.253287, 616.000000)" fill="#34495E" sketch:type="MSShapeGroup">
+                    <rect id="Rectangle-6" x="0" y="0" width="104.662441" height="44"></rect>
+                </g>
+                <g id="lines-copy-4" transform="translate(931.908623, 79.000000)">
+                    <path d="M0.50057984,0.5 L215.456235,0.5" id="Line" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" sketch:type="MSShapeGroup"></path>
+                    <path d="M0.50057984,50.5 L215.456235,50.5" id="Line-4" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" sketch:type="MSShapeGroup"></path>
+                    <path d="M0.50057984,105.5 L215.456235,105.5" id="Line-5" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" sketch:type="MSShapeGroup"></path>
+                    <path d="M0.50057984,160.5 L215.456235,160.5" id="Line-6" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" sketch:type="MSShapeGroup"></path>
+                    <path d="M0.50057984,215.5 L215.456235,215.5" id="Line-7" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" sketch:type="MSShapeGroup"></path>
+                    <path d="M0.50057984,270.5 L215.456235,270.5" id="Line-8" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" sketch:type="MSShapeGroup"></path>
+                    <path d="M0.50057984,325.5 L215.456235,325.5" id="Line-20" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" sketch:type="MSShapeGroup"></path>
+                    <path d="M0.50057984,380.5 L215.456235,380.5" id="Line-22" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" sketch:type="MSShapeGroup"></path>
+                    <path d="M0.50057984,435.5 L215.456235,435.5" id="Line-23" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" sketch:type="MSShapeGroup"></path>
+                    <path d="M0.50057984,489.5 L215.456235,489.5" id="Line-24" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" sketch:type="MSShapeGroup"></path>
+                    <path d="M0.50057984,545.5 L215.456235,545.5" id="Line-25" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" sketch:type="MSShapeGroup"></path>
+                    <path d="M0.50057984,603.5 L215.456235,603.5" id="Line-26" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" sketch:type="MSShapeGroup"></path>
+                    <path d="M0.50057984,662.5 L215.456235,662.5" id="Line-27" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" sketch:type="MSShapeGroup"></path>
+                    <path d="M0.50057984,719.5 L215.456235,719.5" id="Line-28" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" sketch:type="MSShapeGroup"></path>
+                    <g id="Line-42">
+                        <use stroke-opacity="0.195652174" stroke="#34495E" stroke-width="1" stroke-linecap="square" stroke-dasharray="5" fill="none" sketch:type="MSShapeGroup" xlink:href="#path-12"></use>
+                        <use stroke="none" fill="url(#linearGradient-3)" fill-rule="evenodd" xlink:href="#path-12"></use>
+                    </g>
+                    <path d="M0.50057984,77.5 L215.456235,77.5" id="Line-41" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" stroke-dasharray="5" sketch:type="MSShapeGroup"></path>
+                    <path d="M0.50057984,133.5 L215.456235,133.5" id="Line-40" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" stroke-dasharray="5" sketch:type="MSShapeGroup"></path>
+                    <path d="M0.50057984,187.5 L215.456235,187.5" id="Line-39" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" stroke-dasharray="5" sketch:type="MSShapeGroup"></path>
+                    <path d="M0.50057984,242.5 L215.456235,242.5" id="Line-38" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" stroke-dasharray="5" sketch:type="MSShapeGroup"></path>
+                    <path d="M0.50057984,297.5 L215.456235,297.5" id="Line-37" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" stroke-dasharray="5" sketch:type="MSShapeGroup"></path>
+                    <path d="M0.50057984,352.5 L215.456235,352.5" id="Line-36" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" stroke-dasharray="5" sketch:type="MSShapeGroup"></path>
+                    <path d="M0.50057984,407.5 L215.456235,407.5" id="Line-35" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" stroke-dasharray="5" sketch:type="MSShapeGroup"></path>
+                    <path d="M0.50057984,462.5 L215.456235,462.5" id="Line-34" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" stroke-dasharray="5" sketch:type="MSShapeGroup"></path>
+                    <path d="M0.50057984,516.5 L215.456235,516.5" id="Line-33" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" stroke-dasharray="5" sketch:type="MSShapeGroup"></path>
+                    <path d="M0.50057984,572.5 L215.456235,572.5" id="Line-32" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" stroke-dasharray="5" sketch:type="MSShapeGroup"></path>
+                    <path d="M0.50057984,630.5 L215.456235,630.5" id="Line-31" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" stroke-dasharray="5" sketch:type="MSShapeGroup"></path>
+                    <path d="M0.50057984,691.5 L215.456235,691.5" id="Line-30" stroke-opacity="0.195652174" stroke="#34495E" stroke-linecap="square" stroke-dasharray="5" sketch:type="MSShapeGroup"></path>
+                </g>
+                <g id="event-copy-4" transform="translate(937.230442, 176.000000)" fill="#34495E" sketch:type="MSShapeGroup">
+                    <rect id="Rectangle-6" x="0" y="0" width="209.768367" height="93"></rect>
+                </g>
+                <g id="event-2-copy-4" transform="translate(937.230442, 281.000000)" fill="#34495E" sketch:type="MSShapeGroup">
+                    <rect id="Rectangle-6" x="0" y="0" width="209.768367" height="44"></rect>
+                </g>
+                <g id="event-3-copy-4" transform="translate(937.230442, 349.000000)" fill="#34495E" sketch:type="MSShapeGroup">
+                    <rect id="Rectangle-6" x="0" y="0" width="209.768367" height="44"></rect>
+                </g>
+                <g id="event-4-copy-4" transform="translate(937.230442, 423.000000)" sketch:type="MSShapeGroup">
+                    <rect id="Rectangle-6" fill="#34495E" x="0" y="0" width="104.662441" height="93"></rect>
+                    <rect id="Rectangle-12" fill="#FF422E" filter="url(#filter-13)" x="0" y="0" width="1.33045476" height="93"></rect>
+                </g>
+                <g id="event-5-copy-4" transform="translate(937.230442, 621.000000)" fill="#34495E" sketch:type="MSShapeGroup">
+                    <rect id="Rectangle-6" x="0" y="0" width="104.662441" height="44"></rect>
+                </g>
+                <g id="event-6-copy-4" transform="translate(1044.110308, 483.000000)" fill="#34495E" sketch:type="MSShapeGroup">
+                    <rect id="Rectangle-11" x="0" y="0" width="102.888501" height="140"></rect>
+                </g>
+                <polygon id="Triangle-2" fill="#34495E" sketch:type="MSShapeGroup" transform="translate(388.000000, 32.000000) scale(1, -1) translate(-388.000000, -32.000000) " points="388 28 392 36 384 36 "></polygon>
+                <path d="M283.798975,69.4999404 L283.798975,808.514954" id="Line" stroke-opacity="0.49609375" stroke="#34495E" stroke-linecap="square" sketch:type="MSShapeGroup"></path>
+                <path d="M499.798975,69.4999404 L499.798975,808.514954" id="Line-Copy" stroke-opacity="0.49609375" stroke="#34495E" stroke-linecap="square" sketch:type="MSShapeGroup"></path>
+                <path d="M715.798975,69.4999404 L715.798975,808.514954" id="Line-Copy-2" stroke-opacity="0.49609375" stroke="#34495E" stroke-linecap="square" sketch:type="MSShapeGroup"></path>
+                <path d="M931.798975,69.4999404 L931.798975,808.514954" id="Line-Copy-3" stroke-opacity="0.49609375" stroke="#34495E" stroke-linecap="square" sketch:type="MSShapeGroup"></path>
+                <path d="M1147,28 L1147,36 L1155,32 L1147,28 Z" id="Triangle-2-Copy" fill="#34495E" sketch:type="MSShapeGroup" transform="translate(1151.000000, 32.000000) rotate(-180.000000) translate(-1151.000000, -32.000000) "></path>
+                <path d="M69,333 L69,341 L77,337 L69,333 Z" id="Triangle-2-Copy-2" fill="#DF4A32" sketch:type="MSShapeGroup"></path>
+                <text id="HEUTE" sketch:type="MSTextLayer" font-family="Roboto" font-size="15" font-weight="260" fill="#34495E">
+                    <tspan x="1095" y="35">HEUTE</tspan>
+                </text>
+            </g>
+            <g id="+" sketch:type="MSLayerGroup" transform="translate(1337.000000, 920.000000)">
+                <g id="Oval-1" filter="url(#filter-14)">
+                    <use fill="#34495E" fill-rule="evenodd" sketch:type="MSShapeGroup" xlink:href="#path-15"></use>
+                    <use fill="none" xlink:href="#path-15"></use>
+                </g>
+                <text sketch:type="MSTextLayer" font-family="Roboto" font-size="48.6956522" font-weight="260" fill="#FFFFFF">
+                    <tspan x="21" y="45">+</tspan>
+                </text>
+            </g>
+            <text id="08:35-10:15-BIOLOGIE" sketch:type="MSTextLayer" font-family="Roboto" font-size="14.34375" font-weight="260" fill="#FFFFFF">
+                <tspan x="218" y="335.857143">08:35-10:15 </tspan>
+                <tspan x="295.209717" y="335.857143" font-style="condensed">BIOLOGIE</tspan>
+            </text>
+            <text id="10.30-11.15-ENGLISCH" sketch:type="MSTextLayer" font-family="Roboto" font-size="14.34375" font-weight="260" fill="#FFFFFF">
+                <tspan x="218" y="439.857143">10.30-11.15 </tspan>
+                <tspan x="296.036163" y="439.857143" font-style="condensed">ENGLISCH</tspan>
+            </text>
+        </g>
+    </g>
+</svg>

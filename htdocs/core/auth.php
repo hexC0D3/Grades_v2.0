@@ -38,6 +38,8 @@ function logInUser($mail, $password){
 		}
 		$db->doQueryWithArgs("INSERT INTO login_tokens(user_id, login_token, ip) VALUES(?, ?, ?)", array($user["id"], $token, $_SERVER['REMOTE_ADDR']), "iss");
 		
+		global $JSON;
+		
 		$JSON['session_token']=$token;
 		
 		return true;

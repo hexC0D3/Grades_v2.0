@@ -1,3 +1,9 @@
-<div class="content">
-	<h1>Registrieren</h1>
+<div class="content" ng-controller="RegisterController as registerC">
+	<h1>Let's get started</h1>
+	<h2>Erstelle ein Konto:</h2>
+	
+	<form ng-submit="registerC.register()">
+		<input type="mail" name="mail" ng-model="register.mail" placeholder="e-mail eingeben">
+		<div class="g-recaptcha" data-sitekey="6Le-hQITAAAAADiKBpBGQdALRYombGChKCjF23OP"></div>
+	</form>
 </div>

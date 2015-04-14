@@ -65,7 +65,7 @@
 	$SESSION_TOKEN = getPseudoGetParams('session_token');
 	
 	//check if user is logged in or wants to login/register/reset_password, otherwise we block
-	if(isUserLoggedIn() || ($_GET['type']=='user' && in_array($_GET['action'], array('verify','reset_pw','login'))){
+	if(isUserLoggedIn() || ($_GET['type']=='user' && in_array($_GET['action'], array('verify','reset_pw','login')))){
 		
 		if(isset($_GET['type'])){
 			if($_GET['type']=='user'){

@@ -140,7 +140,7 @@ function validateDynamicInput($value, $type){
 		
 		$value=(int)$value;
 		
-		$valid=in_array($value, array(0,1,2);
+		$valid=in_array($value, array(0,1,2));
 
 		/*
 			* 0 : switzerland, 1 => worst, 6 => best, 4 => ok
@@ -212,7 +212,7 @@ function deleteGroup($group_id){
 	
 	$members = $db->doQueryWithArgs("SELECT * FROM group_relations WHERE group_id=?", array($group_id), "i");
 	foreach($members as $member){
-		if($member['member_type') == 1){
+		if($member['member_type'] == 1){
 			//only delete relation
 		}else if($member['member_type'] == 2){
 			deleteGroup($member['member_id']);

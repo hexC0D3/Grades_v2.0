@@ -1,3 +1,12 @@
-<div class="content">
+<div class="content" ng-controller="LoginController as loginC">
+	<h1>Welcome Back!</h1>
 	
+	<div class="warning">{{loginC.warning}}</div>
+	
+	<form ng-submit="loginC.login()">
+		<input type="mail" name="mail" placeholder="e-mail eingeben" ng-model="loginC.mail">
+		<input type="password" name="password" placeholder="Passwort eingeben" ng-model="loginC.password">
+		<input type="submit" value="Login">
+	</form>
+	<h3 class="title-line">Oder</h3>
 </div>

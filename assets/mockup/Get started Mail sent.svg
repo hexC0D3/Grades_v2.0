@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="1440px" height="1024px" viewBox="0 0 1440 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.3 (11970) - http://www.bohemiancoding.com/sketch -->
+    <title>Desktop HD</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <filter x="-50%" y="-50%" width="200%" height="200%" filterUnits="objectBoundingBox" id="filter-1">
+            <feOffset dx="1" dy="1" in="SourceAlpha" result="shadowOffsetInner1"></feOffset>
+            <feGaussianBlur stdDeviation="5" in="shadowOffsetInner1" result="shadowBlurInner1"></feGaussianBlur>
+            <feComposite in="shadowBlurInner1" in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1" result="shadowInnerInner1"></feComposite>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.452301291 0" in="shadowInnerInner1" type="matrix" result="shadowMatrixInner1"></feColorMatrix>
+            <feMerge>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+                <feMergeNode in="shadowMatrixInner1"></feMergeNode>
+            </feMerge>
+        </filter>
+        <filter x="-50%" y="-50%" width="200%" height="200%" filterUnits="objectBoundingBox" id="filter-2">
+            <feOffset dx="0" dy="4" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="2.5" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.35 0" in="shadowBlurOuter1" type="matrix" result="shadowMatrixOuter1"></feColorMatrix>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+            </feMerge>
+        </filter>
+        <filter x="-50%" y="-50%" width="200%" height="200%" filterUnits="objectBoundingBox" id="filter-3">
+            <feOffset dx="1" dy="1" in="SourceAlpha" result="shadowOffsetInner1"></feOffset>
+            <feGaussianBlur stdDeviation="5" in="shadowOffsetInner1" result="shadowBlurInner1"></feGaussianBlur>
+            <feComposite in="shadowBlurInner1" in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1" result="shadowInnerInner1"></feComposite>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.35 0" in="shadowInnerInner1" type="matrix" result="shadowMatrixInner1"></feColorMatrix>
+            <feMerge>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+                <feMergeNode in="shadowMatrixInner1"></feMergeNode>
+            </feMerge>
+        </filter>
+    </defs>
+    <g id="Get-started:-Mail-sent" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="Desktop-HD" sketch:type="MSArtboardGroup">
+            <rect id="Head" fill="#34495E" filter="url(#filter-1)" sketch:type="MSShapeGroup" x="0" y="0" width="1440" height="300"></rect>
+            <g id="Paper-lines" sketch:type="MSLayerGroup" transform="translate(0.000000, 10.000000)" stroke="#FFFFFF" stroke-opacity="0.15625" stroke-linecap="square">
+                <path d="M0,20 L1440,20" id="Line" sketch:type="MSShapeGroup"></path>
+                <path d="M0,60 L1440,60" id="Line-2" sketch:type="MSShapeGroup"></path>
+                <path d="M0,40 L1440,40" id="Line-3" stroke-dasharray="5" sketch:type="MSShapeGroup"></path>
+                <path d="M0,100 L1440,100" id="Line-10" sketch:type="MSShapeGroup"></path>
+                <path d="M0,80 L1440,80" id="Line-9" stroke-dasharray="5" sketch:type="MSShapeGroup"></path>
+                <path d="M0,140 L1440,140" id="Line-12" sketch:type="MSShapeGroup"></path>
+                <path d="M0,120 L1440,120" id="Line-11" stroke-dasharray="5" sketch:type="MSShapeGroup"></path>
+                <path d="M0,180 L1440,180" id="Line-14" sketch:type="MSShapeGroup"></path>
+                <path d="M0,160 L1440,160" id="Line-13" stroke-dasharray="5" sketch:type="MSShapeGroup"></path>
+                <path d="M0,220 L1440,220" id="Line-16" sketch:type="MSShapeGroup"></path>
+                <path d="M0,200 L1440,200" id="Line-15" stroke-dasharray="5" sketch:type="MSShapeGroup"></path>
+                <path d="M0,260 L1440,260" id="Line-18" sketch:type="MSShapeGroup"></path>
+                <path d="M0,240 L1440,240" id="Line-17" stroke-dasharray="5" sketch:type="MSShapeGroup"></path>
+                <path d="M0,280 L1440,280" id="Line-19" stroke-dasharray="5" sketch:type="MSShapeGroup"></path>
+                <path d="M0,1 L1440,1" id="Line-21" stroke-dasharray="5" sketch:type="MSShapeGroup"></path>
+            </g>
+            <text id="GRADES" sketch:type="MSTextLayer" font-family="Roboto" font-size="50" font-style="condensed" font-weight="260" fill="#FFFFFF">
+                <tspan x="136" y="62">GRADES</tspan>
+            </text>
+            <rect id="Main" fill="#FFFFFF" filter="url(#filter-2)" sketch:type="MSShapeGroup" x="230" y="125" width="980" height="776"></rect>
+            <rect id="Rectangle-3" fill="#34495E" sketch:type="MSShapeGroup" x="593" y="807" width="254" height="66" rx="6"></rect>
+            <text id="LET’S-GET-STARTED!" sketch:type="MSTextLayer" font-family="Roboto" font-size="50" font-weight="260" fill="#34495E">
+                <tspan x="250" y="191">LET’S GET STARTED!</tspan>
+            </text>
+            <circle id="Oval-1" fill="#34495E" filter="url(#filter-3)" sketch:type="MSShapeGroup" cx="720.5" cy="461.5" r="229.5"></circle>
+            <text id="Wir-haben-dir-eine-e" sketch:type="MSTextLayer" font-family="Roboto" font-size="50" font-weight="260" fill="#34495E">
+                <tspan x="333" y="767">Wir haben dir eine e-mail geschickt!</tspan>
+            </text>
+            <text id="" sketch:type="MSTextLayer" font-family="FontAwesome" font-size="254" font-weight="normal" fill="#FFFFFF">
+                <tspan x="593" y="540"></tspan>
+            </text>
+            <text id="FORTFAHREN" sketch:type="MSTextLayer" font-family="Roboto" font-size="30" font-style="condensed" font-weight="260" fill="#FFFFFF">
+                <tspan x="627" y="849">FORTFAHREN</tspan>
+            </text>
+        </g>
+    </g>
+</svg>
