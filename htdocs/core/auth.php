@@ -11,7 +11,7 @@ function isUserLoggedIn(){
 
 /** Returns the current user data **/
 function getUser(){
-	global $user, $db;
+	global $user, $db, $SESSION_TOKEN;
 	if(!empty($user)){
 		return $user;
 	}
@@ -25,39 +25,45 @@ function getUser(){
 /** Logs in a user **/
 function logInUser($mail, $password){
 	global $db;
-	$password=password_hash($password, PASSWORD_HASH);
 	
-	$user=$db->doQueryWithArgs("SELECT * from users WHERE mail=? AND password=?", array($mail, $password), "ss");
+	$user = $db->doQueryWithArgs("SELECT * from users WHERE mail=?", array($mail), "s");
+	
 	if(!empty($user)&&$user!=false&&count($user)==1){
+		
 		$user=$user[0];
 		
-		//generate unique login token
-		$token=bin2hex(openssl_random_pseudo_bytes(16));
-		while($db->doQueryWithArgs("SELECT COUNT(*) as count FROM login_tokens WHERE login_token=?", array($token), "s")[0]["count"]>0){
+		if(password_verify($password, $user['password'])){
+			//generate unique login token
 			$token=bin2hex(openssl_random_pseudo_bytes(16));
+			while($db->doQueryWithArgs("SELECT COUNT(*) as count FROM login_tokens WHERE login_token=?", array($token), "s")[0]["count"]>0){
+				$token=bin2hex(openssl_random_pseudo_bytes(16));
+			}
+			$db->doQueryWithArgs("INSERT INTO login_tokens(user_id, login_token, ip) VALUES(?, ?, ?)", array($user["id"], $token, $_SERVER['REMOTE_ADDR']), "iss");
+			
+			global $JSON;
+			
+			$JSON['session_token']=$token;
+			
+			return true;
+		}else{
+			addError(getMessages()->ERROR_SET_PASSWORD_INVALID_LOGIN); /*Wrong pword */
 		}
-		$db->doQueryWithArgs("INSERT INTO login_tokens(user_id, login_token, ip) VALUES(?, ?, ?)", array($user["id"], $token, $_SERVER['REMOTE_ADDR']), "iss");
-		
-		global $JSON;
-		
-		$JSON['session_token']=$token;
-		
-		return true;
 	}
-	addError(getMessages()->UNKNOWN_ERROR(1));
+	addError(getMessages()->ERROR_SET_PASSWORD_INVALID_LOGIN); /* Wrong uname */
 	
 	return false;
 }
 
 /** Checks if a user already exists or not **/
 function isMailRegistered($mail){
+	
 	if(filter_var($mail, FILTER_VALIDATE_EMAIL)){
 		global $db;
 		$data=$db->doQueryWithArgs("SELECT * FROM users WHERE mail=?", array($mail), "s");
-		if(count($data)==0){
+		if(count($data) == 0){
 			//everything is fine, mail not registered
 			return false;
-		}else if(count($data)==1){
+		}else if(count($data) == 1){
 			//mail already registered
 			if($data[0]['password'] == 'registering'){
 				//user isn't verified by mail yet
@@ -100,12 +106,10 @@ function registerUser($mail, $captach_val){
 					getMessages()->MAIL_REGISTER_BODY_PART." ".$token.
 					"<br>".getMessages()->MAIL_REGARDS);
 					
+					return true;
 				}else{
 					addError(getMessages()->UNKNOWN_ERROR(3));
 				}
-	
-				
-				return true;
 			}else{
 				addError(getMessages()->ERROR_GEN_TOKEN);
 			}
@@ -113,6 +117,10 @@ function registerUser($mail, $captach_val){
 			addError(getMessages()->ERROR_REGISTER_INVALID_CAPTCHA);
 		}
 	}
+	
+	clearResetTokens();
+	clearUnverifiedUsers();
+	
 	return false;
 }
 
@@ -135,7 +143,7 @@ function resetPassword($mail, $token, $password){
 			$password=password_hash($password, PASSWORD_HASH);
 		
 			global $db;
-			if($db->doQueryWithArgs("UPDATE users SET password WHERE mail=?", array($password, $mail), "ss")==true){
+			if($db->doQueryWithArgs("UPDATE users SET password = ? WHERE mail=?", array($password, $mail), "ss")==true){
 				return true;
 			}else{
 				return false;
@@ -157,8 +165,12 @@ function validatePasswordResetToken($token, $mail){
 	clearResetTokens();
 	clearUnverifiedUsers();
 	
-	$token=$db->doQueryWithArgs("SELECT id FROM reset_tokens WHERE mail=? AND token=? AND ip=? ", array($mail, $token, $_SERVER['REMOTE_ADDR']), "sss");
-	if(count($token)==1&&isset($token[0]['id'])){
+	$token=$db->doQueryWithArgs("SELECT reset_tokens.id FROM reset_tokens LEFT JOIN users ON reset_tokens.user_id=users.id WHERE users.mail=? AND reset_tokens.token=? AND reset_tokens.ip=? ", array($mail, $token, $_SERVER['REMOTE_ADDR']), "sss");
+	
+	if(count($token) == 1 && isset($token[0]['id'])){
+		
+		$db->doQueryWithArgs("DELETE FROM reset_tokens WHERE id=?", array($token[0]['id']), "i");
+		
 		return true;
 	}
 	return false;

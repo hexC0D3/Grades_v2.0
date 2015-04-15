@@ -2,8 +2,22 @@
 	<h1>Let's get started</h1>
 	<h2>Erstelle ein Konto:</h2>
 	
-	<form ng-submit="registerC.register()">
-		<input type="mail" name="mail" ng-model="register.mail" placeholder="e-mail eingeben">
+	<div class="warning">{{registerC.warning}}</div>
+	
+	<form ng-submit="registerC.register()" ng-show="registerC.step == 0">
+		
+		<input type="mail" ng-model="registerC.mail" placeholder="e-mail eingeben">
+		<no-captcha g-recaptcha-response="registerC.captcha" control="registerC"></no-captcha>
 		<div class="g-recaptcha" data-sitekey="6Le-hQITAAAAADiKBpBGQdALRYombGChKCjF23OP"></div>
+		<input type="submit" value="Registrieren">
+		
+	</form>
+	
+	<form ng-submit="registerC.confirm()" ng-show="registerC.step == 1">
+		
+		<input type="text" ng-model="registerC.code" placeholder="Den erhaltenen Code eingeben" maxlength="5">
+		<input type="password" ng-model="registerC.password" placeholder="Das gewünschte Passwort eingeben">
+		<input type="password" ng-model="registerC.password1" placeholder="Passwort bestätigen">
+		<input type="submit" value="Registrieren">
 	</form>
 </div>

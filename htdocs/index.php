@@ -24,9 +24,9 @@
 		<script src="res/js/angular-route.min.js" charset="utf-8"></script>
 		<script src="res/js/highcharts.js" charset="utf-8"></script>
 		
-		<script src="res/js/grades.js" charset="utf-8"></script>
+		<script src="res/js/angular-no-captcha.js"></script>
 		
-		<script src='https://www.google.com/recaptcha/api.js'></script>
+		<script src="res/js/grades.js" charset="utf-8"></script>
 		
 		<link rel="stylesheet" href="res/css/grades.css" title="Grades CSS" type="text/css" media="all" charset="utf-8">
 		

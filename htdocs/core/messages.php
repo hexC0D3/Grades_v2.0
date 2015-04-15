@@ -38,6 +38,11 @@
 					$this->ERROR_API_VERSIONS_INVALID=_("The requested api version doesn't exist!");
 					
 					//User
+					
+						//Login
+						
+						$this->ERROR_SET_PASSWORD_INVALID_LOGIN=_("Login failed! Username or password is invalid!");
+						
 						//Set password
 						$this->ERROR_SET_PASSWORD_INVALID_CODE=_("Your code is invalid! Please request a new one.");
 							//Password restrictions
@@ -118,9 +123,9 @@
 				//Group Options
 				$this->DYNAMIC_GROUP_TYPE_OPTIONS_MARK_CALC_METHOD_DESC=_("The method this school uses to calculate your average grade.");
 				
-				$this->DYNAMIC_GROUP_TYPE_OPTIONS_MARK_CALC_METHOD_1=_();
-				$this->DYNAMIC_GROUP_TYPE_OPTIONS_MARK_CALC_METHOD_2=_();
-				$this->DYNAMIC_GROUP_TYPE_OPTIONS_MARK_CALC_METHOD_3=_();
+				$this->DYNAMIC_GROUP_TYPE_OPTIONS_MARK_CALC_METHOD_1=_("");
+				$this->DYNAMIC_GROUP_TYPE_OPTIONS_MARK_CALC_METHOD_2=_("");
+				$this->DYNAMIC_GROUP_TYPE_OPTIONS_MARK_CALC_METHOD_3=_("");
 				
 				$this->DYNAMIC_GROUP_TYPE_OPTIONS_CLASS_ADMIN_DESC=_("The member of this class who's able to manage it.");
 				$this->DYNAMIC_GROUP_TYPE_OPTIONS_WEBSITE_DESC=_("This schools website URL.");

@@ -20,7 +20,7 @@
 		die(json_encode($JSON));
 	}
 	
-	global $JSON;
+	global $JSON, $SESSION_TOKEN, $_PUT, $_DELETE;
 	
 	$JSON=array("version"=>$version);
 	
@@ -30,6 +30,7 @@
 	}else if($_SERVER['REQUEST_METHOD'] == 'POST'){
 		//create
 		$is_post=true;
+		
 	}else if($_SERVER['REQUEST_METHOD'] == 'PUT'){
 		//update
 		$is_put=true;
@@ -65,7 +66,7 @@
 	$SESSION_TOKEN = getPseudoGetParams('session_token');
 	
 	//check if user is logged in or wants to login/register/reset_password, otherwise we block
-	if(isUserLoggedIn() || ($_GET['type']=='user' && in_array($_GET['action'], array('verify','reset_pw','login')))){
+	if(isUserLoggedIn() || ($_GET['type']=='user' && isset($_GET['action']) && in_array($_GET['action'], array('verify','reset_pw','login'))) || (!isset($_GET['action']) && $is_post)){
 		
 		if(isset($_GET['type'])){
 			if($_GET['type']=='user'){

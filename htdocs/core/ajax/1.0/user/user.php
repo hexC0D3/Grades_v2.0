@@ -6,7 +6,7 @@
 				if($is_get){
 					//get all possible settings
 					
-					global $db
+					global $db;
 					
 					$JSON["settings"]=array();
 					
@@ -105,6 +105,7 @@
 		if($is_post){
 				
 			//register a new user
+			
 			if(isset($_POST['mail'])&&isset($_POST['captcha'])){
 				registerUser($_POST['mail'], $_POST['captcha']);
 			}

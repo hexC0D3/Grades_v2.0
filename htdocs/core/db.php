@@ -56,7 +56,7 @@ class DB{
 	}
 	/** Binds parameters with types and values **/
 	private function bindParameters($stmt, $types, $values){
-		call_user_func_array(array($stmt, "bind_param"), array_merge(array($types), $values));
+		call_user_func_array('mysqli_stmt_bind_param', array_merge(array($stmt, $types), $values));
 		return true;
 	}
 	/** Executes the passed query with the mysqli bind_param.
@@ -70,6 +70,7 @@ class DB{
 			$values[$i] = &$arrayOfValues[$i];
 		}
 		
+		
 		if($stmt = $this->mysqli->prepare($query)){
 			$this->bindParameters($stmt, $types, $values);
 			$stmt->execute();
@@ -77,16 +78,19 @@ class DB{
 			$stmt->close();
 			return $data;
 		}
+		
+		#var_dump($this->mysqli->error);
+		
 		return false;
 	}
 	/** This function executes the query wihtout any arguments **/
 	function doQueryWithoutArgs($query){
 		
-		$result=array();
-		
-		$data=$this->mysqli->query($query);
-		while ($row = mysqli_fetch_assoc($data)) {
-			$result[]=$row;
+		$data = $this->mysqli->query($query);
+		if(is_bool($data)){
+			return $data;
+		}else{
+			 for ($result = array (); $result = $result->fetch_assoc(); $result[] = $row);
 		}
 		
 		return $result;
