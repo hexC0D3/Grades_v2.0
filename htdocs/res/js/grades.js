@@ -32,7 +32,7 @@ grades.factory('AppService', function() {
 	  
 	  activeNavigation : 0,
 	  
-	  api_url : "http://grades.dev/api/v1/",
+	  api_url : "http://grades.dev/api/v1",
 	  
 	  session_token : "",
 
@@ -116,7 +116,7 @@ grades.controller("LoginController", ['AppService', '$http', '$location', functi
 				
 				loading(true);
 				
-				$http.post(AppService.api_url+"user/"+this.mail+"/login", {password: this.password}).
+				$http.post(AppService.api_url+"/user/"+this.mail+"/login", {password: this.password}).
 				
 				success(function(data, status, headers, config) {
 					
@@ -156,7 +156,7 @@ grades.controller("RegisterController", ['AppService', '$http', '$location', fun
 		if(this.mail != ""){
 			if(this.captcha != "" && this.captcha != false && this.captcha != null){
 				
-				$http.post(AppService.api_url+"user/", {mail: this.mail, captcha: this.captcha}).
+				$http.post(AppService.api_url+"/user/", {mail: this.mail, captcha: this.captcha}).
 				
 				success(function(data, status, headers, config) {
 					
@@ -181,7 +181,7 @@ grades.controller("RegisterController", ['AppService', '$http', '$location', fun
 			if(this.code != ""){
 				if(this.password != ""){
 					if(this.password == this.password1){
-						$http.post(AppService.api_url+"user/"+this.mail+"/verify", {code: this.code, password: this.password}).
+						$http.post(AppService.api_url+"/user/"+this.mail+"/verify", {code: this.code, password: this.password}).
 					
 						success(function(data, status, headers, config) {
 							

@@ -2,6 +2,58 @@
 
 @import url(https://fonts.googleapis.com/css?family=Roboto:400,300,100,500);
 
+@mixin transitions($duration){
+	-webkit-transition: all $duration ease-in-out;
+	-moz-transition: all $duration ease-in-out;
+	-ms-transition: all $duration ease-in-out;
+	-o-transition: all $duration ease-in-out;
+	transition: all $duration ease-in-out;
+}
+
+@mixin transform($transform){
+	-webkit-transform: $transform;
+	-moz-transform: $transform;
+	-ms-transform: $transform;
+	transform: $transform;
+}
+@mixin filter($filter){
+	-webkit-filter: $filter;
+	-moz-filter: $filter;
+	-ms-filter: $filter;
+	filter: $filter;
+}
+
+@mixin animation($name, $time, $timing_function, $delay, $iteration, $direction, $fill-mode){
+	-webkit-animation: $name $time $timing_function $delay $iteration $direction;
+	-webkit-animation-fill-mode: $fill-mode;
+	-moz-animation: $name $time $timing_function $delay $iteration $direction;
+	-moz-animation-fill-mode: $fill-mode;
+	-ms-animation: $name $time $timing_function $delay $iteration $direction;
+	-ms-animation-fill-mode: $fill-mode;
+	-o-animation: $name $time $timing_function $delay $iteration $direction;
+	-o-animation-fill-mode: $fill-mode;
+	animation: $name $time $timing_function $delay $iteration $direction;
+	animation-fill-mode: $fill-mode;
+}
+
+@mixin keyframe ($animation_name) {
+    @-webkit-keyframes $animation_name {
+        @content;
+    }
+ 
+    @-moz-keyframes $animation_name {
+        @content;
+    }
+ 
+    @-o-keyframes $animation_name {
+        @content;
+    }
+ 
+    @keyframes $animation_name {
+        @content;
+    }
+}
+
 body, html{
 	font-family: 'Roboto', sans-serif;
 	
@@ -122,12 +174,14 @@ body > footer{
 	@extend .shadow;
 }
 /* content */
-.widget .content{
-	position:  absolute;
-	top: 0;
-	left: 0;
-	bottom: 0;
-	right: 0;
+.widget{
+	.content{
+		position:  absolute;
+		top: 0;
+		left: 0;
+		bottom: 0;
+		right: 0;	
+	}
 }
 
 /* widget width */
@@ -183,4 +237,36 @@ body > footer{
 	content: "";
 	display: block;
 	padding-top: 50%;
+}
+
+
+/* Third Party */
+.loader {
+	margin: 6em auto;
+	font-size: 10px;
+	position: absolute;
+	top:0;
+	right:0;
+	text-indent: -9999em;
+	border-top: 1.1em solid rgba(255, 255, 255, 0.2);
+	border-right: 1.1em solid rgba(255, 255, 255, 0.2);
+	border-bottom: 1.1em solid rgba(255, 255, 255, 0.2);
+	border-left: 1.1em solid #ffffff;
+	@include transform(translateZ(0));
+	@include animation(animateSpinner, 1.1s, linear, 0s, infinite, normal, forwards);
+	
+	z-index: 99;
+}
+.loader, .loader:after {
+	border-radius: 50%;
+	width: 10em;
+	height: 10em;
+}
+@include keyframe(animateSpinner){
+	0% {
+		@include transform(rotate(0));
+	}
+	100% {
+		@include transform(rotate(360));
+	}
 }
