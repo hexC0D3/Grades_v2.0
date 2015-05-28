@@ -1,12 +1,12 @@
 <div class="content" ng-controller="LoginController as loginC">
-	<h1>Welcome Back!</h1>
+	<h1 i18n="common.welcome_back"></h1>
 	
 	<div class="warning">{{loginC.warning}}</div>
 	
 	<form ng-submit="loginC.login()">
-		<input type="mail" name="mail" placeholder="e-mail eingeben" ng-model="loginC.mail">
-		<input type="password" name="password" placeholder="Passwort eingeben" ng-model="loginC.password">
-		<input type="submit" value="Login">
+		<input type="mail" name="mail" data-i18n-attr="{placeholder: 'common.enter_mail'}" ng-model="loginC.mail">
+		<input type="password" name="password" data-i18n-attr="{placeholder: 'common.enter_password'}" ng-model="loginC.password">
+		<input type="submit" data-i18n-attr="{value: 'common.login'}">
 	</form>
-	<h3 class="title-line">Oder</h3>
+	<h3 class="title-line" i18n="common.or"></h3>
 </div>

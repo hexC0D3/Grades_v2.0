@@ -1,6 +1,30 @@
 {
-    "about"				:		"", /* About us */
-    "register"			:		"", /* Register */
-    "login"				:		"", /* Login */
-    ""					:		""
+    "about_us"						:		"Über uns",
+    "register"						:		"Registrieren",
+    "login"							:		"Login",
+    
+    "group"							:		"Gruppe",
+    "groups"						:		"Gruppen",
+    "add_group"						:		"Füge eine Gruppe hinzu",
+    
+    "grade"							:		"Note",
+    "grades"						:		"Noten",
+    
+    "excercise"						:		"Aufgabe",
+    "excercises"					:		"Aufgaben",
+    
+    "subject"						:		"Fach",
+    "subjects"						:		"Fächer",
+    
+    "welcome_back"					:		"Willkommen zurück!",
+    "create_account"				:		"Erstelle ein Account",
+    "get_started"					:		"Let's get started",
+    "or"							:		"Oder",
+    
+    
+    "enter_mail"					:		"E-Mail eingeben",
+    "enter_password"				:		"Passwort eingeben",
+    "enter_desired_password"		:		"Gewünschtes Passwort eingeben",
+    "confirm_password"				:		"Passwort bestätigen",
+    "enter_received_code"			:		"Erhaltenen Code eingeben"
 }

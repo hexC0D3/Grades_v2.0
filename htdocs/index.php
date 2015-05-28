@@ -34,8 +34,7 @@
 		
 		<script src="/res/js/angular-cookies.min.js" charset="utf-8"></script>
 		
-		<script src="/res/js/angular-sanitize.min.js" charset="utf-8">
-		</script>
+		<script src="/res/js/angular-sanitize.min.js" charset="utf-8"></script>
 		
 		<script src="/res/js/angular-localization.min.js" charset="utf-8"></script>
 		
@@ -50,14 +49,14 @@
 					<a href="#/"><h1>Grades</h1></a>
 					<nav ng-controller="NavigationController as navigation">
 						<ul class="nav-home" ng-show="navigation.isNavigation(0)">
-							<li><a href="/about" i18n="common.helloWorld">Über Uns</a></li>
-							<li><a href="/register">Registrieren</a></li>
-							<li><a href="/login">Login</a></li>
+							<li><a href="/about" i18n="common.about_us"></a></li>
+							<li><a href="/register" i18n="common.register"></a></li>
+							<li><a href="/login" i18n="common.login"></a></li>
 						</ul>
 						<ul class="nav-dashboard" ng-show="navigation.isNavigation(1)">
-							<li><a href="#">Gruppen</a></li>
-							<li><a href="#">Noten</a></li>
-							<li><a href="#">Aufgaben</a></li>
+							<li><a href="#" i18n="common.groups"></a></li>
+							<li><a href="#" i18n="common.grades">Noten</a></li>
+							<li><a href="#" i18n="common.excercises">Aufgaben</a></li>
 							<li><a href="#">{{app.user.username}}</a></li>
 						</ul>
 					</nav>

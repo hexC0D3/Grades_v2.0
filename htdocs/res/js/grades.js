@@ -43,7 +43,7 @@ var grades = angular.module('grades', ['ngRoute', 'noCAPTCHA', 'ngStorage', 'ngL
 
 grades
 	.value('localeConf', {
-		basePath: '/res/lang/',
+		basePath: '/res/lang',
 		defaultLocale: 'de-DE',
 		sharedDictionary: 'common',
 		fileExtension: '.lang.json',

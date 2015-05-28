@@ -1,23 +1,23 @@
 <div class="content" ng-controller="RegisterController as registerC">
-	<h1>Let's get started</h1>
-	<h2>Erstelle ein Konto:</h2>
+	<h1 i18n="common.get_started"></h1>
+	<h2 i18n="common.create_account"></h2>
 	
 	<div class="warning">{{registerC.warning}}</div>
 	
 	<form ng-submit="registerC.register()" ng-show="registerC.step == 0">
 		
-		<input type="mail" ng-model="registerC.mail" placeholder="e-mail eingeben">
+		<input type="mail" ng-model="registerC.mail" data-i18n-attr="{placeholder: 'common.enter_mail'}">
 		<no-captcha g-recaptcha-response="registerC.captcha" control="registerC"></no-captcha>
 		<div class="g-recaptcha" data-sitekey="6Le-hQITAAAAADiKBpBGQdALRYombGChKCjF23OP"></div>
-		<input type="submit" value="Registrieren">
+		<input type="submit" data-i18n-attr="{value: 'common.register'}">
 		
 	</form>
 	
 	<form ng-submit="registerC.confirm()" ng-show="registerC.step == 1">
 		
-		<input type="text" ng-model="registerC.code" placeholder="Den erhaltenen Code eingeben" maxlength="5">
-		<input type="password" ng-model="registerC.password" placeholder="Das gewünschte Passwort eingeben">
-		<input type="password" ng-model="registerC.password1" placeholder="Passwort bestätigen">
-		<input type="submit" value="Registrieren">
+		<input type="text" ng-model="registerC.code" data-i18n-attr="{placeholder: 'common.enter_received_code'}" maxlength="5">
+		<input type="password" ng-model="registerC.password" data-i18n-attr="{placeholder: 'common.enter_desired_password'}">
+		<input type="password" ng-model="registerC.password1" data-i18n-attr="{placeholder: 'common.confirm_password'}">
+		<input type="submit" data-i18n-attr="{value: 'common.register'}">
 	</form>
 </div>
