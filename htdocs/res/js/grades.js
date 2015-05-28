@@ -1,4 +1,13 @@
-function loading(state){
+
+/* Global Storage */
+
+if(typeof(Storage) === "undefined"){
+	alert("Your browser is too old! Upgrade it!");
+	throw new Error("Browser Version too old!");
+}
+
+
+function grades_loading(state){
 	if(state == true){
 		
 	}else{
@@ -6,9 +15,9 @@ function loading(state){
 	}
 }
 
-function validateAPIResponse(json){
+function grades_validateAPIResponse(json){
 	
-	loading(false);
+	grades_loading(false);
 	
 	if(json.errors.length == 0){
 		return true;
@@ -18,93 +27,121 @@ function validateAPIResponse(json){
 	}
 }
 
+function grades_add(){
+	
+}
+
 /* Angular */
 
-var grades = angular.module('grades', ['ngRoute', 'noCAPTCHA']);
+var grades = angular.module('grades', ['ngRoute', 'noCAPTCHA', 'ngStorage', 'ngLocalize']);
 
 /* App */
 
 /* Services */
 
-grades.factory('AppService', function() {
-  return {
-	  page_title : '',
-	  
-	  activeNavigation : 0,
-	  
-	  api_url : "http://grades.dev/api/v1",
-	  
-	  session_token : "",
-
-	  user : {
-		  'username' : "-"
-	  }
-  };
-});
-
 /* Config */
 
+grades
+	.value('localeConf', {
+		basePath: '/res/lang/',
+		defaultLocale: 'de-DE',
+		sharedDictionary: 'common',
+		fileExtension: '.lang.json',
+		persistSelection: true,
+		cookieName: 'COOKIE_LOCALE_LANG',
+		observableAttrs: new RegExp('^data-(?!ng-|i18n)'),
+		delimiter: '::'
+	})
+	.value('localeSupported', [
+		'de-DE',
+		'en-GB',
+		'fr-FR',
+		'it-IT'
+	])
+	.value('localeFallbacks', {
+		'de'		: 'de-DE',
+		'de-CH' 	: 'de-DE',
+	    'en'		: 'en-GB',
+	    'fr'		: 'fr-FR',
+	    'it'		: 'it-IT'
+	})
+;
 
-grades.config(['noCAPTCHAProvider', function (noCaptchaProvider) {
+
+
+grades.config(['noCAPTCHAProvider', '$httpProvider', '$routeProvider', '$locationProvider', function (noCaptchaProvider, $httpProvider, $routeProvider, $locationProvider) {
 	noCaptchaProvider.setSiteKey('6Le-hQITAAAAADiKBpBGQdALRYombGChKCjF23OP');
 	noCaptchaProvider.setTheme('light');
-}]);
-
-grades.config(function ($httpProvider) {
-    $httpProvider.defaults.transformRequest = function(data){
+	
+	$httpProvider.defaults.transformRequest = function(data){
         if (data === undefined) {
             return data;
         }
         return $.param(data);
     }
     $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded; charset=UTF-8';
-});
-
-grades.config(['$routeProvider', function($routeProvider) {
-		$routeProvider.
-		when('/about', {
-			templateUrl: 'res/html/about.html'
-		}).
-		when('/register', {
-			templateUrl: 'res/html/register.html'
-		}).
-		when('/login', {
-			templateUrl: 'res/html/login.html'
-		}).
-		when('/dashboard', {
-			templateUrl: 'res/html/dashboard.html'
+    
+    
+    $routeProvider.
+		when('/:name*', {
+			templateUrl: function(urlAttr){
+				return 'res/html/' + urlAttr.name + '.html';
+			}
 		}).
 		otherwise({
 			templateUrl: 'res/html/start.html'
 		});
-  }]);
+		
+	$locationProvider.html5Mode(true);
+		
+}]);
 
 /* Controllers */
 
-grades.controller("AppController", ['AppService', '$http', function(AppService, $http) {
+grades.controller("AppController", ['$http', '$sessionStorage', function($http, $sessionStorage) {
+	
+	$me = this;
+	
+	this.$storage = $sessionStorage;
+	
+	this.$storage.pageTitle			=		'-';
+	this.$storage.activeNavigation	=		0;
+	this.$storage.apiURL			=		'http://grades.dev/api/v1';
+	this.$storage.username			=		'-';
+	this.$storage.sessionToken		=		'-';
+	
 	
 	this.setTitle = function(title){
-		AppService.page_title = title;
+		$me.$storage.pageTitle = title;
 	};
 	
 	this.title = function(){
-		return "Grades" + (AppService.page_title == "" ? "" : " - "+AppService.page_title);
+		return "Grades" + ($me.$storage.pageTitle == "" ? "" : " - " + $me.$storage.pageTitle);
 	};
 	
 }]);
 
 /* Header */
 
-grades.controller("NavigationController", ['AppService', '$http', function(AppService, $http) {
+grades.controller("NavigationController", ['$http', '$sessionStorage', function($http, $sessionStorage) {
+	
+	$me = this;
+	
+	this.$storage = $sessionStorage;
 	
 	this.isNavigation = function (nav){
-		return nav == AppService.activeNavigation;
+		return nav == $me.$storage.activeNavigation;
 	};
 }]);
 
 /* Login */
 
-grades.controller("LoginController", ['AppService', '$http', '$location', function(AppService, $http, $location) {
+grades.controller("LoginController", ['$http', '$location', '$sessionStorage', function($http, $location, $sessionStorage) {
+	
+	$me = this;
+	
+	this.$storage = $sessionStorage;
+	
 	this.mail = "";
 	this.password = "";
 	
@@ -114,18 +151,18 @@ grades.controller("LoginController", ['AppService', '$http', '$location', functi
 		if(this.mail != ""){
 			if(this.password != ""){
 				
-				loading(true);
+				grades_loading(true);
 				
-				$http.post(AppService.api_url+"/user/"+this.mail+"/login", {password: this.password}).
+				$http.post($me.$storage.apiURL+"/user/"+this.mail+"/login", {password: this.password}).
 				
 				success(function(data, status, headers, config) {
 					
 					data = angular.fromJson(data);
 					
-					if(validateAPIResponse(data)){
-						AppService.session_token = data.session_token;
+					if(grades_validateAPIResponse(data)){
+						$me.$storage.sessionToken = data.sessionToken;
 						$location.path('/dashboard');
-						AppService.activeNavigation = 1;
+						$me.$storage.activeNavigation = 1;
 					}
 				});
 				
@@ -140,7 +177,12 @@ grades.controller("LoginController", ['AppService', '$http', '$location', functi
 
 /* Register */
 
-grades.controller("RegisterController", ['AppService', '$http', '$location', function(AppService, $http, $location) {
+grades.controller("RegisterController", ['$http', '$location', '$sessionStorage', function($http, $location, $sessionStorage) {
+	
+	$me = this;
+	
+	this.$storage = $sessionStorage;
+	
 	this.mail = "";
 	this.captcha = "";
 	this.warning = "";
@@ -156,13 +198,13 @@ grades.controller("RegisterController", ['AppService', '$http', '$location', fun
 		if(this.mail != ""){
 			if(this.captcha != "" && this.captcha != false && this.captcha != null){
 				
-				$http.post(AppService.api_url+"/user/", {mail: this.mail, captcha: this.captcha}).
+				$http.post($me.$storage.apiURL+"/user/", {mail: this.mail, captcha: this.captcha}).
 				
 				success(function(data, status, headers, config) {
 					
 					data = angular.fromJson(data);
 					
-					if(validateAPIResponse(data)){
+					if(grades_validateAPIResponse(data)){
 						
 						$me.step = 1;
 						
@@ -181,15 +223,15 @@ grades.controller("RegisterController", ['AppService', '$http', '$location', fun
 			if(this.code != ""){
 				if(this.password != ""){
 					if(this.password == this.password1){
-						$http.post(AppService.api_url+"/user/"+this.mail+"/verify", {code: this.code, password: this.password}).
+						$http.post($me.$storage.apiURL+"/user/"+this.mail+"/verify", {code: this.code, password: this.password}).
 					
 						success(function(data, status, headers, config) {
 							
 							data = angular.fromJson(data);
 							
-							if(validateAPIResponse(data)){
+							if(grades_validateAPIResponse(data)){
 								$location.path('/dashboard');
-								AppService.activeNavigation = 1;
+								$me.$storage.activeNavigation = 1;
 							}
 						});
 					}else{

@@ -42,7 +42,7 @@ function logInUser($mail, $password){
 			
 			global $JSON;
 			
-			$JSON['session_token']=$token;
+			$JSON['sessionToken']=$token;
 			
 			return true;
 		}else{

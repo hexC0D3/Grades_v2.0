@@ -18,13 +18,21 @@
 	  
 		<title>{{app.title()}}</title>
 		
+		<base href="/">
+		
 		<link rel="stylesheet" href="res/css/grades.css" title="Grades CSS" type="text/css" media="all" charset="utf-8">
 		
 		<script src="res/js/modernizr.custom.js" charset="utf-8"></script>
 		<script src="res/js/jquery.min.js" charset="utf-8"></script>
 		<script src="res/js/angular.min.js" charset="utf-8"></script>
 		<script src="res/js/angular-route.min.js" charset="utf-8"></script>
-		<script src="res/js/angular-no-captcha.js"></script>
+		<script src="res/js/angular-no-captcha.js" charset="utf-8"></script>
+		
+		<script src="/res/js/angular-cookies.min.js" charset="utf-8"></script>
+		
+		
+		<script src="/res/js/ngStorage.min.js" charset="utf-8"></script>
+		<script src="/res/js/angular-localization.min.js" charset="utf-8"></script>
 		
 		<script src="res/js/grades.js" charset="utf-8"></script>
 	</head>
@@ -35,9 +43,9 @@
 					<a href="#/"><h1>Grades</h1></a>
 					<nav ng-controller="NavigationController as navigation">
 						<ul class="nav-home" ng-show="navigation.isNavigation(0)">
-							<li><a href="#/about">Über Uns</a></li>
-							<li><a href="#/register">Registrieren</a></li>
-							<li><a href="#/login">Login</a></li>
+							<li><a href="/about">Über Uns</a></li>
+							<li><a href="/register">Registrieren</a></li>
+							<li><a href="/login">Login</a></li>
 						</ul>
 						<ul class="nav-dashboard" ng-show="navigation.isNavigation(1)">
 							<li><a href="#">Gruppen</a></li>
@@ -55,10 +63,8 @@
 		</main>
 
 		<footer>
-				<script src="res/js/highcharts.js" charset="utf-8" async></script>
+			
 		</footer>
-		
-		<div class="loader">Loading...</div>
 		
 	</body>
 	
