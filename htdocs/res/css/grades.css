@@ -8,4 +8,1502 @@
  * Copyright 2011-2015 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
 >>>>>>> origin/master
+<<<<<<< HEAD
  *//*! normalize.css v3.0.2 | MIT License | git.io/normalize */@import url(https://fonts.googleapis.com/css?family=Roboto:400,300,100,500);html{font-family:sans-serif;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%}body{margin:0}article,aside,details,figcaption,figure,footer,header,hgroup,main,menu,nav,section,summary{display:block}audio,canvas,progress,video{display:inline-block;vertical-align:baseline}audio:not([controls]){display:none;height:0}[hidden],template{display:none}a{background-color:transparent}a:active,a:hover{outline:0}abbr[title]{border-bottom:1px dotted}b,strong{font-weight:700}dfn{font-style:italic}h1{margin:.67em 0}mark{color:#000;background:#ff0}sub,sup{position:relative;font-size:75%;line-height:0;vertical-align:baseline}sup{top:-.5em}sub{bottom:-.25em}img{border:0}svg:not(:root){overflow:hidden}figure{margin:1em 40px}hr{height:0;-webkit-box-sizing:content-box;-moz-box-sizing:content-box;box-sizing:content-box}pre{overflow:auto}code,kbd,pre,samp{font-family:monospace,monospace;font-size:1em}button,input,optgroup,select,textarea{margin:0;font:inherit;color:inherit}button{overflow:visible}button,select{text-transform:none}button,html input[type=button],input[type=reset],input[type=submit]{-webkit-appearance:button;cursor:pointer}button[disabled],html input[disabled]{cursor:default}button::-moz-focus-inner,input::-moz-focus-inner{padding:0;border:0}input[type=checkbox],input[type=radio]{-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;padding:0}input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-spin-button{height:auto}input[type=search]{-webkit-box-sizing:content-box;-moz-box-sizing:content-box;box-sizing:content-box;-webkit-appearance:textfield}input[type=search]::-webkit-search-cancel-button,input[type=search]::-webkit-search-decoration{-webkit-appearance:none}fieldset{padding:0.35em 0.625em 0.75em;margin:0 2px;border:1px solid silver}legend{padding:0;border:0}textarea{overflow:auto}optgroup{font-weight:700}table{border-spacing:0;border-collapse:collapse}td,th{padding:0}/*! Source: https://github.com/h5bp/html5-boilerplate/blob/master/src/css/main.css */*,:after,:before{-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box}html{font-size:10px;-webkit-tap-highlight-color:transparent}body{font-size:16px;line-height:1.4;color:#000;background-color:#fff}button,input,select,textarea{font-family:inherit;font-size:inherit;line-height:inherit}hr{margin-top:20px;margin-bottom:20px;border:0;border-top:1px solid #eee}[role=button]{cursor:pointer}.h1,.h2,.h3,.h4,.h5,.h6,h1,h2,h3,h4,h5,h6{font-family:inherit;font-weight:500;line-height:1.1;color:inherit}.h1 .small,.h1 small,.h2 .small,.h2 small,.h3 .small,.h3 small,.h4 .small,.h4 small,.h5 .small,.h5 small,.h6 .small,.h6 small,h1 .small,h1 small,h2 .small,h2 small,h3 .small,h3 small,h4 .small,h4 small,h5 .small,h5 small,h6 .small,h6 small{font-weight:400;line-height:1;color:#777}.h1,.h2,.h3,h1,h2,h3{margin-top:20px;margin-bottom:10px}.h1 .small,.h1 small,.h2 .small,.h2 small,.h3 .small,.h3 small,h1 .small,h1 small,h2 .small,h2 small,h3 .small,h3 small{font-size:65%}.h4,.h5,.h6,h4,h5,h6{margin-top:10px;margin-bottom:10px}.h4 .small,.h4 small,.h5 .small,.h5 small,.h6 .small,.h6 small,h4 .small,h4 small,h5 .small,h5 small,h6 .small,h6 small{font-size:75%}.h1,h1{font-size:36px}.h2,h2{font-size:30px}.h3,h3{font-size:24px}.h4,h4{font-size:18px}.h5,h5{font-size:14px}.h6,h6{font-size:12px}p{margin:0 0 10px}.lead{margin-bottom:20px;font-size:16px;font-weight:300;line-height:1.4}@media (min-width: 768px){.lead{font-size:21px}}.small,small{font-size:85%}.mark,mark{padding:.2em;background-color:#fcf8e3}.text-left{text-align:left}.text-right{text-align:right}.text-center{text-align:center}.text-justify{text-align:justify}.text-nowrap{white-space:nowrap}.text-lowercase{text-transform:lowercase}.text-uppercase{text-transform:uppercase}.text-capitalize{text-transform:capitalize}.container,.container-fluid{padding-right:15px;padding-left:15px;margin-right:auto;margin-left:auto}@media (min-width: 768px){.container{width:750px}}@media (min-width: 992px){.container{width:970px}}@media (min-width: 1200px){.container{width:1170px}}.row{margin-right:-15px;margin-left:-15px}.col-lg-1,.col-lg-10,.col-lg-11,.col-lg-12,.col-lg-2,.col-lg-3,.col-lg-4,.col-lg-5,.col-lg-6,.col-lg-7,.col-lg-8,.col-lg-9,.col-md-1,.col-md-10,.col-md-11,.col-md-12,.wX4,.col-md-2,.col-md-3,.wX1,.col-md-4,.col-md-5,.col-md-6,.wX2,.col-md-7,.col-md-8,.col-md-9,.wX3,.col-sm-1,.col-sm-10,.col-sm-11,.col-sm-12,.col-sm-2,.col-sm-3,.col-sm-4,.col-sm-5,.col-sm-6,.col-sm-7,.col-sm-8,.col-sm-9,.col-xs-1,.col-xs-10,.col-xs-11,.col-xs-12,.col-xs-2,.col-xs-3,.col-xs-4,.col-xs-5,.col-xs-6,.col-xs-7,.col-xs-8,.col-xs-9{position:relative;min-height:1px;padding-right:15px;padding-left:15px}.col-xs-1,.col-xs-10,.col-xs-11,.col-xs-12,.col-xs-2,.col-xs-3,.col-xs-4,.col-xs-5,.col-xs-6,.col-xs-7,.col-xs-8,.col-xs-9{float:left}.col-xs-12{width:100%}.col-xs-11{width:91.66666667%}.col-xs-10{width:83.33333333%}.col-xs-9{width:75%}.col-xs-8{width:66.66666667%}.col-xs-7{width:58.33333333%}.col-xs-6{width:50%}.col-xs-5{width:41.66666667%}.col-xs-4{width:33.33333333%}.col-xs-3{width:25%}.col-xs-2{width:16.66666667%}.col-xs-1{width:8.33333333%}.col-xs-pull-12{right:100%}.col-xs-pull-11{right:91.66666667%}.col-xs-pull-10{right:83.33333333%}.col-xs-pull-9{right:75%}.col-xs-pull-8{right:66.66666667%}.col-xs-pull-7{right:58.33333333%}.col-xs-pull-6{right:50%}.col-xs-pull-5{right:41.66666667%}.col-xs-pull-4{right:33.33333333%}.col-xs-pull-3{right:25%}.col-xs-pull-2{right:16.66666667%}.col-xs-pull-1{right:8.33333333%}.col-xs-pull-0{right:auto}.col-xs-push-12{left:100%}.col-xs-push-11{left:91.66666667%}.col-xs-push-10{left:83.33333333%}.col-xs-push-9{left:75%}.col-xs-push-8{left:66.66666667%}.col-xs-push-7{left:58.33333333%}.col-xs-push-6{left:50%}.col-xs-push-5{left:41.66666667%}.col-xs-push-4{left:33.33333333%}.col-xs-push-3{left:25%}.col-xs-push-2{left:16.66666667%}.col-xs-push-1{left:8.33333333%}.col-xs-push-0{left:auto}.col-xs-offset-12{margin-left:100%}.col-xs-offset-11{margin-left:91.66666667%}.col-xs-offset-10{margin-left:83.33333333%}.col-xs-offset-9{margin-left:75%}.col-xs-offset-8{margin-left:66.66666667%}.col-xs-offset-7{margin-left:58.33333333%}.col-xs-offset-6{margin-left:50%}.col-xs-offset-5{margin-left:41.66666667%}.col-xs-offset-4{margin-left:33.33333333%}.col-xs-offset-3{margin-left:25%}.col-xs-offset-2{margin-left:16.66666667%}.col-xs-offset-1{margin-left:8.33333333%}.col-xs-offset-0{margin-left:0}@media (min-width: 768px){.col-sm-1,.col-sm-10,.col-sm-11,.col-sm-12,.col-sm-2,.col-sm-3,.col-sm-4,.col-sm-5,.col-sm-6,.col-sm-7,.col-sm-8,.col-sm-9{float:left}.col-sm-12{width:100%}.col-sm-11{width:91.66666667%}.col-sm-10{width:83.33333333%}.col-sm-9{width:75%}.col-sm-8{width:66.66666667%}.col-sm-7{width:58.33333333%}.col-sm-6{width:50%}.col-sm-5{width:41.66666667%}.col-sm-4{width:33.33333333%}.col-sm-3{width:25%}.col-sm-2{width:16.66666667%}.col-sm-1{width:8.33333333%}.col-sm-pull-12{right:100%}.col-sm-pull-11{right:91.66666667%}.col-sm-pull-10{right:83.33333333%}.col-sm-pull-9{right:75%}.col-sm-pull-8{right:66.66666667%}.col-sm-pull-7{right:58.33333333%}.col-sm-pull-6{right:50%}.col-sm-pull-5{right:41.66666667%}.col-sm-pull-4{right:33.33333333%}.col-sm-pull-3{right:25%}.col-sm-pull-2{right:16.66666667%}.col-sm-pull-1{right:8.33333333%}.col-sm-pull-0{right:auto}.col-sm-push-12{left:100%}.col-sm-push-11{left:91.66666667%}.col-sm-push-10{left:83.33333333%}.col-sm-push-9{left:75%}.col-sm-push-8{left:66.66666667%}.col-sm-push-7{left:58.33333333%}.col-sm-push-6{left:50%}.col-sm-push-5{left:41.66666667%}.col-sm-push-4{left:33.33333333%}.col-sm-push-3{left:25%}.col-sm-push-2{left:16.66666667%}.col-sm-push-1{left:8.33333333%}.col-sm-push-0{left:auto}.col-sm-offset-12{margin-left:100%}.col-sm-offset-11{margin-left:91.66666667%}.col-sm-offset-10{margin-left:83.33333333%}.col-sm-offset-9{margin-left:75%}.col-sm-offset-8{margin-left:66.66666667%}.col-sm-offset-7{margin-left:58.33333333%}.col-sm-offset-6{margin-left:50%}.col-sm-offset-5{margin-left:41.66666667%}.col-sm-offset-4{margin-left:33.33333333%}.col-sm-offset-3{margin-left:25%}.col-sm-offset-2{margin-left:16.66666667%}.col-sm-offset-1{margin-left:8.33333333%}.col-sm-offset-0{margin-left:0}}@media (min-width: 992px){.col-md-1,.col-md-10,.col-md-11,.col-md-12,.wX4,.col-md-2,.col-md-3,.wX1,.col-md-4,.col-md-5,.col-md-6,.wX2,.col-md-7,.col-md-8,.col-md-9,.wX3{float:left}.col-md-12,.wX4{width:100%}.col-md-11{width:91.66666667%}.col-md-10{width:83.33333333%}.col-md-9,.wX3{width:75%}.col-md-8{width:66.66666667%}.col-md-7{width:58.33333333%}.col-md-6,.wX2{width:50%}.col-md-5{width:41.66666667%}.col-md-4{width:33.33333333%}.col-md-3,.wX1{width:25%}.col-md-2{width:16.66666667%}.col-md-1{width:8.33333333%}.col-md-pull-12{right:100%}.col-md-pull-11{right:91.66666667%}.col-md-pull-10{right:83.33333333%}.col-md-pull-9{right:75%}.col-md-pull-8{right:66.66666667%}.col-md-pull-7{right:58.33333333%}.col-md-pull-6{right:50%}.col-md-pull-5{right:41.66666667%}.col-md-pull-4{right:33.33333333%}.col-md-pull-3{right:25%}.col-md-pull-2{right:16.66666667%}.col-md-pull-1{right:8.33333333%}.col-md-pull-0{right:auto}.col-md-push-12{left:100%}.col-md-push-11{left:91.66666667%}.col-md-push-10{left:83.33333333%}.col-md-push-9{left:75%}.col-md-push-8{left:66.66666667%}.col-md-push-7{left:58.33333333%}.col-md-push-6{left:50%}.col-md-push-5{left:41.66666667%}.col-md-push-4{left:33.33333333%}.col-md-push-3{left:25%}.col-md-push-2{left:16.66666667%}.col-md-push-1{left:8.33333333%}.col-md-push-0{left:auto}.col-md-offset-12{margin-left:100%}.col-md-offset-11{margin-left:91.66666667%}.col-md-offset-10{margin-left:83.33333333%}.col-md-offset-9{margin-left:75%}.col-md-offset-8{margin-left:66.66666667%}.col-md-offset-7{margin-left:58.33333333%}.col-md-offset-6{margin-left:50%}.col-md-offset-5{margin-left:41.66666667%}.col-md-offset-4{margin-left:33.33333333%}.col-md-offset-3{margin-left:25%}.col-md-offset-2{margin-left:16.66666667%}.col-md-offset-1{margin-left:8.33333333%}.col-md-offset-0{margin-left:0}}@media (min-width: 1200px){.col-lg-1,.col-lg-10,.col-lg-11,.col-lg-12,.col-lg-2,.col-lg-3,.col-lg-4,.col-lg-5,.col-lg-6,.col-lg-7,.col-lg-8,.col-lg-9{float:left}.col-lg-12{width:100%}.col-lg-11{width:91.66666667%}.col-lg-10{width:83.33333333%}.col-lg-9{width:75%}.col-lg-8{width:66.66666667%}.col-lg-7{width:58.33333333%}.col-lg-6{width:50%}.col-lg-5{width:41.66666667%}.col-lg-4{width:33.33333333%}.col-lg-3{width:25%}.col-lg-2{width:16.66666667%}.col-lg-1{width:8.33333333%}.col-lg-pull-12{right:100%}.col-lg-pull-11{right:91.66666667%}.col-lg-pull-10{right:83.33333333%}.col-lg-pull-9{right:75%}.col-lg-pull-8{right:66.66666667%}.col-lg-pull-7{right:58.33333333%}.col-lg-pull-6{right:50%}.col-lg-pull-5{right:41.66666667%}.col-lg-pull-4{right:33.33333333%}.col-lg-pull-3{right:25%}.col-lg-pull-2{right:16.66666667%}.col-lg-pull-1{right:8.33333333%}.col-lg-pull-0{right:auto}.col-lg-push-12{left:100%}.col-lg-push-11{left:91.66666667%}.col-lg-push-10{left:83.33333333%}.col-lg-push-9{left:75%}.col-lg-push-8{left:66.66666667%}.col-lg-push-7{left:58.33333333%}.col-lg-push-6{left:50%}.col-lg-push-5{left:41.66666667%}.col-lg-push-4{left:33.33333333%}.col-lg-push-3{left:25%}.col-lg-push-2{left:16.66666667%}.col-lg-push-1{left:8.33333333%}.col-lg-push-0{left:auto}.col-lg-offset-12{margin-left:100%}.col-lg-offset-11{margin-left:91.66666667%}.col-lg-offset-10{margin-left:83.33333333%}.col-lg-offset-9{margin-left:75%}.col-lg-offset-8{margin-left:66.66666667%}.col-lg-offset-7{margin-left:58.33333333%}.col-lg-offset-6{margin-left:50%}.col-lg-offset-5{margin-left:41.66666667%}.col-lg-offset-4{margin-left:33.33333333%}.col-lg-offset-3{margin-left:25%}.col-lg-offset-2{margin-left:16.66666667%}.col-lg-offset-1{margin-left:8.33333333%}.col-lg-offset-0{margin-left:0}}.btn-group-vertical>.btn-group:after,.btn-group-vertical>.btn-group:before,.btn-toolbar:after,.btn-toolbar:before,.clearfix:after,.clearfix:before,.container-fluid:after,.container-fluid:before,.container:after,.container:before,.dl-horizontal dd:after,.dl-horizontal dd:before,.form-horizontal .form-group:after,.form-horizontal .form-group:before,.modal-footer:after,.modal-footer:before,.nav:after,.nav:before,.navbar-collapse:after,.navbar-collapse:before,.navbar-header:after,.navbar-header:before,.navbar:after,.navbar:before,.pager:after,.pager:before,.panel-body:after,.panel-body:before,.row:after,.row:before{display:table;content:" "}.btn-group-vertical>.btn-group:after,.btn-toolbar:after,.clearfix:after,.container-fluid:after,.container:after,.dl-horizontal dd:after,.form-horizontal .form-group:after,.modal-footer:after,.nav:after,.navbar-collapse:after,.navbar-header:after,.navbar:after,.pager:after,.panel-body:after,.row:after{clear:both}.center-block{display:block;margin-right:auto;margin-left:auto}.pull-right{float:right !important}.pull-left{float:left !important}.hide{display:none !important}.show{display:block !important}.invisible{visibility:hidden}.hidden{display:none !important}.affix{position:fixed}@-ms-viewport{width:device-width}.visible-lg,.visible-lg-block,.visible-lg-inline,.visible-lg-inline-block,.visible-md,.visible-md-block,.visible-md-inline,.visible-md-inline-block,.visible-sm,.visible-sm-block,.visible-sm-inline,.visible-sm-inline-block,.visible-xs,.visible-xs-block,.visible-xs-inline,.visible-xs-inline-block{display:none !important}@media (max-width: 767px){.visible-xs{display:block !important}table.visible-xs{display:table}tr.visible-xs{display:table-row !important}td.visible-xs,th.visible-xs{display:table-cell !important}}@media (max-width: 767px){.visible-xs-block{display:block !important}}@media (max-width: 767px){.visible-xs-inline{display:inline !important}}@media (max-width: 767px){.visible-xs-inline-block{display:inline-block !important}}@media (min-width: 768px) and (max-width: 991px){.visible-sm{display:block !important}table.visible-sm{display:table}tr.visible-sm{display:table-row !important}td.visible-sm,th.visible-sm{display:table-cell !important}}@media (min-width: 768px) and (max-width: 991px){.visible-sm-block{display:block !important}}@media (min-width: 768px) and (max-width: 991px){.visible-sm-inline{display:inline !important}}@media (min-width: 768px) and (max-width: 991px){.visible-sm-inline-block{display:inline-block !important}}@media (min-width: 992px) and (max-width: 1199px){.visible-md{display:block !important}table.visible-md{display:table}tr.visible-md{display:table-row !important}td.visible-md,th.visible-md{display:table-cell !important}}@media (min-width: 992px) and (max-width: 1199px){.visible-md-block{display:block !important}}@media (min-width: 992px) and (max-width: 1199px){.visible-md-inline{display:inline !important}}@media (min-width: 992px) and (max-width: 1199px){.visible-md-inline-block{display:inline-block !important}}@media (min-width: 1200px){.visible-lg{display:block !important}table.visible-lg{display:table}tr.visible-lg{display:table-row !important}td.visible-lg,th.visible-lg{display:table-cell !important}}@media (min-width: 1200px){.visible-lg-block{display:block !important}}@media (min-width: 1200px){.visible-lg-inline{display:inline !important}}@media (min-width: 1200px){.visible-lg-inline-block{display:inline-block !important}}@media (max-width: 767px){.hidden-xs{display:none !important}}@media (min-width: 768px) and (max-width: 991px){.hidden-sm{display:none !important}}@media (min-width: 992px) and (max-width: 1199px){.hidden-md{display:none !important}}@media (min-width: 1200px){.hidden-lg{display:none !important}}body,html{font-family:'Roboto', sans-serif;margin:0;padding:0}h1,h2,h3,h4,h5,h6{margin:0}h1,h2,h3{text-transform:uppercase}body>header{width:100%;height:300px;background-image:url("../img/bg.jpg");background-repeat:repeat;position:relative;z-index:1}body>header div.container{position:relative;height:300px;display:block}body>header div.container div.nav{position:absolute;left:15px;right:15px;bottom:230px;vertical-align:bottom}body>header div.container div.nav h1{margin:0;font-size:50px;font-weight:100;color:#fff;display:inline-block}body>header div.container div.nav nav{position:absolute;right:0;bottom:0}body>header div.container div.nav nav ul{list-style:none;margin:0}body>header div.container div.nav nav ul li{display:inline;margin-left:10px}body>header div.container div.nav nav ul li a{font-size:16px;font-weight:100;text-decoration:none;text-transform:uppercase;color:#fff}body>main{margin-top:-200px;position:relative;z-index:2}.shadow,.content,.widget{box-shadow:0px 2px 8px 0px rgba(0,0,0,0.35)}.content{background-color:#fff;min-height:300px;padding:10px}.row{margin:0}.widgets{width:101%;margin-left:-1%}.widget{background-color:white;margin-bottom:1%}.widget .content{position:absolute;top:0;left:0;bottom:0;right:0}.widget::before{content:"";display:block;padding-top:100%}.wX2{width:49%;margin-left:1%}.wX1{width:24%;margin-left:1%}.wX3{width:74%;margin-left:1%}.wX4{width:99%;margin-left:1%}.wY2::before{content:"";display:block;padding-top:200%}.wY1-5::before{content:"";display:block;padding-top:148%}.wY0-75::before{content:"";display:block;padding-top:75%}.wY0-5::before{content:"";display:block;padding-top:50%}
+=======
+ */
+/*! normalize.css v3.0.2 | MIT License | git.io/normalize */
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+html {
+  font-family: sans-serif;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+body {
+  margin: 0; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary {
+  display: block; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+audio, canvas, progress, video {
+  display: inline-block;
+  vertical-align: baseline; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+audio:not([controls]) {
+  display: none;
+  height: 0; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+[hidden], template {
+  display: none; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+a {
+  background-color: transparent; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+a:active, a:hover {
+  outline: 0; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+abbr[title] {
+  border-bottom: 1px dotted; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+b, strong {
+  font-weight: 700; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+dfn {
+  font-style: italic; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+h1 {
+  margin: .67em 0; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+mark {
+  color: #000;
+  background: #ff0; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+sub, sup {
+  position: relative;
+  font-size: 75%;
+  line-height: 0;
+  vertical-align: baseline; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+sup {
+  top: -.5em; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+sub {
+  bottom: -.25em; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+img {
+  border: 0; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+svg:not(:root) {
+  overflow: hidden; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+figure {
+  margin: 1em 40px; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+hr {
+  height: 0;
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+pre {
+  overflow: auto; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+code, kbd, pre, samp {
+  font-family: monospace,monospace;
+  font-size: 1em; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+button, input, optgroup, select, textarea {
+  margin: 0;
+  font: inherit;
+  color: inherit; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+button {
+  overflow: visible; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+button, select {
+  text-transform: none; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+button, html input[type=button], input[type=reset], input[type=submit] {
+  -webkit-appearance: button;
+  cursor: pointer; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+button[disabled], html input[disabled] {
+  cursor: default; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+button::-moz-focus-inner, input::-moz-focus-inner {
+  padding: 0;
+  border: 0; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+input[type=checkbox], input[type=radio] {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  padding: 0; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button {
+  height: auto; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+input[type=search] {
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+  -webkit-appearance: textfield; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+input[type=search]::-webkit-search-cancel-button, input[type=search]::-webkit-search-decoration {
+  -webkit-appearance: none; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+fieldset {
+  padding: .35em .625em .75em;
+  margin: 0 2px;
+  border: 1px solid silver; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+legend {
+  padding: 0;
+  border: 0; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+textarea {
+  overflow: auto; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+optgroup {
+  font-weight: 700; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+table {
+  border-spacing: 0;
+  border-collapse: collapse; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+td, th {
+  padding: 0; }
+
+/*! Source: https://github.com/h5bp/html5-boilerplate/blob/master/src/css/main.css */
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+*, :after, :before {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+html {
+  font-size: 10px;
+  -webkit-tap-highlight-color: transparent; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+body {
+  font-size: 16px;
+  line-height: 1.4;
+  color: #000;
+  background-color: #fff; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+button, input, select, textarea {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+hr {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  border: 0;
+  border-top: 1px solid #eee; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+[role=button] {
+  cursor: pointer; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
+  font-family: inherit;
+  font-weight: 500;
+  line-height: 1.1;
+  color: inherit; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+.h1 .small, .h1 small, .h2 .small, .h2 small, .h3 .small, .h3 small, .h4 .small, .h4 small, .h5 .small, .h5 small, .h6 .small, .h6 small, h1 .small, h1 small, h2 .small, h2 small, h3 .small, h3 small, h4 .small, h4 small, h5 .small, h5 small, h6 .small, h6 small {
+  font-weight: 400;
+  line-height: 1;
+  color: #777; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+.h1, .h2, .h3, h1, h2, h3 {
+  margin-top: 20px;
+  margin-bottom: 10px; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+.h1 .small, .h1 small, .h2 .small, .h2 small, .h3 .small, .h3 small, h1 .small, h1 small, h2 .small, h2 small, h3 .small, h3 small {
+  font-size: 65%; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+.h4, .h5, .h6, h4, h5, h6 {
+  margin-top: 10px;
+  margin-bottom: 10px; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+.h4 .small, .h4 small, .h5 .small, .h5 small, .h6 .small, .h6 small, h4 .small, h4 small, h5 .small, h5 small, h6 .small, h6 small {
+  font-size: 75%; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+.h1, h1 {
+  font-size: 36px; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+.h2, h2 {
+  font-size: 30px; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+.h3, h3 {
+  font-size: 24px; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+.h4, h4 {
+  font-size: 18px; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+.h5, h5 {
+  font-size: 14px; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+.h6, h6 {
+  font-size: 12px; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+p {
+  margin: 0 0 10px; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+.lead {
+  margin-bottom: 20px;
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 1.4; }
+
+@media (min-width: 768px) {
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .lead {
+    font-size: 21px; } }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+.small, small {
+  font-size: 85%; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+.mark, mark {
+  padding: .2em;
+  background-color: #fcf8e3; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+.text-left {
+  text-align: left; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+.text-right {
+  text-align: right; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+.text-center {
+  text-align: center; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+.text-justify {
+  text-align: justify; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+.text-nowrap {
+  white-space: nowrap; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+.text-lowercase {
+  text-transform: lowercase; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+.text-uppercase {
+  text-transform: uppercase; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+.text-capitalize {
+  text-transform: capitalize; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+.container, .container-fluid {
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto; }
+
+@media (min-width: 768px) {
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .container {
+    width: 750px; } }
+
+@media (min-width: 992px) {
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .container {
+    width: 970px; } }
+
+@media (min-width: 1200px) {
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .container {
+    width: 1170px; } }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+.row {
+  margin-right: -15px;
+  margin-left: -15px; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+.col-lg-1, .col-lg-10, .col-lg-11, .col-lg-12, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-md-1, .col-md-10, .col-md-11, .col-md-12, .wX4, .col-md-2, .col-md-3, .wX1, .col-md-4, .col-md-5, .col-md-6, .wX2, .col-md-7, .col-md-8, .col-md-9, .wX3, .col-sm-1, .col-sm-10, .col-sm-11, .col-sm-12, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-xs-1, .col-xs-10, .col-xs-11, .col-xs-12, .col-xs-2, .col-xs-3, .col-xs-4, .col-xs-5, .col-xs-6, .col-xs-7, .col-xs-8, .col-xs-9 {
+  position: relative;
+  min-height: 1px;
+  padding-right: 15px;
+  padding-left: 15px; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+.col-xs-1, .col-xs-10, .col-xs-11, .col-xs-12, .col-xs-2, .col-xs-3, .col-xs-4, .col-xs-5, .col-xs-6, .col-xs-7, .col-xs-8, .col-xs-9 {
+  float: left; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+.col-xs-12 {
+  width: 100%; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+.col-xs-11 {
+  width: 91.66667%; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+.col-xs-10 {
+  width: 83.33333%; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+.col-xs-9 {
+  width: 75%; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+.col-xs-8 {
+  width: 66.66667%; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+.col-xs-7 {
+  width: 58.33333%; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+.col-xs-6 {
+  width: 50%; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+.col-xs-5 {
+  width: 41.66667%; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+.col-xs-4 {
+  width: 33.33333%; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+.col-xs-3 {
+  width: 25%; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+.col-xs-2 {
+  width: 16.66667%; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+.col-xs-1 {
+  width: 8.33333%; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+.col-xs-pull-12 {
+  right: 100%; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+.col-xs-pull-11 {
+  right: 91.66667%; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+.col-xs-pull-10 {
+  right: 83.33333%; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+.col-xs-pull-9 {
+  right: 75%; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+.col-xs-pull-8 {
+  right: 66.66667%; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+.col-xs-pull-7 {
+  right: 58.33333%; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+.col-xs-pull-6 {
+  right: 50%; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+.col-xs-pull-5 {
+  right: 41.66667%; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+.col-xs-pull-4 {
+  right: 33.33333%; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+.col-xs-pull-3 {
+  right: 25%; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+.col-xs-pull-2 {
+  right: 16.66667%; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+.col-xs-pull-1 {
+  right: 8.33333%; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+.col-xs-pull-0 {
+  right: auto; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+.col-xs-push-12 {
+  left: 100%; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+.col-xs-push-11 {
+  left: 91.66667%; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+.col-xs-push-10 {
+  left: 83.33333%; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+.col-xs-push-9 {
+  left: 75%; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+.col-xs-push-8 {
+  left: 66.66667%; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+.col-xs-push-7 {
+  left: 58.33333%; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+.col-xs-push-6 {
+  left: 50%; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+.col-xs-push-5 {
+  left: 41.66667%; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+.col-xs-push-4 {
+  left: 33.33333%; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+.col-xs-push-3 {
+  left: 25%; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+.col-xs-push-2 {
+  left: 16.66667%; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+.col-xs-push-1 {
+  left: 8.33333%; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+.col-xs-push-0 {
+  left: auto; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+.col-xs-offset-12 {
+  margin-left: 100%; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+.col-xs-offset-11 {
+  margin-left: 91.66667%; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+.col-xs-offset-10 {
+  margin-left: 83.33333%; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+.col-xs-offset-9 {
+  margin-left: 75%; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+.col-xs-offset-8 {
+  margin-left: 66.66667%; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+.col-xs-offset-7 {
+  margin-left: 58.33333%; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+.col-xs-offset-6 {
+  margin-left: 50%; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+.col-xs-offset-5 {
+  margin-left: 41.66667%; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+.col-xs-offset-4 {
+  margin-left: 33.33333%; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+.col-xs-offset-3 {
+  margin-left: 25%; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+.col-xs-offset-2 {
+  margin-left: 16.66667%; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+.col-xs-offset-1 {
+  margin-left: 8.33333%; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+.col-xs-offset-0 {
+  margin-left: 0; }
+
+@media (min-width: 768px) {
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-sm-1, .col-sm-10, .col-sm-11, .col-sm-12, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9 {
+    float: left; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-sm-12 {
+    width: 100%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-sm-11 {
+    width: 91.66667%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-sm-10 {
+    width: 83.33333%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-sm-9 {
+    width: 75%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-sm-8 {
+    width: 66.66667%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-sm-7 {
+    width: 58.33333%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-sm-6 {
+    width: 50%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-sm-5 {
+    width: 41.66667%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-sm-4 {
+    width: 33.33333%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-sm-3 {
+    width: 25%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-sm-2 {
+    width: 16.66667%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-sm-1 {
+    width: 8.33333%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-sm-pull-12 {
+    right: 100%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-sm-pull-11 {
+    right: 91.66667%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-sm-pull-10 {
+    right: 83.33333%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-sm-pull-9 {
+    right: 75%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-sm-pull-8 {
+    right: 66.66667%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-sm-pull-7 {
+    right: 58.33333%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-sm-pull-6 {
+    right: 50%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-sm-pull-5 {
+    right: 41.66667%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-sm-pull-4 {
+    right: 33.33333%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-sm-pull-3 {
+    right: 25%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-sm-pull-2 {
+    right: 16.66667%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-sm-pull-1 {
+    right: 8.33333%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-sm-pull-0 {
+    right: auto; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-sm-push-12 {
+    left: 100%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-sm-push-11 {
+    left: 91.66667%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-sm-push-10 {
+    left: 83.33333%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-sm-push-9 {
+    left: 75%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-sm-push-8 {
+    left: 66.66667%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-sm-push-7 {
+    left: 58.33333%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-sm-push-6 {
+    left: 50%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-sm-push-5 {
+    left: 41.66667%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-sm-push-4 {
+    left: 33.33333%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-sm-push-3 {
+    left: 25%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-sm-push-2 {
+    left: 16.66667%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-sm-push-1 {
+    left: 8.33333%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-sm-push-0 {
+    left: auto; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-sm-offset-12 {
+    margin-left: 100%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-sm-offset-11 {
+    margin-left: 91.66667%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-sm-offset-10 {
+    margin-left: 83.33333%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-sm-offset-9 {
+    margin-left: 75%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-sm-offset-8 {
+    margin-left: 66.66667%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-sm-offset-7 {
+    margin-left: 58.33333%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-sm-offset-6 {
+    margin-left: 50%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-sm-offset-5 {
+    margin-left: 41.66667%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-sm-offset-4 {
+    margin-left: 33.33333%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-sm-offset-3 {
+    margin-left: 25%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-sm-offset-2 {
+    margin-left: 16.66667%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-sm-offset-1 {
+    margin-left: 8.33333%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-sm-offset-0 {
+    margin-left: 0; } }
+
+@media (min-width: 992px) {
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-md-1, .col-md-10, .col-md-11, .col-md-12, .wX4, .col-md-2, .col-md-3, .wX1, .col-md-4, .col-md-5, .col-md-6, .wX2, .col-md-7, .col-md-8, .col-md-9, .wX3 {
+    float: left; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-md-12, .wX4 {
+    width: 100%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-md-11 {
+    width: 91.66667%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-md-10 {
+    width: 83.33333%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-md-9, .wX3 {
+    width: 75%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-md-8 {
+    width: 66.66667%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-md-7 {
+    width: 58.33333%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-md-6, .wX2 {
+    width: 50%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-md-5 {
+    width: 41.66667%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-md-4 {
+    width: 33.33333%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-md-3, .wX1 {
+    width: 25%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-md-2 {
+    width: 16.66667%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-md-1 {
+    width: 8.33333%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-md-pull-12 {
+    right: 100%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-md-pull-11 {
+    right: 91.66667%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-md-pull-10 {
+    right: 83.33333%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-md-pull-9 {
+    right: 75%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-md-pull-8 {
+    right: 66.66667%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-md-pull-7 {
+    right: 58.33333%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-md-pull-6 {
+    right: 50%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-md-pull-5 {
+    right: 41.66667%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-md-pull-4 {
+    right: 33.33333%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-md-pull-3 {
+    right: 25%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-md-pull-2 {
+    right: 16.66667%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-md-pull-1 {
+    right: 8.33333%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-md-pull-0 {
+    right: auto; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-md-push-12 {
+    left: 100%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-md-push-11 {
+    left: 91.66667%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-md-push-10 {
+    left: 83.33333%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-md-push-9 {
+    left: 75%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-md-push-8 {
+    left: 66.66667%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-md-push-7 {
+    left: 58.33333%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-md-push-6 {
+    left: 50%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-md-push-5 {
+    left: 41.66667%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-md-push-4 {
+    left: 33.33333%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-md-push-3 {
+    left: 25%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-md-push-2 {
+    left: 16.66667%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-md-push-1 {
+    left: 8.33333%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-md-push-0 {
+    left: auto; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-md-offset-12 {
+    margin-left: 100%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-md-offset-11 {
+    margin-left: 91.66667%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-md-offset-10 {
+    margin-left: 83.33333%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-md-offset-9 {
+    margin-left: 75%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-md-offset-8 {
+    margin-left: 66.66667%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-md-offset-7 {
+    margin-left: 58.33333%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-md-offset-6 {
+    margin-left: 50%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-md-offset-5 {
+    margin-left: 41.66667%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-md-offset-4 {
+    margin-left: 33.33333%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-md-offset-3 {
+    margin-left: 25%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-md-offset-2 {
+    margin-left: 16.66667%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-md-offset-1 {
+    margin-left: 8.33333%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-md-offset-0 {
+    margin-left: 0; } }
+
+@media (min-width: 1200px) {
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-lg-1, .col-lg-10, .col-lg-11, .col-lg-12, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9 {
+    float: left; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-lg-12 {
+    width: 100%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-lg-11 {
+    width: 91.66667%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-lg-10 {
+    width: 83.33333%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-lg-9 {
+    width: 75%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-lg-8 {
+    width: 66.66667%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-lg-7 {
+    width: 58.33333%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-lg-6 {
+    width: 50%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-lg-5 {
+    width: 41.66667%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-lg-4 {
+    width: 33.33333%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-lg-3 {
+    width: 25%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-lg-2 {
+    width: 16.66667%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-lg-1 {
+    width: 8.33333%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-lg-pull-12 {
+    right: 100%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-lg-pull-11 {
+    right: 91.66667%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-lg-pull-10 {
+    right: 83.33333%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-lg-pull-9 {
+    right: 75%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-lg-pull-8 {
+    right: 66.66667%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-lg-pull-7 {
+    right: 58.33333%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-lg-pull-6 {
+    right: 50%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-lg-pull-5 {
+    right: 41.66667%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-lg-pull-4 {
+    right: 33.33333%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-lg-pull-3 {
+    right: 25%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-lg-pull-2 {
+    right: 16.66667%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-lg-pull-1 {
+    right: 8.33333%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-lg-pull-0 {
+    right: auto; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-lg-push-12 {
+    left: 100%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-lg-push-11 {
+    left: 91.66667%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-lg-push-10 {
+    left: 83.33333%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-lg-push-9 {
+    left: 75%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-lg-push-8 {
+    left: 66.66667%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-lg-push-7 {
+    left: 58.33333%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-lg-push-6 {
+    left: 50%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-lg-push-5 {
+    left: 41.66667%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-lg-push-4 {
+    left: 33.33333%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-lg-push-3 {
+    left: 25%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-lg-push-2 {
+    left: 16.66667%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-lg-push-1 {
+    left: 8.33333%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-lg-push-0 {
+    left: auto; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-lg-offset-12 {
+    margin-left: 100%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-lg-offset-11 {
+    margin-left: 91.66667%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-lg-offset-10 {
+    margin-left: 83.33333%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-lg-offset-9 {
+    margin-left: 75%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-lg-offset-8 {
+    margin-left: 66.66667%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-lg-offset-7 {
+    margin-left: 58.33333%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-lg-offset-6 {
+    margin-left: 50%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-lg-offset-5 {
+    margin-left: 41.66667%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-lg-offset-4 {
+    margin-left: 33.33333%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-lg-offset-3 {
+    margin-left: 25%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-lg-offset-2 {
+    margin-left: 16.66667%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-lg-offset-1 {
+    margin-left: 8.33333%; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .col-lg-offset-0 {
+    margin-left: 0; } }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+.btn-group-vertical > .btn-group:after, .btn-group-vertical > .btn-group:before, .btn-toolbar:after, .btn-toolbar:before, .clearfix:after, .clearfix:before, .container-fluid:after, .container-fluid:before, .container:after, .container:before, .dl-horizontal dd:after, .dl-horizontal dd:before, .form-horizontal .form-group:after, .form-horizontal .form-group:before, .modal-footer:after, .modal-footer:before, .nav:after, .nav:before, .navbar-collapse:after, .navbar-collapse:before, .navbar-header:after, .navbar-header:before, .navbar:after, .navbar:before, .pager:after, .pager:before, .panel-body:after, .panel-body:before, .row:after, .row:before {
+  display: table;
+  content: " "; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+.btn-group-vertical > .btn-group:after, .btn-toolbar:after, .clearfix:after, .container-fluid:after, .container:after, .dl-horizontal dd:after, .form-horizontal .form-group:after, .modal-footer:after, .nav:after, .navbar-collapse:after, .navbar-header:after, .navbar:after, .pager:after, .panel-body:after, .row:after {
+  clear: both; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+.center-block {
+  display: block;
+  margin-right: auto;
+  margin-left: auto; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+.pull-right {
+  float: right !important; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+.pull-left {
+  float: left !important; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+.hide {
+  display: none !important; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+.show {
+  display: block !important; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+.invisible {
+  visibility: hidden; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+.hidden {
+  display: none !important; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+.affix {
+  position: fixed; }
+
+@-ms-viewport {
+  width: device-width; }
+
+/* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+.visible-lg, .visible-lg-block, .visible-lg-inline, .visible-lg-inline-block, .visible-md, .visible-md-block, .visible-md-inline, .visible-md-inline-block, .visible-sm, .visible-sm-block, .visible-sm-inline, .visible-sm-inline-block, .visible-xs, .visible-xs-block, .visible-xs-inline, .visible-xs-inline-block {
+  display: none !important; }
+
+@media (max-width: 767px) {
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .visible-xs {
+    display: block !important; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  table.visible-xs {
+    display: table; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  tr.visible-xs {
+    display: table-row !important; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  td.visible-xs, th.visible-xs {
+    display: table-cell !important; } }
+
+@media (max-width: 767px) {
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .visible-xs-block {
+    display: block !important; } }
+
+@media (max-width: 767px) {
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .visible-xs-inline {
+    display: inline !important; } }
+
+@media (max-width: 767px) {
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .visible-xs-inline-block {
+    display: inline-block !important; } }
+
+@media (min-width: 768px) and (max-width: 991px) {
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .visible-sm {
+    display: block !important; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  table.visible-sm {
+    display: table; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  tr.visible-sm {
+    display: table-row !important; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  td.visible-sm, th.visible-sm {
+    display: table-cell !important; } }
+
+@media (min-width: 768px) and (max-width: 991px) {
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .visible-sm-block {
+    display: block !important; } }
+
+@media (min-width: 768px) and (max-width: 991px) {
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .visible-sm-inline {
+    display: inline !important; } }
+
+@media (min-width: 768px) and (max-width: 991px) {
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .visible-sm-inline-block {
+    display: inline-block !important; } }
+
+@media (min-width: 992px) and (max-width: 1199px) {
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .visible-md {
+    display: block !important; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  table.visible-md {
+    display: table; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  tr.visible-md {
+    display: table-row !important; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  td.visible-md, th.visible-md {
+    display: table-cell !important; } }
+
+@media (min-width: 992px) and (max-width: 1199px) {
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .visible-md-block {
+    display: block !important; } }
+
+@media (min-width: 992px) and (max-width: 1199px) {
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .visible-md-inline {
+    display: inline !important; } }
+
+@media (min-width: 992px) and (max-width: 1199px) {
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .visible-md-inline-block {
+    display: inline-block !important; } }
+
+@media (min-width: 1200px) {
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .visible-lg {
+    display: block !important; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  table.visible-lg {
+    display: table; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  tr.visible-lg {
+    display: table-row !important; }
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  td.visible-lg, th.visible-lg {
+    display: table-cell !important; } }
+
+@media (min-width: 1200px) {
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .visible-lg-block {
+    display: block !important; } }
+
+@media (min-width: 1200px) {
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .visible-lg-inline {
+    display: inline !important; } }
+
+@media (min-width: 1200px) {
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .visible-lg-inline-block {
+    display: inline-block !important; } }
+
+@media (max-width: 767px) {
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .hidden-xs {
+    display: none !important; } }
+
+@media (min-width: 768px) and (max-width: 991px) {
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .hidden-sm {
+    display: none !important; } }
+
+@media (min-width: 992px) and (max-width: 1199px) {
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .hidden-md {
+    display: none !important; } }
+
+@media (min-width: 1200px) {
+  /* line 11, E:/github/Grades_v2.0/htdocs/res/css/_bootstrap.custom.scss */
+  .hidden-lg {
+    display: none !important; } }
+
+/* line 57, E:/github/Grades_v2.0/htdocs/res/css/grades.scss */
+body, html {
+  font-family: 'Roboto', sans-serif;
+  margin: 0;
+  padding: 0; }
+
+/* line 64, E:/github/Grades_v2.0/htdocs/res/css/grades.scss */
+h1, h2, h3, h4, h5, h6 {
+  margin: 0; }
+
+/* line 67, E:/github/Grades_v2.0/htdocs/res/css/grades.scss */
+h1, h2, h3 {
+  text-transform: uppercase; }
+
+/* line 70, E:/github/Grades_v2.0/htdocs/res/css/grades.scss */
+h1 {
+  font-family: Roboto;
+  font-size: 50px;
+  font-weight: 300; }
+
+/* line 77, E:/github/Grades_v2.0/htdocs/res/css/grades.scss */
+body > header {
+  width: 100%;
+  height: 300px;
+  background-image: url("../img/bg.jpg");
+  background-repeat: repeat;
+  position: relative;
+  z-index: 1; }
+  /* line 87, E:/github/Grades_v2.0/htdocs/res/css/grades.scss */
+  body > header div.container {
+    position: relative;
+    height: 300px;
+    display: block; }
+    /* line 93, E:/github/Grades_v2.0/htdocs/res/css/grades.scss */
+    body > header div.container div.nav {
+      position: absolute;
+      left: 15px;
+      right: 15px;
+      bottom: 230px;
+      vertical-align: bottom; }
+      /* line 101, E:/github/Grades_v2.0/htdocs/res/css/grades.scss */
+      body > header div.container div.nav h1 {
+        margin: 0;
+        font-size: 50px;
+        font-weight: 100;
+        color: #fff;
+        display: inline-block; }
+      /* line 111, E:/github/Grades_v2.0/htdocs/res/css/grades.scss */
+      body > header div.container div.nav nav {
+        position: absolute;
+        right: 0;
+        bottom: 0; }
+        /* line 116, E:/github/Grades_v2.0/htdocs/res/css/grades.scss */
+        body > header div.container div.nav nav ul {
+          list-style: none;
+          margin: 0; }
+          /* line 120, E:/github/Grades_v2.0/htdocs/res/css/grades.scss */
+          body > header div.container div.nav nav ul li {
+            display: inline;
+            margin-left: 10px; }
+            /* line 124, E:/github/Grades_v2.0/htdocs/res/css/grades.scss */
+            body > header div.container div.nav nav ul li a {
+              font-size: 16px;
+              font-weight: 100;
+              text-decoration: none;
+              text-transform: uppercase;
+              color: #fff; }
+
+/* line 139, E:/github/Grades_v2.0/htdocs/res/css/grades.scss */
+body > main {
+  margin-top: -200px;
+  position: relative;
+  z-index: 2; }
+
+/* line 151, E:/github/Grades_v2.0/htdocs/res/css/grades.scss */
+.shadow, .content, .widget {
+  box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, 0.35); }
+
+/* line 155, E:/github/Grades_v2.0/htdocs/res/css/grades.scss */
+.content {
+  background-color: #fff;
+  min-height: 300px;
+  padding: 10px; }
+
+/* line 164, E:/github/Grades_v2.0/htdocs/res/css/grades.scss */
+.row {
+  margin: 0; }
+
+/* Widgets */
+/* Widget container */
+/* line 171, E:/github/Grades_v2.0/htdocs/res/css/grades.scss */
+.widgets {
+  width: 101%;
+  margin-left: -1%; }
+
+/* general */
+/* line 176, E:/github/Grades_v2.0/htdocs/res/css/grades.scss */
+.widget {
+  background-color: white;
+  margin-bottom: 1%; }
+
+/* content */
+/* line 184, E:/github/Grades_v2.0/htdocs/res/css/grades.scss */
+.widget .content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0; }
+
+/* widget width */
+/* line 195, E:/github/Grades_v2.0/htdocs/res/css/grades.scss */
+.widget::before {
+  content: "";
+  display: block;
+  padding-top: 100%; }
+
+/* line 201, E:/github/Grades_v2.0/htdocs/res/css/grades.scss */
+.wX2 {
+  width: 49%;
+  margin-left: 1%; }
+
+/* line 206, E:/github/Grades_v2.0/htdocs/res/css/grades.scss */
+.wX1 {
+  width: 24%;
+  margin-left: 1%; }
+
+/* line 211, E:/github/Grades_v2.0/htdocs/res/css/grades.scss */
+.wX3 {
+  width: 74%;
+  margin-left: 1%; }
+
+/* line 216, E:/github/Grades_v2.0/htdocs/res/css/grades.scss */
+.wX4 {
+  width: 99%;
+  margin-left: 1%; }
+
+/* widget aspecet ratio */
+/* line 224, E:/github/Grades_v2.0/htdocs/res/css/grades.scss */
+.wY2::before {
+  content: "";
+  display: block;
+  padding-top: 200%; }
+
+/* line 230, E:/github/Grades_v2.0/htdocs/res/css/grades.scss */
+.wY1-5::before {
+  content: "";
+  display: block;
+  padding-top: 148%; }
+
+/* line 236, E:/github/Grades_v2.0/htdocs/res/css/grades.scss */
+.wY0-75::before {
+  content: "";
+  display: block;
+  padding-top: 75%; }
+
+/* line 242, E:/github/Grades_v2.0/htdocs/res/css/grades.scss */
+.wY0-5::before {
+  content: "";
+  display: block;
+  padding-top: 50%; }
+
+/* Third Party */
+/* line 250, E:/github/Grades_v2.0/htdocs/res/css/grades.scss */
+.loader {
+  margin: 6em auto;
+  font-size: 10px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  text-indent: -9999em;
+  border-top: 1.1em solid rgba(255, 255, 255, 0.2);
+  border-right: 1.1em solid rgba(255, 255, 255, 0.2);
+  border-bottom: 1.1em solid rgba(255, 255, 255, 0.2);
+  border-left: 1.1em solid #ffffff;
+  -webkit-transform: translateZ(0);
+  -moz-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-animation: animateSpinner 1.1s linear 0s infinite normal;
+  -webkit-animation-fill-mode: forwards;
+  -moz-animation: animateSpinner 1.1s linear 0s infinite normal;
+  -moz-animation-fill-mode: forwards;
+  -ms-animation: animateSpinner 1.1s linear 0s infinite normal;
+  -ms-animation-fill-mode: forwards;
+  -o-animation: animateSpinner 1.1s linear 0s infinite normal;
+  -o-animation-fill-mode: forwards;
+  animation: animateSpinner 1.1s linear 0s infinite normal;
+  animation-fill-mode: forwards;
+  z-index: 99; }
+
+/* line 266, E:/github/Grades_v2.0/htdocs/res/css/grades.scss */
+.loader, .loader:after {
+  border-radius: 50%;
+  width: 10em;
+  height: 10em; }
+
+@-webkit-keyframes animateSpinner {
+  /* line 272, E:/github/Grades_v2.0/htdocs/res/css/grades.scss */
+  0% {
+    -webkit-transform: rotate(0);
+    -moz-transform: rotate(0);
+    -ms-transform: rotate(0);
+    transform: rotate(0); }
+
+  /* line 275, E:/github/Grades_v2.0/htdocs/res/css/grades.scss */
+  100% {
+    -webkit-transform: rotate(360);
+    -moz-transform: rotate(360);
+    -ms-transform: rotate(360);
+    transform: rotate(360); } }
+
+@-moz-keyframes animateSpinner {
+  /* line 272, E:/github/Grades_v2.0/htdocs/res/css/grades.scss */
+  0% {
+    -webkit-transform: rotate(0);
+    -moz-transform: rotate(0);
+    -ms-transform: rotate(0);
+    transform: rotate(0); }
+
+  /* line 275, E:/github/Grades_v2.0/htdocs/res/css/grades.scss */
+  100% {
+    -webkit-transform: rotate(360);
+    -moz-transform: rotate(360);
+    -ms-transform: rotate(360);
+    transform: rotate(360); } }
+
+@-o-keyframes animateSpinner {
+  /* line 272, E:/github/Grades_v2.0/htdocs/res/css/grades.scss */
+  0% {
+    -webkit-transform: rotate(0);
+    -moz-transform: rotate(0);
+    -ms-transform: rotate(0);
+    transform: rotate(0); }
+
+  /* line 275, E:/github/Grades_v2.0/htdocs/res/css/grades.scss */
+  100% {
+    -webkit-transform: rotate(360);
+    -moz-transform: rotate(360);
+    -ms-transform: rotate(360);
+    transform: rotate(360); } }
+
+@keyframes animateSpinner {
+  /* line 272, E:/github/Grades_v2.0/htdocs/res/css/grades.scss */
+  0% {
+    -webkit-transform: rotate(0);
+    -moz-transform: rotate(0);
+    -ms-transform: rotate(0);
+    transform: rotate(0); }
+
+  /* line 275, E:/github/Grades_v2.0/htdocs/res/css/grades.scss */
+  100% {
+    -webkit-transform: rotate(360);
+    -moz-transform: rotate(360);
+    -ms-transform: rotate(360);
+    transform: rotate(360); } }
+
+/* input fields */
+/* line 281, E:/github/Grades_v2.0/htdocs/res/css/grades.scss */
+.content form input {
+  width: 100%;
+  box-shadow: none;
+  border: none; }
+
+/*# sourceMappingURL=grades.css.map */
+>>>>>>> origin/master
