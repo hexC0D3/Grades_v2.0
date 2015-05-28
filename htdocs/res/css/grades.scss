@@ -243,10 +243,6 @@ body > footer{
 	content: "";
 	display: block;
 	padding-top: 50%;
-<<<<<<< HEAD
-}
-=======
-}
 
 
 /* Third Party */
@@ -280,5 +276,9 @@ body > footer{
 	}
 }
 
-
->>>>>>> origin/master
+/* input fields */
+.content form input{
+	width: 100%;
+	box-shadow: none;
+	border: none;
+}
