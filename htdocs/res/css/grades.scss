@@ -67,6 +67,12 @@ h1, h2, h3, h4, h5, h6{
 h1, h2, h3{
 	text-transform: uppercase;
 }
+h1{
+	font-family: Roboto;
+	font-size: 50px;
+	font-weight: 300;
+}
+
 
 body > header{
 	width: 100%;
@@ -270,3 +276,5 @@ body > footer{
 		@include transform(rotate(360));
 	}
 }
+
+
