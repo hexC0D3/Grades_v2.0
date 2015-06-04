@@ -1,6 +1,6 @@
 <?php
 	
-if(isset($_GET['id']){
+if(isset($_GET['id'])){
 	
 	$event_type_id = -1;
 	
@@ -9,7 +9,7 @@ if(isset($_GET['id']){
 		$event_type_id = $data[0]['type_id'];
 	}
 	
-	if(isset($_GET['action']){
+	if(isset($_GET['action'])){
 		if($_GET['action']=='settings'){
 			if($is_get){
 				//get all possible settings

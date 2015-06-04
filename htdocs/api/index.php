@@ -46,9 +46,11 @@
 	function getPseudoGetParams($key){
 		global $_PSEUDO_GET;
 		if(!isset($_PSEUDO_GET)){
-			$pseudo_get=explode("?", $_SERVER['REQUEST_URI']);
-			if(count($pseudo_get)>1){
-				parse_str($pseudo_get[1], $_PSEUDO_GET);
+			
+			$pseudo = explode("?", $_SERVER['REQUEST_URI']);
+			
+			if(count($pseudo) > 1){
+				parse_str($pseudo[1], $_PSEUDO_GET);
 			}
 		}
 		

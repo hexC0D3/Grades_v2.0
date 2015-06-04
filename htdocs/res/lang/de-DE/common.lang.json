@@ -6,9 +6,17 @@
     "group"							:		"Gruppe",
     "groups"						:		"Gruppen",
     "add_group"						:		"Füge eine Gruppe hinzu",
+    "invite_only"					:		"Um dieser Gruppe beitreten zu können, muss man eingeladen werden.",
+    "join"							:		"Beitreten",
+    "leave"							:		"Verlassen",
+    "unjoinable"					:		"Nicht beitretbar",
+    "group_no_action"				:		"Keine Aktionen verfügbar",
     
     "grade"							:		"Note",
     "grades"						:		"Noten",
+    
+    "event"							:		"Event",
+    "events"						:		"Evente",
     
     "excercise"						:		"Aufgabe",
     "excercises"					:		"Aufgaben",
@@ -21,10 +29,35 @@
     "get_started"					:		"Let's get started",
     "or"							:		"Oder",
     
+    "school"						:		"Schule",
+    
+    "class"							:		"Klasse",
+    
+    "sub_class"						:		"Teilklasse",
+    
+    "subject_related_class"			:		"Fach spezifische Klasse",
+    
+    "type"							:		"Typ",
+    
+    "capabilities"					:		"Rechte",
+    "rights"						:		"Rechte",
+    "no_rights"						:		"keine Rechte",
+    
+    "read"							:		"Lesen",
+    "write"							:		"Schreiben",
+    "manage_capabilities"			:		"Rechte bearbeiten",
+    "manage_options"				:		"Einstellungen bearbeiten",
+    "manage_members"				:		"Mitglieder verwalten",
+    "create_events"					:		"Events erstellen",
+    "create_subject"				:		"Fächer erstellen",
     
     "enter_mail"					:		"E-Mail eingeben",
     "enter_password"				:		"Passwort eingeben",
     "enter_desired_password"		:		"Gewünschtes Passwort eingeben",
     "confirm_password"				:		"Passwort bestätigen",
-    "enter_received_code"			:		"Erhaltenen Code eingeben"
+    "enter_received_code"			:		"Erhaltenen Code eingeben",
+    
+    "name"							:		"Name",
+    "create"						:		"Erstellen",
+    "no_parent"						:		"Nicht untergeordnet"
 }

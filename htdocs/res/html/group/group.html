@@ -1,0 +1,19 @@
+<div class="content" ng-controller="GroupController as groupC">
+	
+	<h2>{{groupC.name}}</h2>
+	
+	<h3><span i18n="common.type"></span>:</h3><span class="type" i18n="common.{{groupC.groupType}}"></span>
+	
+	<h3><span i18n="common.capabilities"></span>:</h3>
+	
+	<ul class="rights">
+		<li ng-repeat="cap in groupC.capabilities" i18n="common.{{cap}}"></li>
+		<li ng-show="groupC.capabilities.length == 0" i18n="common.no_rights"></li>
+	</ul>
+	
+	
+	<button class="btn" i18n="common.join" ng-show="groupC.canJoin" ng-click="groupC.join()"></button>
+	<button class="btn" i18n="common.leave" ng-show="groupC.canLeave" ng-click="groupC.leave()"></button>
+	
+	<button class="btn" i18n="common.group_no_action" ng-show="!groupC.canLeave && !groupC.canJoin" disabled></button>
+</div>

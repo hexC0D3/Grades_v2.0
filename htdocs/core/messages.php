@@ -22,14 +22,14 @@
 				
 				//Register
 				$this->ERROR_REGISTER_MAIL_ALREADY_IN_USE_VERIFIED=_("The entered E-Mail address is already in use and was verified!");
-				$this->ERROR_REGISTER_MAIL_ALREADY_IN_USE_NOT_VERIFIED=_("The entered E-Mail address is already in use but wasn't verified! You may try again in 10 minutes.");
-				$this->ERROR_REGISTER_INVALID_CAPTCHA=_("Your captcha is invalid! Please re-enter it.");
+				$this->ERROR_REGISTER_MAIL_ALREADY_IN_USE_NOT_VERIFIED=_("The entered E-Mail address is already in use but wasn't verified! You may try again in 10 minutes");
+				$this->ERROR_REGISTER_INVALID_CAPTCHA=_("Your captcha is invalid! Please re-enter it");
 				
 				//API
 				$this->ERROR_API_CHEATING=_("Hi script-kiddie!");	
 				$this->ERROR_API_REQUIRED_FIELDS=_("Please send all required fields");
 				$this->ERROR_API_PRIVILEGES=_("You don't have the permission to do that!");	
-				$this->ERROR_API_UNKNOWN=_("Unknown error! Please report this.");
+				$this->ERROR_API_UNKNOWN=_("Unknown error! Please report this");
 				
 					//Input
 					$this->ERROR_API_INVALID_INPUT=_("The given input is invalid!");
@@ -44,11 +44,11 @@
 						$this->ERROR_SET_PASSWORD_INVALID_LOGIN=_("Login failed! Username or password is invalid!");
 						
 						//Set password
-						$this->ERROR_SET_PASSWORD_INVALID_CODE=_("Your code is invalid! Please request a new one.");
+						$this->ERROR_SET_PASSWORD_INVALID_CODE=_("Your code is invalid! Please request a new one");
 							//Password restrictions
 							$this->ERROR_SET_PASSWORD_STRENGTH_LENGTH=_("Your passwords needs to have more than 5 letters!");
 						//List
-						$this->ERROR_API_USER_LIST_ALL=_("You cannot list all users! Please use a filter.");
+						$this->ERROR_API_USER_LIST_ALL=_("You cannot list all users! Please use a filter");
 						
 						//Settings
 						
@@ -63,11 +63,11 @@
 						$this->ERROR_GROUPS_CAPABILITY_NOT_REMOVEABLE=_("This user doesn't have the chosen capability!");
 					
 						//List
-						$this->ERROR_API_GROUPS_LIST_ALL=_("You cannot list all groups! Please use a filter.");
+						$this->ERROR_API_GROUPS_LIST_ALL=_("You cannot list all groups! Please use a filter");
 					
 					//Events
 						//List
-						$this->ERROR_API_EVENTS_LIST_ALL=_("You cannot list all events! Please use a filter.");
+						$this->ERROR_API_EVENTS_LIST_ALL=_("You cannot list all events! Please use a filter");
 						
 			//Texts
 				//Input
@@ -92,46 +92,47 @@
 						
 				//Reset Password
 				$this->MAIL_PASSWORD_RESET_SUBJECT=_("Grades Support - Password Reset");
-				$this->MAIL_PASSWORD_RESET_BODY_PART=_("A reset of your password has been requested! If you still want to reset it, then please click on the following link.");
+				$this->MAIL_PASSWORD_RESET_BODY_PART=_("A reset of your password has been requested! If you still want to reset it, then please click on the following link");
 				$this->MAIL_PASSWORD_RESET_BODY_LINK=_("Reset Password");
 				
 			//Groups
 				//Global group options
-				$this->GROUP_OPTIONS_INVITE_ONLY_DESC=_("Enable this if you want, that not all grade members can freely join your group.");
-				$this->GROUP_OPTIONS_NAME_DESC=_("The name of this group.");
+				$this->GROUP_OPTIONS_INVITE_ONLY_DESC=_("Enable this if you want, that not all grade members can freely join your group");
+				$this->GROUP_OPTIONS_NAME_DESC=_("The name of this group");
 				
 				//Capabilities
-				$this->GROUP_CAPABILITIES_MANAGE_CAPS=_("Gives a user the capability to manage the capabilities of users in this group.");
-				$this->GROUP_CAPABILITIES_MANAGE_OPTIONS=_("Gives a user the capability to manage the options of this group.");
-				$this->GROUP_CAPABILITIES_ADD_MEMBERS=_("Gives a user the capability to add members to this group.");
-				$this->GROUP_CAPABILITIES_CREATE_EVENTS=_("Gives a user the capability to create group-wide events.");
-				$this->GROUP_CAPABILITIES_CREATE_SUBJECTS=_("Gives a user the capability to create group-wide subjects.");
+				$this->GROUP_CAPABILITIES_MANAGE_CAPS=_("Gives a user the capability to manage the capabilities of users in this group");
+				$this->GROUP_CAPABILITIES_MANAGE_OPTIONS=_("Gives a user the capability to manage the options of this group");
+				$this->GROUP_CAPABILITIES_MANAGE_MEMBERS=_("Gives a user the capability to manage members in this group");
+				$this->GROUP_CAPABILITIES_CREATE_EVENTS=_("Gives a user the capability to create group-wide events");
+				$this->GROUP_CAPABILITIES_CREATE_SUBJECTS=_("Gives a user the capability to create group-wide subjects");
 				
 			//Events
 				//Global event options
-				$this->GROUP_OPTIONS_TITLE_DESC=_("The title of this event.");
-				$this->GROUP_OPTIONS_DESCRIPTION_DESC=_("Give this event a short description.");
+				$this->GROUP_OPTIONS_TITLE_DESC=_("The title of this event");
+				$this->GROUP_OPTIONS_DESCRIPTION_DESC=_("Give this event a short description");
 				
 			//Subjects
-			$this->SUBJECT_OPTIONS_NAME_DESC=_("The name of this subject.");
+			$this->SUBJECT_OPTIONS_NAME_DESC=_("The name of this subject");
 			
 			//Grades
-			$this->GRADE_OPTIONS_GRADE_DESC=_("The grade you received.");
+			$this->GRADE_OPTIONS_GRADE_DESC=_("The grade you received");
 				
 			//Dynamic
 			
 				//Group Options
-				$this->DYNAMIC_GROUP_TYPE_OPTIONS_MARK_CALC_METHOD_DESC=_("The method this school uses to calculate your average grade.");
+				$this->DYNAMIC_GROUP_TYPE_OPTIONS_MARK_CALC_METHOD_DESC=_("The method this school uses to calculate your average grade");
 				
-				$this->DYNAMIC_GROUP_TYPE_OPTIONS_MARK_CALC_METHOD_1=_("");
-				$this->DYNAMIC_GROUP_TYPE_OPTIONS_MARK_CALC_METHOD_2=_("");
-				$this->DYNAMIC_GROUP_TYPE_OPTIONS_MARK_CALC_METHOD_3=_("");
+				$this->DYNAMIC_GROUP_TYPE_OPTIONS_MARK_CALC_METHOD_0=_("CM0");
+				$this->DYNAMIC_GROUP_TYPE_OPTIONS_MARK_CALC_METHOD_1=_("CM1");
+				$this->DYNAMIC_GROUP_TYPE_OPTIONS_MARK_CALC_METHOD_2=_("CM2");
+				$this->DYNAMIC_GROUP_TYPE_OPTIONS_MARK_CALC_METHOD_3=_("CM3");
 				
-				$this->DYNAMIC_GROUP_TYPE_OPTIONS_CLASS_ADMIN_DESC=_("The member of this class who's able to manage it.");
-				$this->DYNAMIC_GROUP_TYPE_OPTIONS_WEBSITE_DESC=_("This schools website URL.");
-				$this->DYNAMIC_GROUP_TYPE_OPTIONS_ADDRESS_DESC=_("This schools address.");
-				$this->DYNAMIC_GROUP_TYPE_OPTIONS_SCHOOL_ADMIN_DESC=_("The member of this school who's able to manage it.");
-				$this->DYNAMIC_GROUP_TYPE_OPTIONS_SUBJECT_DESC=_("The subject this sub-class is related to.");
+				$this->DYNAMIC_GROUP_TYPE_OPTIONS_CLASS_ADMIN_DESC=_("The member of this class who's able to manage it");
+				$this->DYNAMIC_GROUP_TYPE_OPTIONS_WEBSITE_DESC=_("This schools website URL");
+				$this->DYNAMIC_GROUP_TYPE_OPTIONS_ADDRESS_DESC=_("This schools address");
+				$this->DYNAMIC_GROUP_TYPE_OPTIONS_SCHOOL_ADMIN_DESC=_("The member of this school who's able to manage it");
+				$this->DYNAMIC_GROUP_TYPE_OPTIONS_SUBJECT_DESC=_("The subject this sub-class is related to");
 				
 				//User Options
 				$this->DYNAMIC_USER_OPTIONS_FIRST_NAME_DESC=_("Your First Name");
@@ -146,14 +147,14 @@
 				$this->DYNAMIC_USER_OPTIONS_ABOUT_DESC=_("About me");
 				
 				//Event Options
-				$this->DYNAMIC_EVENT_TYPE_OPTIONS_TEST_LESSON_ID_DESC=_("The lesson this test takes place.");
-				$this->DYNAMIC_EVENT_TYPE_OPTIONS_TEST_GRADE_WEIGT_DESC=_("The grade weight this test has.");
+				$this->DYNAMIC_EVENT_TYPE_OPTIONS_TEST_LESSON_ID_DESC=_("The lesson this test takes place");
+				$this->DYNAMIC_EVENT_TYPE_OPTIONS_TEST_GRADE_WEIGT_DESC=_("The grade weight this test has");
 				
-				$this->DYNAMIC_EVENT_TYPE_OPTIONS_LESSON_SUBJECT_ID_DESC=_("The subject of this lesson.");
-				$this->DYNAMIC_EVENT_TYPE_OPTIONS_LESSON_TIME_FROM_DESC=_("The time this lesson starts.");
-				$this->DYNAMIC_EVENT_TYPE_OPTIONS_LESSON_TIME_TO_DESC=_("The time this lesson ends.");
+				$this->DYNAMIC_EVENT_TYPE_OPTIONS_LESSON_SUBJECT_ID_DESC=_("The subject of this lesson");
+				$this->DYNAMIC_EVENT_TYPE_OPTIONS_LESSON_TIME_FROM_DESC=_("The time this lesson starts");
+				$this->DYNAMIC_EVENT_TYPE_OPTIONS_LESSON_TIME_TO_DESC=_("The time this lesson ends");
 				
-				$this->DYNAMIC_EVENT_TYPE_OPTIONS_TASK_TIME_REMINDER_DESC=_("The time this lesson ends.");
+				$this->DYNAMIC_EVENT_TYPE_OPTIONS_TASK_TIME_REMINDER_DESC=_("The time this lesson ends");
 				
 				$this->DYNAMIC_EVENT_TYPE_OPTIONS_EVENT_FULL_DAY_DESC=_("Is this a full day event?");
 				$this->DYNAMIC_EVENT_TYPE_OPTIONS_EVENT_TIME_FROM_DESC=_("When does this event start?");

@@ -1,8 +1,6 @@
 <div class="content" ng-controller="LoginController as loginC">
 	<h1 i18n="common.welcome_back"></h1>
 	
-	<div class="warning">{{loginC.warning}}</div>
-	
 	<form ng-submit="loginC.login()">
 		<input type="mail" name="mail" data-i18n-attr="{placeholder: 'common.enter_mail'}" ng-model="loginC.mail">
 		<input type="password" name="password" data-i18n-attr="{placeholder: 'common.enter_password'}" ng-model="loginC.password">

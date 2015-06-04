@@ -239,9 +239,50 @@ function deleteEvent($event_id){
 
 function deleteSubject($subject_id){
 	global $db;
-	//foreach test foreach mark
+	//foreach test foreach grade
+	
+	$events = $db->doQueryWithArgs("SELECT event_options.event_id as id FROM event_options LEFT JOIN event_type_options ON event_options.event_type_option_id = event_type_options.id WHERE event_type_options.option_key = 'subject_id' AND event_options.value=?", array($subject_id), "i");
+	
+	if(count($events) > 0){
+		
+		$conditions = "WHERE event_id=?";
+		$values = array($events[0]['id']);
+		$types = "i";
+		
+		for($i=1;$i<count($events);$i++){
+			$conditions .= " OR event_id=?";
+			$values[] = $events[$i]['id'];
+			$types .= "i";
+		}
+		
+		$db->doQueryWithArgs("DELETE FROM grades".$conditions, $values, $types);
+	}
+	
 	
 	$db->doQueryWithArgs("DELETE FROM subjects WHERE id=?",array($subject_id), "i");
+}
+
+function deleteGrades($user_id, $group_id){
+	
+	global $db;
+	
+	$events = $db->doQueryWithArgs("SELECT group_relations.member_id as id FROM group_relations WHERE group_relations.member_type=3 AND group_id=?", array($group_id), "i");
+	
+	if(count($events) > 0){
+		
+		$conditions = "WHERE event_id=?";
+		$values = array($events[0]['id']);
+		$types = "i";
+		
+		for($i=1;$i<count($events);$i++){
+			$conditions .= " OR event_id=?";
+			$values[] = $events[$i]['id'];
+			$types .= "i";
+		}
+		
+		$db->doQueryWithArgs("DELETE FROM grades".$conditions, $values, $types);
+	}
+	
 }
 
 function isUserMemberOf($group_id){
@@ -266,6 +307,47 @@ function isUserMemberOf($group_id){
 	}
 	
 	return false;
+}
+
+function currentUserCanJoin($group_id){
+	global $db;
+	
+	$data = $db->doQueryWithArgs("SELECT COUNT(*) as count FROM group_relations WHERE member_id=? AND group_id=? AND member_type=1", array(getUser()['id'], $group_id), "ii");
+	
+	if(count($data) == 1){
+		return ($data[0]['count'] == 0);
+	}
+	
+	return false;
+}
+
+function currentUserCanLeave($group_id){
+	
+	global $db;
+	
+	if(currentUserCan('manage_capabilities', $group_id)){
+		
+		$count = $db->doQueryWithArgs("SELECT COUNT(*) as count FROM group_capabilities LEFT JOIN group_relations ON group_capabilities.relation_id = group_relations.id WHERE capability='manage_capabilities' AND group_relations.group_id=?", array($group_id), "i");
+		
+		if($count[0]['count'] <= 1){
+			return false;
+		}
+		
+	}
+	
+	return !currentUserCanJoin($group_id);
+}
+
+function getCurrentUserCapabilities($group_id){
+	global $db;
+	
+	$caps = $db->doQueryWithArgs("SELECT caps FROM v_user_caps WHERE user_id=? AND group_id=?", array(getUser()["id"], $group_id), "ii");
+	
+	if(count($caps) == 1){
+		return explode(",", $caps[0]["caps"]);
+	};
+	
+	return array();
 }
 	
 ?>

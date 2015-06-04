@@ -1,6 +1,6 @@
 <?php
 
-if(isset($_GET['id']){
+if(isset($_GET['id'])){
 	
 	$group_type_id = -1;
 	
@@ -9,7 +9,7 @@ if(isset($_GET['id']){
 		$group_type_id = $data[0]['type_id'];
 	}
 	
-	if(isset($_GET['action']){
+	if(isset($_GET['action'])){
 		if($_GET['action']=='settings'){
 			if($is_get){
 				//get all possible settings
@@ -47,7 +47,7 @@ if(isset($_GET['id']){
 							'name' => 'text'
 						);
 						
-						if(in_array($_PUT['option_key'], array_keys($global_options)){
+						if(in_array($_PUT['option_key'], array_keys($global_options))){
 							$validation=validateDynamicInput($_PUT['value'], $global_options[$_PUT['option_key']]);
 							$_PUT['value']=$validation[1];
 							
@@ -112,9 +112,9 @@ if(isset($_GET['id']){
 					}
 					
 					$JSON["capabilities"][]=array(
-						'key'=>'add_members',
-						'description'=>getMessages()->GROUP_CAPABILITIES_ADD_MEMBERS,
-						'users'=>getUsersWithCap($_GET['id'], 'add_members')
+						'key'=>'manage_members',
+						'description'=>getMessages()->GROUP_CAPABILITIES_MANAGE_MEMBERS,
+						'users'=>getUsersWithCap($_GET['id'], 'manage_members')
 					);
 					$JSON["capabilities"][]=array(
 						'key'=>'create_events',
@@ -171,11 +171,11 @@ if(isset($_GET['id']){
 						//user wants to add himself, check if groups is invite only
 						
 						global $db;
-						$group = $db->doQueryWithArgs("SELECT invite_only FROM groups WHERE id=?", array($_GET['id']), "i");
+						$group = $db->doQueryWithArgs("SELECT * FROM groups WHERE id=?", array($_GET['id']), "i");
 						
 						if(count($group)==1){
-							if(($group[0]["invite_only"] == 0 || $group[0]["invite_only"] == "0") || currentUserCan('add_members', $_GET['id'])){
-								if($db->doQueryWithArgs("SELECT COUNT(*) as count FROM group_relations WHERE member_id=?, group_id=?, member_type=?", array(getUser()['id'], $_GET['id'], 1), "iii")[0]['count']==0){
+							if(($group[0]["invite_only"] == 0 || $group[0]["invite_only"] == "0") || currentUserCan('manage_members', $_GET['id'])){
+								if(currentUserCanJoin($_GET['id'])){
 									//add relation
 									$db->doQueryWithArgs("INSERT INTO group_relations(member_id, group_id, member_type) VALUES(?,?,?)", array(getUser()['id'], $_GET['id'], 1), "iii");
 								}else{
@@ -190,7 +190,7 @@ if(isset($_GET['id']){
 						}
 					}else{
 						//user wants to add someone or someting else
-						if(currentUserCan('add_members', $_GET['id'])){
+						if(currentUserCan('manage_members', $_GET['id'])){
 							
 							if($db->doQueryWithArgs("SELECT COUNT(*) as count FROM group_relations WHERE member_id=?, group_id=?, member_type=?", array($_PUT['member_id'], $_GET['id'], $_PUT['member_type_id']), "iii")[0]['count']==0){
 								//add relation
@@ -213,6 +213,55 @@ if(isset($_GET['id']){
 		}else if($_GET['action']=='leave'){
 			//removes a user from a group
 			
+			if($is_put){
+				if(isset($_PUT['member_type_id'])&&isset($_PUT['member_id'])){
+					
+					global $db;
+					
+					if($_PUT['member_id'] == getUser()['id'] && $_PUT['member_type_id'] == 1){
+						//user wants to leave himself
+						
+						if(currentUserCanLeave($_GET['id'])){
+							
+							//remove him
+							
+							$db->doQueryWithArgs("DELETE FROM group_relations WHERE member_id=? AND group_id=? AND member_type=?", array($_PUT['member_id'], $_GET['id'], $_PUT['member_type_id']), "iii");
+							
+							deleteGrades($_PUT['member_id'], $_GET['id']);
+							
+						}
+						
+					}else{
+						//user wants to kick someone or remove something
+						
+						if(currentUserCan('manage_members', $_GET['id'])){
+							
+							$data = $db->doQueryWithArgs("SELECT *, COUNT(*) as count FROM group_relations WHERE member_id=?, group_id=?, member_type=?", array($_PUT['member_id'], $_GET['id'], $_PUT['member_type_id']), "iii");
+							
+							if(count($data) == 1){
+								//remove relation
+								$db->doQueryWithArgs("DELETE FROM group_relations WHERE id=?", array($data[0]['id']), "i");
+								
+								if($_PUT['member_type_id'] == 1){
+									deleteGrades($_PUT['member_id'], $_GET['id']);
+								}
+								
+								
+							}else{
+								addError(getMessages()->ERROR_GROUPS_ALREADY_MEMBER);
+							}
+							
+						}else{
+							addError(getMessages()->ERROR_API_PRIVILEGES);
+						}
+					}
+				}else{
+					addError(getMessages()->ERROR_API_REQUIRED_FIELDS);
+				}
+			}else{
+				addError(getMessages()->ERROR_API_REQUIRED_FIELDS);
+			}
+			
 		}else{
 			addError(getMessages()->ERROR_API_REQUIRED_FIELDS);
 		}
@@ -223,7 +272,14 @@ if(isset($_GET['id']){
 		$groups = $db->doQueryWithArgs("SELECT groups.id, groups.name, groups.invite_only, group_types.title as group_type  FROM groups LEFT JOIN group_types ON groups.type_id=group_types.id WHERE groups.id = ?", array($_GET['id']), "i");
 
 		if(count($groups) == 1){
-			$JSON['group']=$groups[0];
+			$JSON['group'] = $groups[0];
+			  //TODO
+			
+			$JSON['group']['can_join'] = currentUserCanJoin($_GET['id']);
+			$JSON['group']['can_leave'] = currentUserCanLeave($_GET['id']);
+			
+			$JSON['group']['capabilities'] = getCurrentUserCapabilities($_GET['id']);
+			
 		}else{
 			addError(getMessages()->ERROR_API_INVALID_INPUT);
 		}
@@ -248,7 +304,7 @@ if(isset($_GET['id']){
 					if($all_fields && array_key_exists($val['option_key'], $_POST['options'])){
 						$validation = validateDynamicInput($_POST['options'][$val['option_key']], $val['input_data_type']);
 						if($validation[0]){
-							$options[$val['id']] = $validation[1]
+							$options[$val['id']] = $validation[1];
 						}else{
 							$all_fields=false;
 							addError(getMessages()->ERROR_API_INVALID_INPUT);
@@ -269,6 +325,8 @@ if(isset($_GET['id']){
 						
 						$data = $db->doQueryWithoutArgs("SHOW TABLE STATUS LIKE 'groups'");
 						$id = $data[0]['Auto_increment'];
+						
+						$JSON['group']['id'] = $id;
 					
 						$db->doQueryWithArgs("INSERT INTO groups(id,name,invite_only,type_id) VALUES(?,?,?,?)", array($id,$_POST['group_name'], ((int)$_POST['invite_only']), $_POST['group_type_id']), "sii");
 							
@@ -285,7 +343,7 @@ if(isset($_GET['id']){
 							$types.="iis";
 							
 							//special handling with admins
-							if(in_array($group_type_option_id, array(2,5)){
+							if(in_array($group_type_option_id, array(2,5))){
 								$admin_user_id = $option;
 							}
 						}
@@ -307,7 +365,7 @@ if(isset($_GET['id']){
 							$qm = array();
 							$types = "";
 							$values = array();
-							$capabilities = array('manage_capabilities', 'manage_options', 'add_members', 'create_events', 'create_subject');
+							$capabilities = array('manage_capabilities', 'manage_options', 'manage_members', 'create_events', 'create_subject');
 							
 							foreach($capabilities as $capability){
 								$qm[]="(?,?)";
@@ -328,7 +386,7 @@ if(isset($_GET['id']){
 									//check if user is allowed to create a sub-group if it's invite only
 									
 									if($data[0]['invite_only'] == true){
-										if(currentUserCan('add_members', $_POST['parent_group_id'])){
+										if(currentUserCan('manage_members', $_POST['parent_group_id'])){
 											$db->doQueryWithArgs("INSERT INTO group_relations(member_id,group_id,member_type) VALUES(?,?,2)", array($id,$_POST['parent_group_id']), "ii");
 										}else{
 											addError(getMessages()->ERROR_API_PRIVILEGES);
@@ -360,8 +418,8 @@ if(isset($_GET['id']){
 		}
 		
 	}else if($is_delete){
-		if(isset($_DELETE['group_id']){
-			if(currentUserCan('manage_options', $_DELETE['group_id']){
+		if(isset($_DELETE['group_id'])){
+			if(currentUserCan('manage_options', $_DELETE['group_id'])){
 				//delete recursive everything related to this group
 				deleteGroup($_DELETE['group_id']);
 			}
@@ -373,7 +431,6 @@ if(isset($_GET['id']){
 		
 		$filters=getFilters();
 		
-		
 		if($filters!=false){
 			
 			$groups=array();
@@ -381,43 +438,54 @@ if(isset($_GET['id']){
 			$args=array();
 			$types="";
 			
-			$query="SELECT groups.id,groups.name FROM groups LEFT JOIN group_types ON groups.type_id=group_types.id WHERE 1=1";
 			
-			if(isset($filters['group_parent_id'])){
+			if(isset($filters['type']) && $filters['type'] == 'settings' && isset($filters['group_type_id'])){
 				
-				$query="SELECT groups.id,groups.name FROM (".
-					"SELECT * from group_relations LEFT JOIN groups ON group_relations.member_id=groups.id WHERE group_relations.group_id=? AND member_type=2".
-				") LEFT JOIN group_types ON groups.type_id=group_types.id WHERE 1=1";
-				$args[]=$filters['group_parent_id'];
-				$type.="i";
+				$group_options=getGroupOptions($filters['group_type_id']);
 				
-			}
-			
-			if(isset($filters['name'])){
-				$query.=" AND groups.name LIKE ?";
-				$args[]="%".$filters['name']."%";
-				$types.="s";
-			}
-			if(isset($filters['group_type_id'])){
-				$query.=" AND groups.type_id = ?";
-				$args[]=$filters['group_type_id'];
-				$types.="s";
-			}
-			
-			if(isset($filters['items_per_page']) && isset($filters['page'])){
-				$query.=" LIMIT ?,?";
-				$args[]=$filters['items_per_page'];
-				$args[]=(((int)$filters['items_per_page']) * ((int)$filters['page']));
-				$types.="ii";
-			}
-			
-			if(!empty($args)){
-				$groups=$db->doQueryWithArgs($query, $args, $types);
+				$JSON['settings'] = $group_options;
+				
 			}else{
-				addError(getMessages()->ERROR_API_GROUPS_LIST_ALL);
+				
+				
+				$query="SELECT groups.id,groups.name FROM groups LEFT JOIN group_types ON groups.type_id=group_types.id WHERE 1=1";
+				
+				if(isset($filters['parent_group_id'])){
+					
+					$query="SELECT groups.id,groups.name FROM (".
+						"SELECT * from group_relations LEFT JOIN groups ON group_relations.member_id=groups.id WHERE group_relations.group_id=? AND member_type=2".
+					") LEFT JOIN group_types ON groups.type_id=group_types.id WHERE 1=1";
+					$args[]=$filters['parent_group_id'];
+					$type.="i";
+					
+				}
+				
+				if(isset($filters['name'])){
+					$query.=" AND groups.name LIKE ?";
+					$args[]="%".$filters['name']."%";
+					$types.="s";
+				}
+				if(isset($filters['group_type_id'])){
+					$query.=" AND groups.type_id = ?";
+					$args[]=$filters['group_type_id'];
+					$types.="s";
+				}
+				
+				if(isset($filters['items_per_page']) && isset($filters['page'])){
+					$query.=" LIMIT ?,?";
+					$args[]=$filters['items_per_page'];
+					$args[]=(((int)$filters['items_per_page']) * ((int)$filters['page']));
+					$types.="ii";
+				}
+				
+				if(!empty($args)){
+					$groups=$db->doQueryWithArgs($query, $args, $types);
+				}else{
+					addError(getMessages()->ERROR_API_GROUPS_LIST_ALL);
+				}
+				
+				$JSON["groups"]=$groups;
 			}
-			
-			$JSON["groups"]=$groups;
 			
 		}else{
 			addError(getMessages()->ERROR_API_GROUPS_LIST_ALL);
@@ -429,20 +497,54 @@ if(isset($_GET['id']){
 }
 
 function getGroupOptions($group_type_id){
-	$group_options=$db->doQueryWithArgs("SELECT * FROM group_type_options WHERE group_type_id=?", array($group_type_id), "i");
+	
+	global $db;
+	
+	$group_options = array();
+	
+	$data = $db->doQueryWithArgs("SELECT * FROM group_type_options WHERE group_type_id=?", array($group_type_id), "i");
+	
 	$group_options[]=array(
-		'key'=>'invite_only'
-		'input_data_type'=>'boolean',
-		'options'=>'{"input_type":"checkbox"}',
-		'description'=>getMessages()->GROUP_OPTIONS_INVITE_ONLY_DESC;
+		'key' => 'name',
+		'input_data_type' => 'text',
+		'options' => json_decode('{"input_type":"textfield"}'),
+		'description' => getMessages()->GROUP_OPTIONS_NAME_DESC
 	);
 	$group_options[]=array(
-		'key'=>'name'
-		'input_data_type'=>'text',
-		'options'=>'{"input_type":"textfield"}',
-		'description'=>getMessages()->GROUP_OPTIONS_NAME_DESC;
+		'key' => 'invite_only',
+		'input_data_type' => 'boolean',
+		'options' => json_decode('{"input_type":"checkbox"}'),
+		'description' => getMessages()->GROUP_OPTIONS_INVITE_ONLY_DESC
 	);
+	
+	foreach($data as $group_option){
+		
+		$group_options[]=array(
+			'key'=>$group_option["option_key"],
+			'input_data_type'=>$group_option["input_data_type"],
+			'required'=>$group_option["required"],
+			'options'=>translateOptions($group_option["options"]),
+			'description'=>getMessages()->$group_option["description_translation_key"]
+		);
+	}
+	
 	return $group_options;
+}
+
+function translateOptions($options){
+	$data = json_decode($options);
+	
+	if($data->input_type == 'select'){
+		foreach($data->select as $key => $option){
+			
+			$trans_key = $option->title_tanslation_key;
+			
+			unset($data->select[$key]->title_tanslation_key);
+			$data->select[$key]->description = getMessages()->$trans_key;
+		}
+	}
+	
+	return $data;
 }
 
 function getUsersWithCap($group_id, $capability){

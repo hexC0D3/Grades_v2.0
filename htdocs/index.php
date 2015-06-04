@@ -16,7 +16,7 @@
 		
 		<meta charset="utf-8">
 	  
-		<title>{{app.title()}}</title>
+		<title>{{title()}}</title>
 		
 		<base href="/">
 		
@@ -40,13 +40,16 @@
 		
 		<script src="/res/js/ngStorage.min.js" charset="utf-8"></script>
 		
+		<script src="/res/js/ui-bootstrap-tpls-0.13.0.min.js" charset="utf-8"></script>
+		
 		<script src="res/js/grades.js" charset="utf-8"></script>
+		
 	</head>
 	<body>
 		<header>
 			<div class="container">
 				<div class="nav">
-					<a href="#/"><h1>Grades</h1></a>
+					<a href="/"><h1>Grades</h1></a>
 					<nav ng-controller="NavigationController as navigation">
 						<ul class="nav-home" ng-show="navigation.isNavigation(0)">
 							<li><a href="/about" i18n="common.about_us"></a></li>
@@ -55,8 +58,8 @@
 						</ul>
 						<ul class="nav-dashboard" ng-show="navigation.isNavigation(1)">
 							<li><a href="#" i18n="common.groups"></a></li>
-							<li><a href="#" i18n="common.grades">Noten</a></li>
-							<li><a href="#" i18n="common.excercises">Aufgaben</a></li>
+							<li><a href="#" i18n="common.grades"></a></li>
+							<li><a href="#" i18n="common.excercises"></a></li>
 							<li><a href="#">{{app.user.username}}</a></li>
 						</ul>
 					</nav>

@@ -12,11 +12,35 @@ function isUserLoggedIn(){
 /** Returns the current user data **/
 function getUser(){
 	global $user, $db, $SESSION_TOKEN;
+	
 	if(!empty($user)){
 		return $user;
 	}
+	
 	if($SESSION_TOKEN){
-		return $user=$db->doQueryWithArgs("SELECT users.id, users.mail, user_meta.* FROM users LEFT JOIN user_meta ON users.id=user_meta.user_id LEFT JOIN login_tokens ON users.id=login_tokens.user_id WHERE login_tokens.login_token=? ", array($SESSION_TOKEN), "s")[0];
+		
+		$tmp = $db->doQueryWithArgs("SELECT users.id, users.mail, GROUP_CONCAT(user_meta_options.option_key) as option_keys, GROUP_CONCAT(user_meta.value) as 'values' FROM users LEFT JOIN user_meta ON users.id=user_meta.user_id LEFT JOIN user_meta_options ON user_meta.user_meta_option_id = user_meta_options.id LEFT JOIN login_tokens ON users.id=login_tokens.user_id WHERE login_tokens.login_token=?", 
+		
+		array($SESSION_TOKEN), "s");
+		
+		if(isset($tmp[0])){
+			
+			$keys = explode(",", $tmp[0]['option_keys']);
+			$values = explode(",", $tmp[0]['values']);
+			
+			unset($tmp[0]['option_keys']);
+			unset($tmp[0]['values']);
+			
+			for($i=0;$i<count($keys);$i++){
+				$tmp[0][$keys[$i]] = $values[$i];
+			}
+			
+			return $user = $tmp[0];
+			
+		}else{
+			return null;
+		}
+		
 	}else{
 		return null;
 	}
@@ -38,11 +62,19 @@ function logInUser($mail, $password){
 			while($db->doQueryWithArgs("SELECT COUNT(*) as count FROM login_tokens WHERE login_token=?", array($token), "s")[0]["count"]>0){
 				$token=bin2hex(openssl_random_pseudo_bytes(16));
 			}
+			
+			$db->doQueryWithArgs("DELETE FROM login_tokens WHERE user_id=?", array($user["id"]), "i");
+			
 			$db->doQueryWithArgs("INSERT INTO login_tokens(user_id, login_token, ip) VALUES(?, ?, ?)", array($user["id"], $token, $_SERVER['REMOTE_ADDR']), "iss");
 			
 			global $JSON;
 			
-			$JSON['sessionToken']=$token;
+			$JSON['session_token'] = $token;
+			
+			
+			$user_info = $db->doQueryWithArgs("SELECT users.id, users.mail, GROUP_CONCAT(user_meta_options.option_key) as option_keys, GROUP_CONCAT(user_meta.value) as 'values' FROM users LEFT JOIN user_meta ON users.id=user_meta.user_id LEFT JOIN user_meta_options ON user_meta.user_meta_option_id = user_meta_options.id WHERE users.id=?", array($user['id']), "s");
+			
+			$JSON['user'] = $user_info[0];
 			
 			return true;
 		}else{
@@ -231,12 +263,19 @@ function currentUserCan($capability, $group_id){
 		$capabilityCache=array();
 	}
 	
-	if(isset($capabilityCache[getUser()][$group_id])){
-		$caps=$capabilityCache[getUser()][$group_id];
+	if(isset($capabilityCache[getUser()['id']][$group_id])){
+		$caps = $capabilityCache[getUser()['id']][$group_id];
 	}else{
-		$caps=$db->doQueryWithArgs("SELECT capabilities FROM v_user_caps WHERE user_id=? AND group_id=?", array(getUser()["id"], $group_id), "ii")[0]["capabilities"];
+		$caps = $db->doQueryWithArgs("SELECT caps FROM v_user_caps WHERE user_id=? AND group_id=?", array(getUser()["id"], $group_id), "ii");
+		
+		if(count($caps) == 1){
+			
+			$caps = $caps[0]['caps'];
+		}else{
+			$caps = "";
+		}
 		$caps=explode(",", $caps);
-		$capabilityCache[getUser()][$group_id]=$caps;
+		$capabilityCache[getUser()['id']][$group_id]=$caps;
 	}
 	
 	return in_array($capability, $caps);

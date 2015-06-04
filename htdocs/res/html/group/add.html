@@ -1,3 +1,67 @@
-<div class="content" ng-controller="GroupController as groupC">
+<div class="content" ng-controller="GroupAddController as groupC">
 	<h1 i18n="common.add_group"></h1>
+	
+	<form ng-submit="groupC.create()">
+		
+		<select ng-model="groupC.group_type" ng-change="groupC.refresh()">
+			<option i18n="common.school" value="2"></option>
+			<option i18n="common.class" value="3"></option>
+			<option i18n="common.sub_class" value="4"></option>
+			<option i18n="common.subject_related_class" value="5"></option>
+		</select>
+		
+		<select ng-model="groupC.parentID">
+			<option value="-1" i18n="common.no_parent"></option>
+			<option ng-repeat="parent in groupC.parents" value="{{parent.id}}">{{parent.name}}</option>
+		</select>
+		
+		<div ng-repeat="field in groupC.settings" class="field" ng-class="{'required' : field.required}">
+			
+			<div class="text" ng-if="field.input_data_type == 'text'">
+				
+				<input type="text" name="{{field.key}}" ng-if="field.options.input_type == 'textfield'" placeholder="{{field.description}}">
+				
+				<textarea name="{{field.key}}" ng-if="field.options.input_type == 'textarea'"></textarea>
+				
+			</div>
+			
+			<div class="boolean" ng-if="field.input_data_type == 'boolean'">
+				
+				<div class="checkbox" ng-if="field.options.input_type == 'checkbox'">
+					<label class="desc">{{field.description}} :</label><input type="checkbox" name="{{field.key}}">
+				</div>
+				
+			</div>
+			
+			<div class="user" ng-if="field.input_data_type == 'user_id'">
+				
+				WIP:<input type="text" name="{{field.key}}" ng-if="field.options.input_type == 'user'" placeholder="{{field.description}}">
+				
+			</div>
+			
+			<div class="subject" ng-if="field.input_data_type == 'subject_id'">
+				
+				WIP:<input type="text" name="{{field.key}}" ng-if="field.options.input_type == 'subject'" placeholder="{{field.description}}">
+				
+			</div>
+			
+			<div class="select" ng-if="field.input_data_type == 'select'">
+				
+				<select name="{{field.key}}" ng-if="field.options.input_type == 'select'">
+					<option ng-repeat="option in field.options.select" value="{{option.value}}">{{option.description}}</option>
+				</select>
+				
+			</div>
+			
+			<div class="url" ng-if="field.input_data_type == 'url'">
+				
+				<input type="text" name="{{field.key}}" ng-if="field.options.input_type == 'url'" placeholder="{{field.description}}">
+				
+			</div>
+			
+		</div>
+		
+		<input type="submit" data-i18n-attr="{value: 'common.create'}">
+		
+	</form>
 </div>

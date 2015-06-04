@@ -2,8 +2,6 @@
 	<h1 i18n="common.get_started"></h1>
 	<h2 i18n="common.create_account"></h2>
 	
-	<div class="warning">{{registerC.warning}}</div>
-	
 	<form ng-submit="registerC.register()" ng-show="registerC.step == 0">
 		
 		<input type="mail" ng-model="registerC.mail" data-i18n-attr="{placeholder: 'common.enter_mail'}">

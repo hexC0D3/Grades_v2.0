@@ -1,7 +1,7 @@
 <?php
 
-if(isset($_GET['id']){
-	if(isset($_GET['action']){
+if(isset($_GET['id'])){
+	if(isset($_GET['action'])){
 		if($_GET['action']=='settings'){
 			if($is_get){
 				//get all possible settings
