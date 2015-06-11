@@ -1,0 +1,5 @@
+<div ng-controller="UserInputController as useriC">
+
+	<input class="form-control" type="text" placeholder="{{inputPlaceholder}}" ng-model="useriC.value" typeahead-loading="loadingData" typeahead="user.id as user.desc for user in useriC.getUser($viewValue)" typeahead-on-select="useriC.selectValue($item, $model, $label)" name="{{inputName}}" value="{{inputValue}}">
+	
+</div>

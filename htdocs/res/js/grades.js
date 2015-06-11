@@ -108,7 +108,7 @@ grades.config(['noCAPTCHAProvider', '$httpProvider', '$routeProvider', '$locatio
 
 /* Controllers */
 
-grades.controller("AppController", ['$scope', '$http', '$sessionStorage', function($scope, $http, $sessionStorage) {
+var appController = grades.controller("AppController", ['$scope', '$http', '$sessionStorage', function($scope, $http, $sessionStorage) {
 	
 	var $me = this;
 	
@@ -165,6 +165,31 @@ grades.controller("AppController", ['$scope', '$http', '$sessionStorage', functi
 	}
 	
 }]);
+
+appController.directive("userInput", function(){
+	return {
+		restrict: 'E',
+		scope: {
+			inputName: '=inputName',
+			inputPlaceholder: '=inputPlaceholder',
+			inputValue: '=inputValue'
+	    },
+		templateUrl: '/res/html/directives/userInput.html'
+	};
+});
+
+appController.directive("subjectInput", function(){
+	return {
+		restrict: 'E',
+		scope: {
+			inputName: '=inputName',
+			inputPlaceholder: '=inputPlaceholder',
+			inputGroupID: '=inputGroupId',
+			inputValue: '=inputValue'
+	    },
+		templateUrl: '/res/html/directives/subjectInput.html'
+	};
+});
 
 /* Header */
 
@@ -302,7 +327,7 @@ grades.controller("DashboardController", function(){
 	
 });
 
-/* Groups */
+/* Add */
 
 grades.controller("GroupAddController", ['$scope', '$http' ,'$sessionStorage', '$location', function($scope, $http, $sessionStorage, $location){
 
@@ -310,14 +335,15 @@ grades.controller("GroupAddController", ['$scope', '$http' ,'$sessionStorage', '
 	
 	this.$storage = $sessionStorage;
 	
+	/* group */
+		
 	this.name			= "";
+	this.invite_only	= false;
 	this.group_type		=  3;
 	this.parentID		= -1;
-	this.inviteOnly	= false;
-	this.settings = [];
-	
+		
 	this.parents = [];
-	
+		
 	this.parent_relation = {
 		1:-1,
 		2:1,
@@ -326,36 +352,51 @@ grades.controller("GroupAddController", ['$scope', '$http' ,'$sessionStorage', '
 		5:3
 	};
 	
-	this.create = function(){
-		if(! isNaN($me.group_type)){
+	
+	
+	this.create = function($event){
+		
+		var formElement = angular.element($event.target);
+		var settings = {};
+		
+		jQuery(formElement).find("[name]").each(function(index){
 			
-			if($me.name.length > 0){
-				
-				$http.post($me.$storage.apiURL+"/group/", {group_name:$me.name, parent_group_id:$me.parentID, group_type_id:$me.group_type, invite_only: $me.inviteOnly}).
-					
-					success(function(data, status, headers, config) {
-						
-						data = angular.fromJson(data);
-						
-						if(grades_validateAPIResponse(data)){
-							
-							$location.path('/group/about/'+data.group.id);
-							
-						}
-					});
-				
+			var field_name = jQuery(this).attr("name").trim();
+			
+			if(jQuery(this).is("input[type='checkbox']")){
+				if(field_name === 'invite_only'){
+					$me.invite_only = jQuery(this).is(":checked");
+				}else{
+					settings[field_name] = jQuery(this).is(":checked");
+				}
+			}else if(field_name === 'name'){
+				$me.name = jQuery(this).val();
 			}else{
-				error("Gib der Gruppe einen Namen!");
+				settings[field_name] = jQuery(this).val();
 			}
-			
-		}else{
-			error("Ungültige Auswahl");
-		}
+		});
+		
+		
+		$http.post($me.$storage.apiURL+"/group/", {group_name:$me.name, parent_group_id:$me.parentID, group_type_id:$me.group_type, invite_only: $me.invite_only, options: settings}).
+					
+			success(function(data, status, headers, config) {
+				
+				data = angular.fromJson(data);
+				
+				if(grades_validateAPIResponse(data)){
+					
+					$location.path('/group/about/'+data.group.id);
+					
+				}
+			});
+		
 	};
 	
 	this.refresh = function(){
+		
 		$me.updateParents();
 		$me.updateFields();
+		
 	};
 	
 	this.updateParents = function(){
@@ -379,7 +420,11 @@ grades.controller("GroupAddController", ['$scope', '$http' ,'$sessionStorage', '
 	
 	this.updateFields = function(){
 		
-		$http.get($me.$storage.apiURL+"/group/?" + jQuery.param({filters: {group_type_id: $me.group_type, type: 'settings'}, session_token:$me.$storage.sessionToken})).
+		var url = "";
+		
+		url = $me.$storage.apiURL+"/group/?" + jQuery.param({filters: {group_type_id: $me.group_type, type: 'settings'}, session_token:$me.$storage.sessionToken});
+		
+		$http.get(url).
 				
 			success(function(data, status, headers, config) {
 				
@@ -399,6 +444,19 @@ grades.controller("GroupAddController", ['$scope', '$http' ,'$sessionStorage', '
 	};
 	
 	$me.refresh();
+	
+}]);
+
+
+grades.controller("GroupEditController", ['$scope', '$http' ,'$sessionStorage', '$location', function($scope, $http, $sessionStorage, $location){
+	
+	var $me = this;
+	
+	this.$storage = $sessionStorage;
+	this.update = function($event){
+		
+	};
+	
 	
 }]);
 
@@ -452,5 +510,62 @@ grades.controller("GroupController", ['$scope', '$http' ,'$sessionStorage', '$ro
 	}
 	
 	this.loadData();
+	
+}]);
+
+grades.controller("UserInputController", ['$scope', '$sessionStorage', '$http', function($scope, $sessionStorage, $http){
+	
+	var $me = this;
+	
+	this.value = "";
+	
+	this.$storage = $sessionStorage;
+	
+	this.getUser = function(string){
+		
+		return $http.get($me.$storage.apiURL+"/user/?" + jQuery.param({filters:{search: string}, session_token:$me.$storage.sessionToken})).
+						
+			then(function(response) {
+				
+				for(var i=0;i<response.data.users.length;i++){
+					response.data.users[i].desc = response.data.users[i].first_name + " " + response.data.users[i].last_name + " - " + response.data.users[i].mail + " (" + response.data.users[i].id + ")";
+				}
+				
+				return response.data.users;
+				
+			});
+	};
+	
+	this.selectValue = function($item, $model, $label){
+	}
+	
+}]);
+
+grades.controller("SubjectInputController", ['$scope', '$sessionStorage', '$http', function($scope, $sessionStorage, $http){
+	
+	var $me = this;
+	
+	this.value = "";
+	
+	this.$storage = $sessionStorage;
+	
+	this.getSubject = function(string, group_id){
+		
+		return $http.get($me.$storage.apiURL+"/subject/?" + jQuery.param({filters:{search: string, group_id:group_id}, session_token:$me.$storage.sessionToken})).
+						
+			then(function(response) {
+				
+				for(var i=0;i<response.data.subjects.length;i++){
+					response.data.subjects[i].desc = response.data.subjects[i].name + " (" + response.data.subjects[i].id + ")";
+				}
+				
+				return response.data.subjects;
+				
+			});
+		
+	}
+	
+	this.selectValue = function($item, $model, $label){
+	}
 	
 }]);

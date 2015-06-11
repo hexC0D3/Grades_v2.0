@@ -1,4 +1,4 @@
-@import 'bootstrap.custom';
+@import 'bootstrap';
 
 @import url(https://fonts.googleapis.com/css?family=Roboto:400,300,100,500);
 
@@ -97,16 +97,20 @@ body > header{
 			bottom:230px;
 			
 			vertical-align: bottom;
-			
-			h1{
-				margin:0;
+			a{
 				
-				font-size: 50px;
-				font-weight:100;
-				color:#fff;
+				h1{
+					margin:0;
+					
+					font-size: 50px;
+					font-weight:100;
+					color:#fff;
+					
+					display: inline-block;
+				}
 				
-				display: inline-block;
 			}
+			
 			
 			nav{
 				position: absolute;

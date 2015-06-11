@@ -112,7 +112,7 @@
 		}else{
 			global $db;
 			
-			$query="SELECT users.id, user_meta.first_name, user_meta.last_name from users LEFT JOIN user_meta ON users.id = user_meta.user_id WHERE 1=1";
+			$query="SELECT id, mail, first_name, last_name FROM (SELECT users.id, users.mail, MAX(IF(user_meta_options.option_key='first_name',user_meta.value,'')) as first_name, MAX(IF(user_meta_options.option_key='last_name',user_meta.value,'')) as last_name FROM users LEFT JOIN user_meta ON users.id = user_meta.user_id LEFT JOIN user_meta_options ON user_meta.user_meta_option_id=user_meta_options.id) as query1 WHERE 0=0";
 			
 			$filters=getFilters();
 			
@@ -124,19 +124,30 @@
 				$args=array();
 				$types="";
 				
-				if(isset($filters['name'])){
-					$query.=" AND concat(user_meta.first_name, ' ', user_meta.last_name) LIKE ?";
-					$args[]="%".$filters['name']."%";
-					$types.="s";
-				}
-				if(isset($filters['mail'])){
-					$query.=" AND users.mail=?";
-					$args[]=$filters['mail'];
-					$types.="s";
+				if(isset($filters['search'])){
+					
+					$query.=" AND (first_name LIKE ? OR last_name LIKE ?) ORDER BY first_name DESC LIMIT 10";
+					$args[]=$filters['search']."%";
+					$args[]=$filters['search']."%";
+					$types.="ss";
+				}else{
+					
+					if(isset($filters['name'])){
+						$query.=" AND concat(user_meta.first_name, ' ', user_meta.last_name) LIKE ?";
+						$args[]="%".$filters['name']."%";
+						$types.="s";
+					}
+					if(isset($filters['mail'])){
+						$query.=" AND users.mail=?";
+						$args[]=$filters['mail'];
+						$types.="s";
+					}
+					
 				}
 				
 				if(!empty($args)){
 					$userList=$db->doQueryWithArgs($query, $args, $types);
+					
 				}else{
 					addError(getMessages()->ERROR_API_USER_LIST_ALL);
 				}

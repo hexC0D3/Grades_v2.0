@@ -186,6 +186,7 @@ function validateDynamicInput($value, $type){
 		}
 		
 		if(in_array($type, array_keys($ids)) && is_numeric($value)){
+			
 			$value = (int)$value;
 			$table = $ids[$type];
 			

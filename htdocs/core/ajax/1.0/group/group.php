@@ -21,18 +21,11 @@ if(isset($_GET['id'])){
 				global $db;
 				
 				$JSON["settings"]=array();
-				$group_options=getGroupOptions($group_type_id);
+				$group_options=getGroupOptions($group_type_id, $_GET['id']);
 				/*specific group type options*/
 				foreach($group_options as $group_option){
-					if($admin || currentUserCan("manage_options_".$group_option["option_key"], $_GET['id'])){
-						
-						$JSON["settings"][]=array(
-							'key'=>$group_option["option_key"],
-							'input_data_type'=>$group_option["input_data_type"],
-							'required'=>$group_option["required"],
-							'options'=>$group_option["options"],
-							'description'=>getMessages()->$group_option["description_translation_key"]
-						);
+					if($admin || currentUserCan("manage_options_".$group_option["key"], $_GET['id'])){
+						$JSON["settings"][]=$group_option;
 					}
 				}
 				
@@ -303,6 +296,7 @@ if(isset($_GET['id'])){
 				foreach($data as $val){
 					if($all_fields && array_key_exists($val['option_key'], $_POST['options'])){
 						$validation = validateDynamicInput($_POST['options'][$val['option_key']], $val['input_data_type']);
+						
 						if($validation[0]){
 							$options[$val['id']] = $validation[1];
 						}else{
@@ -324,11 +318,12 @@ if(isset($_GET['id'])){
 						//create group
 						
 						$data = $db->doQueryWithoutArgs("SHOW TABLE STATUS LIKE 'groups'");
+						
 						$id = $data[0]['Auto_increment'];
 						
 						$JSON['group']['id'] = $id;
 					
-						$db->doQueryWithArgs("INSERT INTO groups(id,name,invite_only,type_id) VALUES(?,?,?,?)", array($id,$_POST['group_name'], ((int)$_POST['invite_only']), $_POST['group_type_id']), "sii");
+						$db->doQueryWithArgs("INSERT INTO groups(id,name,invite_only,type_id) VALUES(?,?,?,?)", array($id,$_POST['group_name'], ((int)$_POST['invite_only']), $_POST['group_type_id']), "isii");
 							
 						$admin_user_id = getUser()['id'];
 						
@@ -352,7 +347,7 @@ if(isset($_GET['id'])){
 						
 						//add admin user to group
 						
-						$db->doQueryWithArgs("INSERT INTO group_relations(member_id,group_id,member_type)", array($admin_user_id,$id,1), "iii");
+						$db->doQueryWithArgs("INSERT INTO group_relations(member_id,group_id,member_type) VALUES(?,?,?)", array($admin_user_id,$id,1), "iii");
 						
 						//get relation id
 						$relation_id = $db->doQueryWithArgs("SELECT id FROM group_relations WHERE member_id=? AND group_id=? AND member_type=?", array($admin_user_id,$id,1), "iii");
@@ -377,28 +372,50 @@ if(isset($_GET['id'])){
 							$db->doQueryWithArgs("INSERT INTO group_capabilities(relation_id,capability) VALUES ".implode(", ", $qm), $values, $types);
 							
 							if($_POST['parent_group_id']>0){
-								//set the parent of this group, but first check if parent group exists
-							
-								$data = $db->doQueryWithArgs("SELECT invite_only FROM groups WHERE id=?", array($_POST['parent_group_id']), "i");
+								//set the parent of this group, but first check if parent group exists and type is allowed
 								
-								if(count($data)==1){
+								//get allowed types
+								
+								$allowed_types = $db->doQueryWithArgs("SELECT parent_group_type_id FROM group_types WHERE id=?", array($_POST['group_type_id']), "i");
+								
+								
+								if(count($allowed_types) > 0){
 									
-									//check if user is allowed to create a sub-group if it's invite only
+									$args = array($_POST['parent_group_id'], $allowed_types[0]);
+									$types = "ii";
+									$_types = "AND ( type_id = ?";
 									
-									if($data[0]['invite_only'] == true){
-										if(currentUserCan('manage_members', $_POST['parent_group_id'])){
-											$db->doQueryWithArgs("INSERT INTO group_relations(member_id,group_id,member_type) VALUES(?,?,2)", array($id,$_POST['parent_group_id']), "ii");
-										}else{
-											addError(getMessages()->ERROR_API_PRIVILEGES);
-										}
-									}else{
-										$db->doQueryWithArgs("INSERT INTO group_relations(member_id,group_id,member_type) VALUES(?,?,2)", array($id,$_POST['parent_group_id']), "ii");
+									for($i=1;$i<count($allowed_types);$i++){
+										$_types .= " OR type_id = ?";
+										$args[] = $allowed_types[$i];
+										$types .= "i";
 									}
 									
-									#done creating a group puh..
-								}else{
-									addError(getMessages()->ERROR_GROUPS_PARENT_NOT_EXISTING);
+									$_types .= ")";
+								
+									$data = $db->doQueryWithArgs("SELECT invite_only FROM groups WHERE id=?".$_types, $args, $types);
+									
+									if(count($data)==1){
+										
+										//check if user is allowed to create a sub-group if it's invite only
+										
+										if($data[0]['invite_only'] == true){
+											if(currentUserCan('manage_members', $_POST['parent_group_id'])){
+												$db->doQueryWithArgs("INSERT INTO group_relations(member_id,group_id,member_type) VALUES(?,?,2)", array($id,$_POST['parent_group_id']), "ii");
+											}else{
+												addError(getMessages()->ERROR_API_PRIVILEGES);
+											}
+										}else{
+											$db->doQueryWithArgs("INSERT INTO group_relations(member_id,group_id,member_type) VALUES(?,?,2)", array($id,$_POST['parent_group_id']), "ii");
+										}
+										
+										#done creating a group puh..
+									}else{
+										addError(getMessages()->ERROR_GROUPS_PARENT_NOT_EXISTING);
+									}
+									
 								}
+								
 							}else{
 								//no error here
 							}
@@ -496,28 +513,55 @@ if(isset($_GET['id'])){
 	}
 }
 
-function getGroupOptions($group_type_id){
+function getGroupOptions($group_type_id, $group_id = null){
 	
 	global $db;
 	
 	$group_options = array();
 	
-	$data = $db->doQueryWithArgs("SELECT * FROM group_type_options WHERE group_type_id=?", array($group_type_id), "i");
+	$value = !is_null($group_id);
 	
-	$group_options[]=array(
+	$data = $db->doQueryWithArgs("SELECT * FROM group_type_options WHERE group_type_id=? ORDER BY id ASC", array($group_type_id), "i");
+	
+	$g_name = "";
+	$g_invite = false;
+	
+	if($value){
+		$v_data = $db->doQueryWithArgs("SELECT groups.name, groups.invite_only, group_options.value, group_type_options.option_key FROM group_options LEFT JOIN group_type_options ON group_options.group_type_option_id = group_type_options.id LEFT JOIN groups ON group_options.group_id = groups.id WHERE group_options.group_id=? ORDER BY group_type_options.id ASC", array($group_id), "i");
+		
+		$values = array();
+		
+		foreach($v_data as $v){
+			$values[$v['option_key']] = $v['value'];
+		}
+		
+		$g_name = $v_data[0]['name'];
+		$g_invite = $v_data[0]['invite_only'];
+		
+		unset($v_data);
+	}
+	
+	$group_options[0]=array(
 		'key' => 'name',
 		'input_data_type' => 'text',
 		'options' => json_decode('{"input_type":"textfield"}'),
 		'description' => getMessages()->GROUP_OPTIONS_NAME_DESC
 	);
-	$group_options[]=array(
+	$group_options[1]=array(
 		'key' => 'invite_only',
 		'input_data_type' => 'boolean',
 		'options' => json_decode('{"input_type":"checkbox"}'),
 		'description' => getMessages()->GROUP_OPTIONS_INVITE_ONLY_DESC
 	);
 	
-	foreach($data as $group_option){
+	if($value){
+		$group_options[0]['value'] = $g_name;
+		$group_options[1]['value'] = $g_invite;
+	}
+	
+	for($i=0;$i<count($data);$i++){
+		
+		$group_option = $data[$i];
 		
 		$group_options[]=array(
 			'key'=>$group_option["option_key"],
@@ -526,6 +570,11 @@ function getGroupOptions($group_type_id){
 			'options'=>translateOptions($group_option["options"]),
 			'description'=>getMessages()->$group_option["description_translation_key"]
 		);
+		
+		if($value){
+			$group_options[($i + 2)]['value'] = $values[$group_option["option_key"]];
+		}
+		
 	}
 	
 	return $group_options;

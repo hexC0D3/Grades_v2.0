@@ -1,7 +1,7 @@
 <?php
 
-if(isset($_GET['id']){
-	if(isset($_GET['action']){
+if(isset($_GET['id'])){
+	if(isset($_GET['action'])){
 		if($_GET['action']=='settings'){
 			if($is_get){
 				//get all possible settings
@@ -78,7 +78,7 @@ if(isset($_GET['id']){
 			addError(getMessages()->ERROR_API_REQUIRED_FIELDS);
 		}
 	}else if($is_delete){
-		if(isset($_DELETE['subject_id']){
+		if(isset($_DELETE['subject_id'])){
 			//delete subject
 			
 			//get parent group id
@@ -98,63 +98,38 @@ if(isset($_GET['id']){
 	}else if($is_get){
 		//list all subjects [filters]
 		
-		global $db;
+		$filters = getFilters();
 		
-		$data = $db->doQueryWithArgs("SELECT group_id FROM group_relations WHERE member_id=? AND member_type=4", array($_GET['id']), "i");
-		
-		if(count($data) == 1){
-			if(isUserMemberOf($data[0]["group_id"])){
+		if($filters!=false){
+			
+			$subjects=array();
 				
-				$filters=getFilters();
-		
-				if($filters!=false){
-					
-					$query="SELECT subjects.id,subjects.name FROM subjects WHERE 1=1";
-				
-					$groups=array();
-					$args=array();
-					$types="";
-					
-					if(isset($filters['group_parent_id'])){
-							
-						$query="SELECT subjects.id,subjects.name FROM (".
-							"SELECT * from group_relations LEFT JOIN subjects ON group_relations.member_id=subjects.id WHERE group_relations.group_id=? AND member_type=4".
-						") WHERE 1=1";
-						$args[]=$filters['group_parent_id'];
-						$type.="i";
-						
-					}
-					
-					if(isset($filters['name'])){
-						$query.=" AND subjects.name LIKE ?";
-						$args[]="%".$filters['name']."%";
-						$types.="s";
-					}
-					
-					if(isset($filters['items_per_page']) && isset($filters['page'])){
-						$query.=" LIMIT ?,?";
-						$args[]=$filters['items_per_page'];
-						$args[]=(((int)$filters['items_per_page']) * ((int)$filters['page']));
-						$types.="ii";
-					}
-					
-					if(!empty($args)){
-						$subjects=$db->doQueryWithArgs($query, $args, $types);
-					}else{
-						addError(getMessages()->ERROR_API_EVENTS_LIST_ALL);
-					}
-					
-					$JSON["subjects"]=$subjects;
-					
-				}else{
-					addError(getMessages()->ERROR_API_EVENTS_LIST_ALL);
-				}
+			$args=array();
+			$types="";
+			
+			$query = "SELECT subjects.id, subjects.name FROM subjects LEFT JOIN group_relations ON subjects.id = group_relations.member_id LEFT JOIN groups ON group_relations.group_id = groups.id WHERE group_relations.member_type=4";
+			
+			if(isset($filters['group_id'])){
+				$query .= " AND groups.id = ?";
+				$args[]=$filters['group_id'];
+				$types.='i';
+			}
+			
+			if(isset($filters['search'])){
+				$query .= " AND subjects.name LIKE ? ORDER BY name DESC LIMIT 10";
+				$args[]=$filters['search']."%";
+				$types.='s';
+			}
+			
+			if(!empty($args)){
+				$subjects = $db->doQueryWithArgs($query, $args, $types);
 				
 			}else{
-				addError(getMessages()->ERROR_API_PRIVILEGES);
+				addError(getMessages()->ERROR_API_SUBJECTS_LIST_ALL);
 			}
-		}else{
-			addError(getMessages()->UNKNOWN_ERROR(13));
+			
+			$JSON['subjects'] = $subjects;
+			
 		}
 
 	}else{

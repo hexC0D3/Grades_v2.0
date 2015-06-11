@@ -90,7 +90,7 @@ class DB{
 		if(is_bool($data)){
 			return $data;
 		}else{
-			 for ($result = array (); $result = $result->fetch_assoc(); $result[] = $row);
+			 for ($result = array (); $row = $data->fetch_assoc(); $result[] = $row);
 		}
 		
 		return $result;

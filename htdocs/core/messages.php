@@ -69,6 +69,10 @@
 						//List
 						$this->ERROR_API_EVENTS_LIST_ALL=_("You cannot list all events! Please use a filter");
 						
+					//Subjects
+						//List
+						$this->ERROR_API_SUBJECTS_LIST_ALL=_("You cannot list all subjects! Please use a filter");
+						
 			//Texts
 				//Input
 				$this->TEXT_INPUT_MAIL=_("yourname@domain.tld");
