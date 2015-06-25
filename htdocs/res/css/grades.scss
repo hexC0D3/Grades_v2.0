@@ -55,6 +55,10 @@
     }
 }
 
+//vars
+
+$color-blue:#34495e;
+
 body, html{
 	font-family: 'Roboto', sans-serif;
 	
@@ -67,6 +71,7 @@ h1, h2, h3, h4, h5, h6{
 }
 h1, h2, h3{
 	text-transform: uppercase;
+	color: $color-blue;
 }
 h1{
 	font-family: Roboto;
@@ -147,6 +152,26 @@ body > main{
 	position: relative;
 	
 	z-index: 2;
+	
+	form{
+		input{
+			border:none;
+			color: $color-blue;
+			height: 50px;
+			font-size: 40px;
+		}
+		
+		input[type=mail]{
+			border-bottom: 1px;
+  			border-bottom-color: $color-blue;
+  			border-bottom-style: inset;
+		}
+		input[type=submit]{
+			color: white;
+			background-color: $color-blue;
+			border-radius: 5px;
+		}
+	}
 }
 
 body > footer{
