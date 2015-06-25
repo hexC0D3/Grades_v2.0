@@ -41,27 +41,43 @@ if(isset($_GET['id'])){
 						);
 						
 						if(in_array($_PUT['option_key'], array_keys($global_options))){
+							
 							$validation=validateDynamicInput($_PUT['value'], $global_options[$_PUT['option_key']]);
+							
 							$_PUT['value']=$validation[1];
 							
-							if($validation[0]){
-								$db->doQueryWithArgs("REPLACE into groups (id,".$_PUT['option_key'].") values(?, ?)", array($_GET['id'], $_PUT['value']), "is");
+							if($validation[0] == true){
+								
+								$db->doQueryWithArgs("UPDATE groups SET ".$_PUT['option_key']." = ? WHERE id = ?", array($_PUT['value'], $_GET['id']), "si");
 							}else{
 								addError(getMessages()->ERROR_API_INVALID_INPUT);
 							}
 							
 						}else{
 							$data=$db->doQueryWithArgs("SELECT id,input_data_type FROM group_type_options WHERE option_key=?", array($_PUT['option_key']), "s");
+							
 							if(count($data)==1){
 								$data=$data[0];
 								
-								$id=$data->id;
+								$id=$data['id'];
 								
-								$validation=validateDynamicInput($_PUT['value'], $data->input_data_type);
+								$validation=validateDynamicInput($_PUT['value'], $data['input_data_type']);
+								
 								$_PUT['value']=$validation[1];
 								
 								if($validation[0]){
-									$db->doQueryWithArgs("REPLACE into group_options (group_id,group_type_option_id,value) values(?, ?, ?)", array($_GET['id'], $id, $_PUT['value']), "iis");
+									
+									$cnt = $db->doQueryWithArgs("SELECT id FROM group_options WHERE group_id=? AND group_type_option_id = ?", array($_GET['id'], $id), "ii");
+									
+									if(count($cnt) <= 0){
+										
+										$db->doQueryWithArgs("INSERT INTO group_options(group_id, group_type_option_id, value) VALUES (?,?,?)", array($_GET['id'], $id, $_PUT['value']), "iis");
+										
+									}else{
+										
+										$db->doQueryWithArgs("UPDATE group_options SET value = ? WHERE id = ?", array($_PUT['value'], $cnt[0]['id']), "si");									
+										
+									}
 								}else{
 									addError(getMessages()->ERROR_API_INVALID_INPUT);
 								}
@@ -80,7 +96,8 @@ if(isset($_GET['id'])){
 			}
 		}else if($_GET['action']=='capabilities'){
 			
-			if(currentUserCan('manage_capabilities', $_GET['id'])){
+			if(currentUserCan('
+			capabilities', $_GET['id'])){
 				if($is_get){
 					//get all capabilities
 					
@@ -360,7 +377,7 @@ if(isset($_GET['id'])){
 							$qm = array();
 							$types = "";
 							$values = array();
-							$capabilities = array('manage_capabilities', 'manage_options', 'manage_members', 'create_events', 'create_subject');
+							$capabilities = array('manage_capabilities', 'manage_options', 'manage_members');
 							
 							foreach($capabilities as $capability){
 								$qm[]="(?,?)";
@@ -477,6 +494,11 @@ if(isset($_GET['id'])){
 					
 				}
 				
+				if(isset($filters['search'])){
+					$query.=" AND groups.name LIKE ?";
+					$args[]=$filters['search']."%";
+					$types.="s";
+				}
 				if(isset($filters['name'])){
 					$query.=" AND groups.name LIKE ?";
 					$args[]="%".$filters['name']."%";
@@ -490,8 +512,8 @@ if(isset($_GET['id'])){
 				
 				if(isset($filters['items_per_page']) && isset($filters['page'])){
 					$query.=" LIMIT ?,?";
-					$args[]=$filters['items_per_page'];
 					$args[]=(((int)$filters['items_per_page']) * ((int)$filters['page']));
+					$args[]=$filters['items_per_page'];
 					$types.="ii";
 				}
 				
@@ -526,10 +548,10 @@ function getGroupOptions($group_type_id, $group_id = null){
 	$g_name = "";
 	$g_invite = false;
 	
+	$values = array();
+	
 	if($value){
-		$v_data = $db->doQueryWithArgs("SELECT groups.name, groups.invite_only, group_options.value, group_type_options.option_key FROM group_options LEFT JOIN group_type_options ON group_options.group_type_option_id = group_type_options.id LEFT JOIN groups ON group_options.group_id = groups.id WHERE group_options.group_id=? ORDER BY group_type_options.id ASC", array($group_id), "i");
-		
-		$values = array();
+		$v_data = $db->doQueryWithArgs("SELECT groups.name, groups.invite_only, group_options.value, group_type_options.option_key FROM groups LEFT JOIN group_type_options ON groups.type_id=group_type_options.group_type_id LEFT JOIN group_options ON group_type_options.id=group_options.group_type_option_id WHERE groups.id=? ORDER BY group_type_options.id ASC", array($group_id), "i");
 		
 		foreach($v_data as $v){
 			$values[$v['option_key']] = $v['value'];
@@ -578,22 +600,6 @@ function getGroupOptions($group_type_id, $group_id = null){
 	}
 	
 	return $group_options;
-}
-
-function translateOptions($options){
-	$data = json_decode($options);
-	
-	if($data->input_type == 'select'){
-		foreach($data->select as $key => $option){
-			
-			$trans_key = $option->title_tanslation_key;
-			
-			unset($data->select[$key]->title_tanslation_key);
-			$data->select[$key]->description = getMessages()->$trans_key;
-		}
-	}
-	
-	return $data;
 }
 
 function getUsersWithCap($group_id, $capability){

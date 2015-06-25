@@ -113,8 +113,7 @@
 				
 			//Events
 				//Global event options
-				$this->GROUP_OPTIONS_TITLE_DESC=_("The title of this event");
-				$this->GROUP_OPTIONS_DESCRIPTION_DESC=_("Give this event a short description");
+				$this->EVENT_OPTIONS_TITLE_DESC=_("The title of this event");
 				
 			//Subjects
 			$this->SUBJECT_OPTIONS_NAME_DESC=_("The name of this subject");
@@ -152,7 +151,13 @@
 				
 				//Event Options
 				$this->DYNAMIC_EVENT_TYPE_OPTIONS_TEST_LESSON_ID_DESC=_("The lesson this test takes place");
+				$this->DYNAMIC_EVENT_TYPE_OPTIONS_TEST_DAY_DESC=_("The day this lesson takes place");
 				$this->DYNAMIC_EVENT_TYPE_OPTIONS_TEST_GRADE_WEIGT_DESC=_("The grade weight this test has");
+				
+				$this->DYNAMIC_EVENT_TYPE_OPTIONS_REPETITION_INTERVAL_DESC=_("Repetition interval in weeks");
+				$this->DYNAMIC_EVENT_TYPE_OPTIONS_REPETITION_INTERVAL_0_DESC=_("No Repetition, a one time lesson");
+				$this->DYNAMIC_EVENT_TYPE_OPTIONS_REPETITION_INTERVAL_1_DESC=_("Every week");
+				$this->DYNAMIC_EVENT_TYPE_OPTIONS_REPETITION_INTERVAL_2_DESC=_("Every second week");
 				
 				$this->DYNAMIC_EVENT_TYPE_OPTIONS_LESSON_SUBJECT_ID_DESC=_("The subject of this lesson");
 				$this->DYNAMIC_EVENT_TYPE_OPTIONS_LESSON_TIME_FROM_DESC=_("The time this lesson starts");

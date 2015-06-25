@@ -13,24 +13,8 @@ if(isset($_GET['id'])){
 		if($_GET['action']=='settings'){
 			if($is_get){
 				//get all possible settings
-				
-				//get requested event
-				
-				global $db;
-				
-				$JSON["settings"]=array();
-				$event_options=getEventOptions($event_type_id);
-				/*specific event type options*/
-				foreach($event_options as $event_option){
-						
-					$JSON["settings"][]=array(
-						'key'=>$event_option["option_key"],
-						'input_data_type'=>$event_option["input_data_type"],
-						'required'=>$event_option["required"],
-						'options'=>$event_option["options"],
-						'description'=>getMessages()->$group_option["description_translation_key"]
-					);
-				}
+				$event_options=getEventOptions($event_type_id, $_GET['id']);
+				$JSON["settings"]=$event_options;
 				
 			}else if($is_put){
 				//update settings
@@ -100,9 +84,11 @@ if(isset($_GET['id'])){
 			
 			$group_id = $data[0]["group_id"];
 			
-			$options = $db->doQueryWithArgs("SELECT event_type_options.option_key,event_options.value FROM event_type_options LEFT JOIN event_options ON event_type_options.id=event_options.event_type_option_id WHERE event_type_options.id=? AND event_options.event_id=?", array($event_type_id, $_GET['id']), "ii");
+			$options = $db->doQueryWithArgs("SELECT events.title, event_types.title as event_type FROM events LEFT JOIN event_types ON events.type_id=event_types.id WHERE events.id=?", array($_GET['id']), "i");
 			
 			$JSON['event']=$options;
+			
+			var_dump(getEventOptions($event_type_id, $_GET['id']));
 			
 		}else{
 			addError(getMessages()->UNKNOWN_ERROR(7));
@@ -113,7 +99,7 @@ if(isset($_GET['id'])){
 		//create new event
 		
 		if(isset($_POST['event_title']) && isset($_POST['event_type_id']) && isset($_POST['parent_group_id']) && isset($_POST['options'])){
-			if(currentUserCan("add_members", $_POST['parent_group_id'])){
+			if(currentUserCan("manage_members", $_POST['parent_group_id'])){
 				if(is_array($_POST['options'])){
 					global $db;
 					$data = $db->doQueryWithArgs("SELECT id, option_key, input_data_type FROM event_type_options WHERE required = 1 AND event_type_id=?", array($_POST['event_type_id']), "i");
@@ -123,10 +109,11 @@ if(isset($_GET['id'])){
 					$options = array();
 					
 					foreach($data as $val){
+						
 						if($all_fields && array_key_exists($val['option_key'], $_POST['options'])){
 							$validation = validateDynamicInput($_POST['options'][$val['option_key']], $val['input_data_type']);
 							if($validation[0]){
-								$options[$val['id']] = $validation[1]
+								$options[$val['id']] = $validation[1];
 							}else{
 								$all_fields=false;
 								addError(getMessages()->ERROR_API_INVALID_INPUT);
@@ -143,6 +130,7 @@ if(isset($_GET['id'])){
 						$data = $db->doQueryWithoutArgs("SHOW TABLE STATUS LIKE 'events'");
 						$id = $data[0]['Auto_increment'];
 						
+						$JSON['event']['id'] = $id;
 						
 						$db->doQueryWithArgs("INSERT INTO events(id, title,type_id) VALUES(?,?,?)", array($id, $_POST['event_title'], $_POST['event_type_id']), "isi");
 						
@@ -157,11 +145,13 @@ if(isset($_GET['id'])){
 							$types.="iis";
 						}
 						
-						$db->doQueryWithArgs("INSERT INTO event_options(event_id,event_type_option_id,value) VALUES ".implode(", ", $qm), $values, $types);
+						$db->doQueryWithArgs(("INSERT INTO event_options(event_id,event_type_option_id,value) VALUES ".implode(", ", $qm).""), $values, $types);
 						
 						//set parent group
 						
 						$db->doQueryWithArgs("INSERT INTO group_relations(member_id,group_id,member_type) VALUES(?,?,3)", array($id,$_POST['parent_group_id']), "ii");
+						
+						
 						
 					}else{
 						addError(getMessages()->ERROR_API_REQUIRED_FIELDS);
@@ -178,7 +168,7 @@ if(isset($_GET['id'])){
 		}
 		
 	}else if($is_delete){
-		if(isset($_DELETE['event_id']){
+		if(isset($_DELETE['event_id'])){
 			//delete event
 			
 			//get parent group id
@@ -200,69 +190,156 @@ if(isset($_GET['id'])){
 		
 		global $db;
 		
+		
+		$query="SELECT events.id,events.title,events.type_id, event_types.title as event_type FROM events LEFT JOIN event_types ON events.type_id=event_types.id WHERE 1=?";
+		
+		$events=array();
+		$args=array(1);
+		$types="i";
+		
 		$filters=getFilters();
 		
 		if($filters!=false){
 			
-			$query="SELECT groups.id,groups.name FROM groups LEFT JOIN group_types ON groups.type_id=group_types.id WHERE 1=1";
-		
-			$groups=array();
-			$args=array();
-			$types="";
-			
-			if(isset($filters['group_parent_id'])){
+			if(isset($filters['type']) && $filters['type'] == 'settings' && isset($filters['event_type_id'])){
+				
+				$event_options=getEventOptions($filters['event_type_id']);
+				$JSON['settings'] = $event_options;
+				
+			}else{
+				
+				if(isset($filters['title'])){
+					$query.=" AND events.title LIKE ?";
+					$args[]="%".$filters['title']."%";
+					$types.="s";
+				}
+				if(isset($filters['search'])){
+					$query.=" AND events.title LIKE ?";
+					$args[]=$filters['search']."%";
+					$types.="s";
+				}
+				if(isset($filters['event_type_id'])){
+					$query.=" AND events.type_id = ?";
+					$args[]=$filters['event_type_id'];
+					$types.="s";
+				}
+				if(isset($filters['event_type'])){
+					$query.=" AND event_types.title = ?";
+					$args[]=$filters['event_type'];
+					$types.="s";
+				}
+				if(isset($filters['items_per_page']) && isset($filters['page'])){
+					$query.=" LIMIT ?,?";
+					$args[]=(((int)$filters['items_per_page']) * ((int)$filters['page']));
+					$args[]=$filters['items_per_page'];
+					$types.="ii";
+				}
+				
+				if(!empty($args)){
 					
-				$query="SELECT events.id,events.title FROM (".
-					"SELECT * from group_relations LEFT JOIN events ON group_relations.member_id=events.id WHERE group_relations.group_id=? AND member_type=3".
-				") LEFT JOIN event_types ON events.type_id=event_types.id WHERE 1=1";
-				$args[]=$filters['group_parent_id'];
-				$type.="i";
+				}else{
+					addError(getMessages()->ERROR_API_EVENTS_LIST_ALL);
+				}
+			}
+			
+		}
+		
+		$events=$db->doQueryWithArgs($query, $args, $types);
+				
+		if(isset($filters['group_id'])){
+			
+			foreach($events as $key => $event){
+				
+				if(!isInGroup($filters['group_id'], 3, $event['id'])){
+					unset($events[$key]);
+				}
 				
 			}
 			
-			if(isset($filters['title'])){
-				$query.=" AND events.title LIKE ?";
-				$args[]="%".$filters['title']."%";
-				$types.="s";
-			}
-			if(isset($filters['event_type_id'])){
-				$query.=" AND events.type_id = ?";
-				$args[]=$filters['event_type_id'];
-				$types.="s";
-			}
+			$events = array_values($events);
 			
-			if(isset($filters['items_per_page']) && isset($filters['page'])){
-				$query.=" LIMIT ?,?";
-				$args[]=$filters['items_per_page'];
-				$args[]=(((int)$filters['items_per_page']) * ((int)$filters['page']));
-				$types.="ii";
-			}
-			
-			if(!empty($args)){
-				$events=$db->doQueryWithArgs($query, $args, $types);
-			}else{
-				addError(getMessages()->ERROR_API_EVENTS_LIST_ALL);
-			}
-			
-			$JSON["events"]=$events;
-			
-		}else{
-			addError(getMessages()->ERROR_API_EVENTS_LIST_ALL);
 		}
+		
+		foreach($events as $key => $event){
+			$events[$key]['options'] = getEventOptions($event['type_id'], $event['id'], false);
+			$data = $db->doQueryWithArgs("SELECT group_id FROM group_relations WHERE member_id=? AND member_type=3", array($event['id']), "i");
+
+			$events[$key]['canEdit'] = (count($data) > 0) ? (currentUserCan('manage_members', $data[0]['group_id'])) : false;
+		}
+		
+		$JSON["events"]=$events;
 		
 	}else{
 		addError(getMessages()->ERROR_API_REQUIRED_FIELDS);
 	}
 }
 
-function getEventOptions($event_type_id){
-	$event_options=$db->doQueryWithArgs("SELECT * FROM event_type_options WHERE event_type_id=?", array($group_type_id), "i");
-	$event_options[]=array(
-		'key'=>'title'
-		'input_data_type'=>'text',
-		'options'=>'{"input_type":"textfield"}',
-		'description'=>getMessages()->GROUP_OPTIONS_TITLE_DESC;
+function getEventOptions($event_type_id, $event_id = null, $fields = true){
+	global $db;
+	
+	$event_options = array();
+	
+	$value = !is_null($event_id);
+	
+	$data = $db->doQueryWithArgs("SELECT * FROM event_type_options WHERE event_type_id=? ORDER BY id ASC", array($event_type_id), "i");
+	
+	$e_title = "";
+	
+	$values = array();
+	
+	if($value){
+		$v_data = $db->doQueryWithArgs("SELECT events.title, event_options.value, event_type_options.option_key FROM events LEFT JOIN event_type_options ON events.type_id=event_type_options.event_type_id LEFT JOIN event_options ON event_type_options.id=event_options.event_type_option_id WHERE events.id=? ORDER BY event_type_options.id ASC", array($event_id), "i");
+		
+		foreach($v_data as $v){
+			$values[$v['option_key']] = $v['value'];
+		}
+		
+		$e_name = $v_data[0]['title'];
+		
+		unset($v_data);
+	}
+	
+	$event_options[0]=array(
+		'key' => 'title',
+		'input_data_type' => 'text',
+		'options' => json_decode('{"input_type":"textfield"}'),
+		'description'=>getMessages()->EVENT_OPTIONS_TITLE_DESC
 	);
+	
+	if($value){
+		$event_options[0]['value'] = $e_name;
+	}
+	
+	if($fields){
+		for($i=0;$i<count($data);$i++){
+		
+			$event_option = $data[$i];
+			
+			$event_options[]=array(
+				'key'=>$event_option["option_key"],
+				'input_data_type'=>$event_option["input_data_type"],
+				'required'=>$event_option["required"],
+				'options'=>translateOptions($event_option["options"]),
+				'description'=>getMessages()->$event_option["description_translation_key"]
+			);
+			
+			if($value){
+				$event_options[($i + 2)]['value'] = $values[$event_option["option_key"]];
+			}
+			
+		}
+	}else{
+		$event_options = array();
+		
+		for($i=0;$i<count($data);$i++){
+		
+			$event_option = $data[$i];
+			
+			$event_options[$event_option["option_key"]]=$values[$event_option["option_key"]];
+			
+		}
+	}
+	
 	return $event_options;
 }
 	

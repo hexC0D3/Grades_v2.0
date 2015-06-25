@@ -6,11 +6,30 @@
     "group"							:		"Gruppe",
     "groups"						:		"Gruppen",
     "add_group"						:		"Füge eine Gruppe hinzu",
+    "edit_group"					:		"Bearbeite eine Gruppe",
     "invite_only"					:		"Um dieser Gruppe beitreten zu können, muss man eingeladen werden.",
     "join"							:		"Beitreten",
     "leave"							:		"Verlassen",
     "unjoinable"					:		"Nicht beitretbar",
     "group_no_action"				:		"Keine Aktionen verfügbar",
+    
+    "add_event"						:		"Füge ein Event hinzu",
+    "test"							:		"Prüfung",
+    "lesson"						:		"Lektion",
+    "task"							:		"Aufgabe",
+    "event"							:		"Event",
+    
+    "input_lesson"					:		"Die dazugehörige Lektion",
+    "input_test"					:		"Die dazugehörige Prüfung",
+    "input_task"					:		"Die dazugehörige Aufgabe",
+    "input_event"					:		"Das dazugehörige Event",
+    
+    "input_date_time_from"			:		"Das Startdatum",
+    "input_date_time_to"			:		"Das Enddatum",
+    "input_date_time_reminder"		:		"Die Erinnerungszeit",
+    "input_date_test_date"			:		"Das Prüfungsdatum",
+    
+    "edit"							:		"Bearbeiten",
     
     "grade"							:		"Note",
     "grades"						:		"Noten",
@@ -59,5 +78,7 @@
     
     "name"							:		"Name",
     "create"						:		"Erstellen",
-    "no_parent"						:		"Nicht untergeordnet"
+    "update"						:		"Aktualisieren",
+    "no_parent"						:		"Nicht untergeordnet",
+    "parent"						:		"übergeordnete Gruppe"
 }

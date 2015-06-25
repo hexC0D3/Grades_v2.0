@@ -32,15 +32,22 @@
 		
 		<script src="res/js/angular-no-captcha.js" charset="utf-8"></script>
 		
-		<script src="/res/js/angular-cookies.min.js" charset="utf-8"></script>
+		<script src="res/js/angular-cookies.min.js" charset="utf-8"></script>
 		
-		<script src="/res/js/angular-sanitize.min.js" charset="utf-8"></script>
+		<script src="res/js/angular-sanitize.min.js" charset="utf-8"></script>
 		
-		<script src="/res/js/angular-localization.min.js" charset="utf-8"></script>
+		<script src="res/js/angular-localization.min.js" charset="utf-8"></script>
 		
-		<script src="/res/js/ngStorage.min.js" charset="utf-8"></script>
+		<script src="res/js/ngStorage.min.js" charset="utf-8"></script>
 		
-		<script src="/res/js/ui-bootstrap-tpls-0.13.0.min.js" charset="utf-8"></script>
+		<script src="res/js/ui-bootstrap-tpls-0.13.0.min.js" charset="utf-8"></script>
+		
+		<script src="res/js/bootstrap.min.js" charset="utf-8"></script>
+		<script src="res/js/moment.min.js" charset="utf-8"></script>
+		<script src="res/js/bootstrap-datetimepicker.js" charset="utf-8"></script>
+		<script src="res/js/fullcalendar.min.js" charset="utf-8"></script>
+		<script src="res/js/lang-all.js" charset="utf-8"></script>
+		<script src="res/js/angular-ui-calendar.js" charset="utf-8"></script>
 		
 		<script src="res/js/grades.js" charset="utf-8"></script>
 		

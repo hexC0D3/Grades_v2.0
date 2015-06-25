@@ -66,6 +66,7 @@ class DB{
 		$types = $types==false?$this->generateTypesString($arrayOfValues):$types;
 		$values = array();
 		// Create an array full of references, needed for prepared statements
+		
 		for($i = 0;$i<count($arrayOfValues);$i++){
 			$values[$i] = &$arrayOfValues[$i];
 		}

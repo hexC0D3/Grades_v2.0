@@ -131,9 +131,12 @@ function validateDynamicInput($value, $type){
 		$value = (float)$value + 0;
 	}else if($type=='text'){
 		$valid = is_string($value);
-		$value = htmlentities(stripslashes(strip_tags($value)));
+		$value = stripslashes(strip_tags($value));
+	}else if($type=='url'){
+		$valid = (!filter_var($value, FILTER_VALIDATE_URL) === false);
 	}else if($type == 'boolean'){
-		$value = (bool)$value;
+		$value = (int)($value === 'true');
+		$valid = true;
 	}else if($type == 'timestamp'){
 		$valid = ((string) (int) $value === $value) && ($value <= PHP_INT_MAX) && ($value > 0);
 	}else if($type == 'mark_calc_method' && is_numeric($value)){
@@ -204,6 +207,22 @@ function validateDynamicInput($value, $type){
 	}
 	
 	return array($valid, $value);
+}
+
+function translateOptions($options){
+	$data = json_decode($options);
+	
+	if($data->input_type == 'select'){
+		foreach($data->select as $key => $option){
+			
+			$trans_key = $option->title_tanslation_key;
+			
+			unset($data->select[$key]->title_tanslation_key);
+			$data->select[$key]->description = getMessages()->$trans_key;
+		}
+	}
+	
+	return $data;
 }
 
 /** Various delete functions **/
@@ -286,25 +305,32 @@ function deleteGrades($user_id, $group_id){
 	
 }
 
-function isUserMemberOf($group_id){
+function isInGroup($group_id, $member_type_id, $member_id){
 	global $db;
 	
 	//get direct parent group
 	
-	$data = $db->doQueryWithArgs("SELECT group_id FROM group_relations WHERE member_id=? AND member_type=1", array(getUser()['id']), "i");
+	$data = $db->doQueryWithArgs("SELECT group_id FROM group_relations WHERE member_id=? AND member_type=?", array($member_id, $member_type_id), "ii");
 	
 	if(count($data) == 1){
+		
 		$db->doQueryWithArgs("CALL `getParentGroups`(?, @p1);", array($data[0]["group_id"]), "i");
-		$data = $db->doQueryWithoutArgs("SELECT @p1 AS group_ids;");
+		
+		$db->doQueryWithArgs("CALL `getParentGroups`(?, @p2);", array($group_id), "i");
+		
+		$data = $db->doQueryWithoutArgs("SELECT @p1 AS group_member_ids, @p2 AS group_ids;");
+		
 		if(count($data)==1){
-			$ids = explode(",", $data[0]['group_ids']);
-			return in_array($group_id, $ids);
+			$group_member_ids = explode(",", $data[0]['group_member_ids']);
+			$group_ids = explode(",", $data[0]['group_ids']);
+			
+			return (count(array_intersect($group_member_ids, $group_ids)) > 0);
 		}else{
 			addError(getMessages()->UNKNOWN_ERROR(9));
 		}
 
 	}else{
-		addError(getMessages()->UNKNOWN_ERROR(10));
+		addError(getMessages()->ERROR_API_INVALID_INPUT);
 	}
 	
 	return false;

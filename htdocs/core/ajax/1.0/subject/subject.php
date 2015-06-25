@@ -48,7 +48,7 @@ if(isset($_GET['id'])){
 		$data = $db->doQueryWithArgs("SELECT group_id FROM group_relations WHERE member_id=? AND member_type=4", array($_GET['id']), "i");
 		
 		if(count($data) == 1){
-			if(isUserMemberOf($data[0]["group_id"])){
+			if(isInGroup($data[0]["group_id"], 1, getUser()['id'])){
 				$data = $db->doQueryWithArgs("SELECT id,name FROM subjects WHERE id=?", array($_GET['id']), "i");
 				$JSON['subject']=$data[0];
 			}else{
@@ -63,7 +63,7 @@ if(isset($_GET['id'])){
 		//create new subject
 		
 		if(isset($_POST['subject_name']) && isset($_POST['parent_group_id'])){
-			if(currentUserCan("add_members", $_POST['parent_group_id'])){
+			if(currentUserCan("manage_members", $_POST['parent_group_id'])){
 				$data = $db->doQueryWithoutArgs("SHOW TABLE STATUS LIKE 'subjects'");
 				$id = $data[0]['Auto_increment'];
 				
@@ -109,16 +109,17 @@ if(isset($_GET['id'])){
 			
 			$query = "SELECT subjects.id, subjects.name FROM subjects LEFT JOIN group_relations ON subjects.id = group_relations.member_id LEFT JOIN groups ON group_relations.group_id = groups.id WHERE group_relations.member_type=4";
 			
-			if(isset($filters['group_id'])){
-				$query .= " AND groups.id = ?";
-				$args[]=$filters['group_id'];
-				$types.='i';
-			}
-			
 			if(isset($filters['search'])){
 				$query .= " AND subjects.name LIKE ? ORDER BY name DESC LIMIT 10";
 				$args[]=$filters['search']."%";
 				$types.='s';
+			}
+			
+			if(isset($filters['items_per_page']) && isset($filters['page'])){
+				$query.=" LIMIT ?,?";
+				$args[]=(((int)$filters['items_per_page']) * ((int)$filters['page']));
+				$args[]=$filters['items_per_page'];
+				$types.="ii";
 			}
 			
 			if(!empty($args)){
@@ -126,6 +127,18 @@ if(isset($_GET['id'])){
 				
 			}else{
 				addError(getMessages()->ERROR_API_SUBJECTS_LIST_ALL);
+			}
+			
+			if(isset($filters['group_id'])){
+				
+				for($i=0;$i<count($subjects);$i++){
+					if(!isInGroup($filters['group_id'], 4, $subjects[$i]['id'])){
+						unset($subjects[$i]);
+					}
+				}
+				
+				$subjects = array_values($subjects);
+				
 			}
 			
 			$JSON['subjects'] = $subjects;

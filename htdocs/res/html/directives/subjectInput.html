@@ -1,5 +1,5 @@
-<div ng-controller="SubjectInputController as subjectiC">
+<div ng-controller="SubjectInputController as subjectiC" ng-init="subjectiC.value = inputValue">
 
-	<input class="form-control" type="text" placeholder="{{inputPlaceholder}}" ng-model="subjectiC.value" typeahead-loading="loadingData" typeahead="subject.id as subject.desc for subject in subjectiC.getSubject($viewValue, inputGroupID)" typeahead-on-select="subjectiC.selectValue($item, $model, $label)" name="{{inputName}}" value="{{inputValue}}">
+	<input class="form-control" type="text" placeholder="{{inputPlaceholder}}" ng-model="subjectiC.value" typeahead-loading="loadingData" typeahead="subject.id as subject.desc for subject in subjectiC.getSubject($viewValue, inputGroupID)" typeahead-on-select="subjectiC.selectValue($item, $model, $label)" name="{{$parent.inputName}}" autocomplete="off">
 	
 </div>

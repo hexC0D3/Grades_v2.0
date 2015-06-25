@@ -1,0 +1,4 @@
+<div ng-controller="EventInputController as eventiC" ng-init="eventiC.genPlaceholder(inputPlaceholder, inputTransPlaceholder);eventiC.value = inputValue;eventiC.inputType = inputType;">
+	<input class="form-control" type="text" placeholder="{{eventiC.placeholder}}" ng-model="$parent.inputModel" typeahead-loading="loadingData" typeahead="event.id as event.desc for event in eventiC.getEvent($viewValue)" typeahead-on-select="eventiC.selectValue($item, $model, $label)" name="{{$parent.inputName}}" autocomplete="off">
+	
+</div>

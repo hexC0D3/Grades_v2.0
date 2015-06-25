@@ -143,6 +143,13 @@
 						$types.="s";
 					}
 					
+					if(isset($filters['items_per_page']) && isset($filters['page'])){
+						$query.=" LIMIT ?,?";
+						$args[]=(((int)$filters['items_per_page']) * ((int)$filters['page']));
+						$args[]=$filters['items_per_page'];
+						$types.="ii";
+					}
+					
 				}
 				
 				if(!empty($args)){

@@ -24,55 +24,7 @@
 			</div>
 		</div>
 		
-		
-		<div ng-repeat="field in groupC.settings" class="form-group" ng-class="{'required' : field.required}">
-			
-			<div class="text" ng-if="field.input_data_type == 'text'">
-				
-				<input class="form-control" type="text" name="{{field.key}}" ng-if="field.options.input_type == 'textfield'" placeholder="{{field.description}}">
-				
-				<textarea class="form-control" name="{{field.key}}" ng-if="field.options.input_type == 'textarea'"></textarea>
-				
-			</div>
-			
-			<div class="boolean" ng-if="field.input_data_type == 'boolean'">
-				
-				<div class="checkbox" ng-if="field.options.input_type == 'checkbox'">
-					<label class="desc" for="{{field.key}}">
-						<input type="checkbox" name="{{field.key}}" id="{{field.key}}">
-						{{field.description}}
-					</label>
-				</div>
-				
-			</div>
-			
-			<div class="user" ng-if="field.input_data_type == 'user_id'">
-					
-					<user-input ng-if="field.options.input_type == 'user'" input-name="field.key" input-placeholder="field.description" input-value=""></user-input>
-				
-			</div>
-			
-			<div class="subject" ng-if="field.input_data_type == 'subject_id'">
-				
-				<subject-input ng-if="field.options.input_type == 'subject'" input-name="field.key" input-placeholder="field.description" input-group-id="groupC.parentID" input-value=""></subject-input>
-				
-			</div>
-			
-			<div class="select" ng-if="field.input_data_type == 'select'">
-				
-				<select class="form-control" name="{{field.key}}" ng-if="field.options.input_type == 'select'">
-					<option ng-repeat="option in field.options.select" value="{{option.value}}">{{option.description}}</option>
-				</select>
-				
-			</div>
-			
-			<div class="url" ng-if="field.input_data_type == 'url'">
-				
-				<input class="form-control" type="text" name="{{field.key}}" ng-if="field.options.input_type == 'url'" placeholder="{{field.description}}">
-				
-			</div>
-			
-		</div>
+		<repeat-fields fields="groupC.settings" parent-group-id="groupC.parentID"></repeat-fields>
 		
 		<input class="btn btn-primary" type="submit" data-i18n-attr="{value: 'common.create'}">
 		

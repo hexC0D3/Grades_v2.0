@@ -1,5 +1,5 @@
-<div ng-controller="UserInputController as useriC">
+<div ng-controller="UserInputController as useriC" ng-init="useriC.value = inputValue">
 
-	<input class="form-control" type="text" placeholder="{{inputPlaceholder}}" ng-model="useriC.value" typeahead-loading="loadingData" typeahead="user.id as user.desc for user in useriC.getUser($viewValue)" typeahead-on-select="useriC.selectValue($item, $model, $label)" name="{{inputName}}" value="{{inputValue}}">
+	<input class="form-control" type="text" placeholder="{{inputPlaceholder}}" ng-model="useriC.value" typeahead-loading="loadingData" typeahead="user.id as user.desc for user in useriC.getUser($viewValue)" typeahead-on-select="useriC.selectValue($item, $model, $label)" name="{{$parent.inputName}}" autocomplete="off">
 	
 </div>

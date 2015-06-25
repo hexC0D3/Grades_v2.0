@@ -1,0 +1,26 @@
+<div class="content" ng-controller="EventAddController as eventC">
+	<h1 i18n="common.add_event"></h1>
+	
+	<form ng-submit="eventC.create($event)">
+		
+		<div class="form-group required">
+			<div class="group_type">
+				<select ng-model="eventC.event_type" class="form-control" ng-change="eventC.updateFields()">
+					<option i18n="common.test" value="1"></option>
+					<option i18n="common.lesson" value="2"></option>
+					<option i18n="common.task" value="3"></option>
+					<option i18n="common.event" value="4"></option>
+				</select>
+			</div>
+		</div>
+		
+		<div class="form-group required">
+			<parent-input input-model="eventC.parentID" input-trans-placeholder="'common.parent'"></parent-input>
+		</div>
+		
+		<repeat-fields fields="eventC.settings" parent-group-id="eventC.parentID" ></repeat-fields>
+				
+		<input class="btn btn-primary" type="submit" data-i18n-attr="{value: 'common.create'}">
+		
+	</form>
+</div>

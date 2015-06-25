@@ -40,7 +40,7 @@ function grades_add(){
 
 /* Angular */
 
-var grades = angular.module('grades', ['ngRoute', 'noCAPTCHA', 'ngStorage', 'ngLocalize', 'ui.bootstrap']);
+var grades = angular.module('grades', ['ngRoute', 'noCAPTCHA', 'ngStorage', 'ngLocalize', 'ui.bootstrap', 'ui.calendar']);
 
 /* App */
 
@@ -92,6 +92,15 @@ grades.config(['noCAPTCHAProvider', '$httpProvider', '$routeProvider', '$locatio
     $routeProvider.
     	when('/group/about/:groupID', {
 	    	templateUrl: 'res/html/group/group.html'
+    	}).
+    	when('/group/edit/:groupID', {
+	    	templateUrl: 'res/html/group/edit.html'
+    	}).
+    	when('/event/about/:eventID', {
+	    	templateUrl: 'res/html/event/event.html'
+    	}).
+    	when('/event/edit/:eventID', {
+	    	templateUrl: 'res/html/event/edit.html'
     	}).
 		when('/:name*', {
 			templateUrl: function(urlAttr){
@@ -188,6 +197,60 @@ appController.directive("subjectInput", function(){
 			inputValue: '=inputValue'
 	    },
 		templateUrl: '/res/html/directives/subjectInput.html'
+	};
+});
+
+appController.directive("repeatFields", function(){
+	return {
+		restrict: 'E',
+		scope: {
+			fields: '=fields',
+			parentGroupID: '=parentGroupId'
+	    },
+		templateUrl: '/res/html/directives/fields.html'
+	};
+});
+
+appController.directive("parentInput", function(){
+	return {
+		restrict: 'E',
+		scope: {
+			inputName: '=inputName',
+			inputPlaceholder: '=inputPlaceholder',
+			inputTransPlaceholder: '=inputTransPlaceholder',
+			inputModel: '=inputModel',
+			inputValue: '=inputValue'
+	    },
+		templateUrl: '/res/html/directives/parentInput.html'
+	};
+});
+
+appController.directive("eventInput", function(){
+	return {
+		restrict: 'E',
+		scope: {
+			inputName: '=inputName',
+			inputPlaceholder: '=inputPlaceholder',
+			inputTransPlaceholder: '=inputTransPlaceholder',
+			inputType: '=inputType',
+			inputValue: '=inputValue'
+	    },
+		templateUrl: '/res/html/directives/eventInput.html'
+	};
+});
+
+appController.directive("dateInput", function(){
+	return {
+		restrict: 'E',
+		scope: {
+			inputName: '=inputName',
+			inputPlaceholder: '=inputPlaceholder',
+			inputTransPlaceholder: '=inputTransPlaceholder',
+			inputType: '=inputType',
+			inputValue: '=inputValue',
+			inputTime: '=inputTime'
+	    },
+		templateUrl: '/res/html/directives/dateInput.html'
 	};
 });
 
@@ -323,9 +386,98 @@ grades.controller("RegisterController", ['$scope', '$http', '$location', '$sessi
 
 /* Dashboard */
 
-grades.controller("DashboardController", function(){
+grades.controller("DashboardController", ['$scope', '$http' ,'$sessionStorage', '$routeParams', '$location', '$modal', function($scope, $http, $sessionStorage, $routeParams, $location, $modal){
 	
-});
+	var $me = this;
+	
+	this.$scope	= $scope;
+    
+    this.events = [];
+	
+	this.refreshEvents = function(){
+		
+		$http.get($me.$storage.apiURL+"/event/?" + jQuery.param({session_token:$me.$storage.sessionToken})).
+					
+			success(function(data, status, headers, config) {
+				data = angular.fromJson(data);
+				
+				if(grades_validateAPIResponse(data)){
+					var e = [];
+					for(var i=0;i<data.events.length;i++){
+						
+						e[i] = {id:data.events[i].id, title:data.events[i].title, editable:data.events[i].canEdit, className:[]};
+						
+						if(data.events[i].event_type == 'event'){
+							
+							e[i].allDay		= Boolean(data.events[i].options.event_full_day);
+							e[i].start		= new Date(data.events[i].options.time_from *1000);
+							e[i].end		= new Date(data.events[i].options.time_to   *1000);
+							e[i].className.push('event-type-event');
+							
+						}else if(data.events[i].event_type == 'lesson'){
+							e[i].allDay		= false;
+							e[i].start		= new Date(data.events[i].options.time_from *1000);
+							e[i].end		= new Date(data.events[i].options.time_to   *1000);
+							e[i].className.push('event-type-lesson');
+						}
+					}
+				}
+				
+				$me.events = e;
+				$me.eventSource = [$me.events];
+				
+				jQuery(".calendar").fullCalendar('removeEvents');
+				jQuery(".calendar").fullCalendar('addEventSource', $me.events);
+				jQuery(".calendar").fullCalendar('rerenderEvents');
+			});
+		
+	};
+	
+	/**/
+	
+	this.$storage = $sessionStorage;
+	
+	this.calendar = {
+		height: (jQuery(".widget.wX2.wY1-5").height()-40),
+		defaultView: 'agendaDay',
+		lang: 'de',
+		timeFormat: 'H:mm',
+		editable: true,
+		header:{
+			left: 'month agendaWeek agendaDay',
+			center: 'title',
+			right: 'today prev,next'
+		},
+		eventClick: function(calEvent, jsEvent, view){
+			
+		},
+		dayClick: function(date, jsEvent, view){
+			
+			var modalInstance = $modal.open({
+				animation: $scope.animationsEnabled,
+				templateUrl: '/res/html/event/add.html',
+				size: 'lg'
+			});
+			
+		},
+		eventMouseover: function(event, jsEvent, view){
+			
+		},
+		eventMouseout: function(event, jsEvent, view){
+			
+		},
+		eventDrop: function(event, delta, revertFunc, jsEvent, ui, view){
+			
+		},
+		eventResize: function(event, delta, revertFunc, jsEvent, ui, view){
+			
+		}
+    };
+    
+    this.eventSource = [$me.events];
+	this.refreshEvents();
+	
+}]);
 
 /* Add */
 
@@ -334,8 +486,6 @@ grades.controller("GroupAddController", ['$scope', '$http' ,'$sessionStorage', '
 	var $me = this;
 	
 	this.$storage = $sessionStorage;
-	
-	/* group */
 		
 	this.name			= "";
 	this.invite_only	= false;
@@ -343,6 +493,8 @@ grades.controller("GroupAddController", ['$scope', '$http' ,'$sessionStorage', '
 	this.parentID		= -1;
 		
 	this.parents = [];
+	
+	this.settings = [];
 		
 	this.parent_relation = {
 		1:-1,
@@ -420,9 +572,7 @@ grades.controller("GroupAddController", ['$scope', '$http' ,'$sessionStorage', '
 	
 	this.updateFields = function(){
 		
-		var url = "";
-		
-		url = $me.$storage.apiURL+"/group/?" + jQuery.param({filters: {group_type_id: $me.group_type, type: 'settings'}, session_token:$me.$storage.sessionToken});
+		var url = $me.$storage.apiURL+"/group/?" + jQuery.param({filters: {group_type_id: $me.group_type, type: 'settings'}, session_token:$me.$storage.sessionToken});
 		
 		$http.get(url).
 				
@@ -448,19 +598,81 @@ grades.controller("GroupAddController", ['$scope', '$http' ,'$sessionStorage', '
 }]);
 
 
-grades.controller("GroupEditController", ['$scope', '$http' ,'$sessionStorage', '$location', function($scope, $http, $sessionStorage, $location){
+grades.controller("GroupEditController", ['$scope', '$http' ,'$sessionStorage', '$location', '$routeParams', function($scope, $http, $sessionStorage, $location, $routeParams){
 	
 	var $me = this;
 	
 	this.$storage = $sessionStorage;
+	
+	this.name			= "";
+	this.invite_only	= false;
+	
 	this.update = function($event){
 		
+		var formElement = angular.element($event.target);
+		var settings = {};
+		
+		jQuery(formElement).find("[name]").each(function(index){
+			
+			var field_name = jQuery(this).attr("name").trim();
+			
+			if(jQuery(this).is("input[type='checkbox']")){
+				settings[field_name] = jQuery(this).is(":checked");
+			}else{
+				settings[field_name] = jQuery(this).val();
+			}
+		});
+		
+		for (var key in settings) {
+
+			if (settings.hasOwnProperty(key)) {
+				
+				console.log({option_key:key, value:settings[key]});
+		          
+				$http.put($me.$storage.apiURL+"/group/"+$routeParams.groupID+"/settings/?" + jQuery.param({session_token:$me.$storage.sessionToken}), {option_key:key, value:settings[key]}).
+			
+					success(function(data, status, headers, config) {
+						
+						data = angular.fromJson(data);
+						
+						if(grades_validateAPIResponse(data)){
+							
+							return true;
+	
+						}
+					});
+		    }
+		}
+		
 	};
+	
+	this.updateFields = function(){
+		
+		$http.get($me.$storage.apiURL+"/group/"+$routeParams.groupID+"/settings/?" + jQuery.param({session_token:$me.$storage.sessionToken})).
+				
+			success(function(data, status, headers, config) {
+				
+				data = angular.fromJson(data);
+				
+				if(grades_validateAPIResponse(data)){
+					
+					for(var i=0;i<data.length;i++){
+						data[i].options = angular.fromJson(data[i].options);
+					}
+					
+					$me.settings = data.settings;
+					
+				}
+			});
+		
+	};
+	
+	$me.updateFields();
 	
 	
 }]);
 
-grades.controller("GroupController", ['$scope', '$http' ,'$sessionStorage', '$routeParams', function($scope, $http, $sessionStorage, $routeParams){
+grades.controller("GroupController", ['$scope', '$http' ,'$sessionStorage', '$routeParams', '$location', function($scope, $http, $sessionStorage, $routeParams, $location){
 	
 	var $me = this;
 	
@@ -509,7 +721,122 @@ grades.controller("GroupController", ['$scope', '$http' ,'$sessionStorage', '$ro
 		});
 	}
 	
+	this.edit = function(){
+		$location.path('/group/edit/'+$routeParams.groupID);
+	};
+	
 	this.loadData();
+	
+}]);
+
+grades.controller("EventController", ['$scope', '$http' ,'$sessionStorage', '$routeParams', '$location', function($scope, $http, $sessionStorage, $routeParams, $location){
+	
+	var $me = this;
+	
+	this.$scope				= $scope;
+	this.eventType 			= "";
+	this.title				= "";
+	this.canEdit			= "";
+	
+	this.$storage = $sessionStorage;
+	
+	this.loadData = function(){
+		if(typeof $routeParams.eventID !== "undefined" && (! isNaN($routeParams.eventID))){
+		
+			$http.get($me.$storage.apiURL+"/event/" + $routeParams.eventID + "/?" + jQuery.param({session_token:$me.$storage.sessionToken})).
+						
+				success(function(data, status, headers, config) {
+					
+					data = angular.fromJson(data);
+					
+					if(grades_validateAPIResponse(data)){
+						
+					}
+				});
+			
+		}else{
+			error("Keine gülitige ID!");
+		}
+	}
+	
+	this.edit = function(){
+		$location.path('/event/edit/'+$routeParams.groupID);
+	};
+	
+	this.loadData();
+	
+}]);
+
+grades.controller("EventAddController", ['$scope', '$http' ,'$sessionStorage', '$location', function($scope, $http, $sessionStorage, $location){
+	
+	var $me = this;
+	
+	this.title = "";
+	this.parentID = "";
+	this.settings = [];
+	this.event_type = 1;
+	
+	this.$storage = $sessionStorage;
+	
+	
+	this.create = function($event){
+		
+		var formElement = angular.element($event.target);
+		var settings = {};
+		
+		jQuery(formElement).find("[name]").each(function(index){
+			
+			var field_name = jQuery(this).attr("name").trim();
+			
+			if(jQuery(this).is("input[type='checkbox']")){
+				settings[field_name] = jQuery(this).is(":checked");
+			}else if(field_name === 'title'){
+				$me.title = jQuery(this).val();
+			}else if(jQuery(this).is(".datepicker")){
+				settings[field_name] = moment(jQuery(this).val(), "DD. MM. YYYY HH:mm").unix();
+			}else{
+				settings[field_name] = jQuery(this).val();
+			}
+		});
+		
+		$http.post($me.$storage.apiURL+"/event/?" + jQuery.param({session_token:$me.$storage.sessionToken}), {event_title:$me.title, parent_group_id:$me.parentID, event_type_id:$me.event_type, options: settings}).
+					
+			success(function(data, status, headers, config) {
+				data = angular.fromJson(data);
+				
+				if(grades_validateAPIResponse(data)){
+					
+					$location.path('/event/about/'+data.event.id);
+					
+				}
+			});
+		
+	};
+	
+	this.updateFields = function(){
+		
+		var url = $me.$storage.apiURL+"/event/?" + jQuery.param({filters: {event_type_id: $me.event_type, type: 'settings'}, session_token:$me.$storage.sessionToken});
+		
+		$http.get(url).
+				
+			success(function(data, status, headers, config) {
+				
+				data = angular.fromJson(data);
+				
+				if(grades_validateAPIResponse(data)){
+					
+					for(var i=0;i<data.length;i++){
+						data[i].options = angular.fromJson(data[i].options);
+					}
+					
+					$me.settings = data.settings;
+					
+				}
+			});
+		
+	};
+	
+	this.updateFields();
 	
 }]);
 
@@ -567,5 +894,131 @@ grades.controller("SubjectInputController", ['$scope', '$sessionStorage', '$http
 	
 	this.selectValue = function($item, $model, $label){
 	}
+	
+}]);
+
+grades.controller("ParentInputController", ['$scope', '$sessionStorage', '$http', 'locale', function($scope, $sessionStorage, $http, locale){
+	
+	var $me = this;
+	
+	this.placeholder = "";
+	
+	this.$storage = $sessionStorage;
+	
+	this.getParent = function(string, group_id){
+		
+		return $http.get($me.$storage.apiURL+"/group/?" + jQuery.param({filters:{search: string, items_per_page: 10, page:0}, session_token:$me.$storage.sessionToken})).
+						
+			then(function(response) {
+				
+				for(var i=0;i<response.data.groups.length;i++){
+					response.data.groups[i].desc = response.data.groups[i].name + " (" + response.data.groups[i].id + ")";
+				}
+				
+				return response.data.groups;
+				
+			});
+		
+	}
+	
+	this.selectValue = function($item, $model, $label){
+	}
+	
+	this.genPlaceholder = function(inputPlaceholder, inputTransPlaceholder){
+		if(typeof inputPlaceholder !== "undefined"){
+			$me.placeholder = inputPlaceholder;
+		}else{
+			locale.ready('common').then(function () {
+                $me.placeholder = locale.getString(inputTransPlaceholder);
+            });
+		}
+	};
+	
+}]);
+
+grades.controller("EventInputController", ['$scope', '$sessionStorage', '$http', 'locale', function($scope, $sessionStorage, $http, locale){
+	
+	var $me = this;
+	
+	this.placeholder = "";
+	this.$storage = $sessionStorage;
+	this.inputType = "";
+	
+	this.getEvent = function(string){
+		
+		var filters = {search: string, items_per_page: 10, page:0};
+		
+		if($me.inputType != ""){
+			filters['event_type'] = $me.inputType.split(":")[1];
+		}
+		
+		return $http.get($me.$storage.apiURL+"/event/?" + jQuery.param({filters:filters, session_token:$me.$storage.sessionToken})).
+						
+			then(function(response) {
+				
+				for(var i=0;i<response.data.events.length;i++){
+					response.data.events[i].desc = response.data.events[i].title + " (" + response.data.events[i].id + ")";
+				}
+				
+				return response.data.events;
+				
+			});
+	};
+	
+	this.genPlaceholder = function(inputPlaceholder, inputTransPlaceholder){
+		if(typeof inputPlaceholder !== "undefined"){
+			$me.placeholder = inputPlaceholder;
+		}else{
+			locale.ready('common').then(function () {
+                $me.placeholder = locale.getString(inputTransPlaceholder);
+            });
+		}
+	};
+	
+	this.selectValue = function($item, $model, $label){
+	}
+	
+}]);
+
+grades.controller("DateInputController", ['$scope', '$sessionStorage', '$http', 'locale', '$element', function($scope, $sessionStorage, $http, locale, $element){
+	
+	var $me = this;
+	
+	this.placeholder = "";
+	this.$storage = $sessionStorage;
+	this.inputType = "";
+	this.useTime = false;
+	this.format = "";
+	
+	this.genPlaceholder = function(inputPlaceholder, inputTransPlaceholder){
+		if(typeof inputPlaceholder !== "undefined"){
+			$me.placeholder = inputPlaceholder;
+		}else{
+			locale.ready('common').then(function () {
+                $me.placeholder = locale.getString(inputTransPlaceholder);
+            });
+		}
+	};
+	
+	this.selectValue = function($item, $model, $label){
+	}
+	
+	this.initDatepicker = function(){
+		
+		jQuery($element).find(".datepicker").each(function(index){
+			$me.format = (jQuery(this).attr("data-time") == "true") ? 'DD. MM. YYYY HH:mm' : 'DD. MM. YYYY';
+			
+			jQuery(this).datetimepicker({
+				format: $me.format,
+				stepping: 5,
+				locale: 'de'
+			});
+		});
+		
+	};
+	
+	this.initDatepicker();
+	
+	
 	
 }]);

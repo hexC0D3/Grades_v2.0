@@ -68,7 +68,7 @@ if(isset($_GET['id'])){
 				$data = $db->doQueryWithArgs("SELECT group_id FROM group_relations WHERE member_id=? AND member_type=3", array($_POST['event_id']), "i");
 				
 				if(count($data) == 1){
-					if(isUserMemberOf($data[0]['group_id'])){
+					if(isInGroup($data[0]["group_id"], 1, getUser()['id'])){
 						$db->doQueryWithArgs("INSERT INTO grades(user_id,event_id,grade)", array(getUser()['id'],$_POST['event_id'],$_POST['grade']), "iid");
 					}else{
 						addError(getMessages()->ERROR_API_PRIVILEGES);
