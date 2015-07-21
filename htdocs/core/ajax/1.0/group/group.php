@@ -505,7 +505,7 @@ if(isset($_GET['id'])){
 					$types.="s";
 				}
 				if(isset($filters['group_type'])){
-					$query.=" AND groups_types.title = ?";
+					$query.=" AND group_types.title = ?";
 					$args[]=$filters['group_type'];
 					$types.="s";
 				}

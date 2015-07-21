@@ -230,8 +230,6 @@ function deleteGroup($group_id){
 		}else if($member['member_type'] == 3){
 			deleteEvent($member['member_id']);
 			
-		}else if($member['member_type'] == 4){
-			deleteSubject($member['member_id']);
 		}
 		
 		$db->doQueryWithArgs("DELETE FROM group_relations WHERE member_id=? AND member_type=?",array($member['id'],$member['member_type']), "ii");
@@ -245,31 +243,6 @@ function deleteEvent($event_id){
 	global $db;
 	$db->doQueryWithArgs("DELETE FROM event_options WHERE event_id=?",array($event_id), "i");
 	$db->doQueryWithArgs("DELETE FROM events WHERE id=?",array($event_id), "i");
-}
-
-function deleteSubject($subject_id){
-	global $db;
-	//foreach test foreach grade
-	
-	$events = $db->doQueryWithArgs("SELECT event_options.event_id as id FROM event_options LEFT JOIN event_type_options ON event_options.event_type_option_id = event_type_options.id WHERE event_type_options.option_key = 'subject_id' AND event_options.value=?", array($subject_id), "i");
-	
-	if(count($events) > 0){
-		
-		$conditions = "WHERE event_id=?";
-		$values = array($events[0]['id']);
-		$types = "i";
-		
-		for($i=1;$i<count($events);$i++){
-			$conditions .= " OR event_id=?";
-			$values[] = $events[$i]['id'];
-			$types .= "i";
-		}
-		
-		$db->doQueryWithArgs("DELETE FROM grades".$conditions, $values, $types);
-	}
-	
-	
-	$db->doQueryWithArgs("DELETE FROM subjects WHERE id=?",array($subject_id), "i");
 }
 
 function deleteGrades($user_id, $group_id){

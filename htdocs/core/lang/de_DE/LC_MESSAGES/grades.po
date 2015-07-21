@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Grades\n"
-"POT-Creation-Date: 2015-07-21 10:30+0200\n"
-"PO-Revision-Date: 2015-07-21 10:31+0200\n"
+"POT-Creation-Date: 2015-07-21 13:18+0200\n"
+"PO-Revision-Date: 2015-07-21 13:19+0200\n"
 "Last-Translator: Nico Hauser <me@tyratox.ch>\n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -245,85 +245,93 @@ msgid "The member of this school who's able to manage it"
 msgstr "Das Mitglied der Schule, welches in der Lage ist, diese zu verwalten"
 
 #: ../../../messages.php:131
+msgid "Subject Name"
+msgstr "Fachname"
+
+#: ../../../messages.php:134
 msgid "Your First Name"
 msgstr "Dein Vorname"
 
-#: ../../../messages.php:132
+#: ../../../messages.php:135
 msgid "Your Last Name"
 msgstr "Dein Nachname"
 
-#: ../../../messages.php:134
+#: ../../../messages.php:137
 msgid "Your Gender"
 msgstr "Dein Geschlecht"
 
-#: ../../../messages.php:135
+#: ../../../messages.php:138
 msgid "Male"
 msgstr "Männlich"
 
-#: ../../../messages.php:136
+#: ../../../messages.php:139
 msgid "Female"
 msgstr "Weiblich"
 
-#: ../../../messages.php:138
+#: ../../../messages.php:141
 msgid "Your Birthday"
 msgstr "Dein Geburtstag"
 
-#: ../../../messages.php:140
+#: ../../../messages.php:143
 msgid "About me"
 msgstr "Über micht"
 
-#: ../../../messages.php:143
+#: ../../../messages.php:146
 msgid "The lesson this test takes place"
 msgstr "Die Lektion, in welcher dieser Test stattfinden wird"
 
-#: ../../../messages.php:144
+#: ../../../messages.php:147
 msgid "The day this lesson takes place"
 msgstr "Der Tag, an dem dieser Test stattfinden wird"
 
-#: ../../../messages.php:145
+#: ../../../messages.php:148
 msgid "The grade weight this test has"
 msgstr "Das Notengewicht dieses Tests"
 
-#: ../../../messages.php:147
+#: ../../../messages.php:150
 msgid "Repetition interval in weeks"
 msgstr "Wiederholungsintervall in Wochen"
 
-#: ../../../messages.php:148
+#: ../../../messages.php:151
 msgid "No Repetition, a one time lesson"
 msgstr "Keine Wiederholungen, dies ist eine einmalige Lektion"
 
-#: ../../../messages.php:149
+#: ../../../messages.php:152
 msgid "Every week"
 msgstr "Jede Woche"
 
-#: ../../../messages.php:150
+#: ../../../messages.php:153
 msgid "Every second week"
 msgstr "Alle 2 Wochen"
 
-#: ../../../messages.php:152
+#: ../../../messages.php:155
 msgid "The subject of this lesson"
 msgstr "Das Fach dieser Lektion"
 
-#: ../../../messages.php:153
+#: ../../../messages.php:156
 msgid "The time this lesson starts"
 msgstr "Die Zeit, zu welcher diese Lektion beginnt"
 
-#: ../../../messages.php:154
+#: ../../../messages.php:157
 msgid "The time this lesson ends"
 msgstr "Die Zeit zu welcher diese Lektion endet"
 
-#: ../../../messages.php:156
+#: ../../../messages.php:159
 msgid "The lesson this task is scheduled on"
 msgstr "Die Lektion, auf welche diese Aufgabe zu erledigen ist"
 
-#: ../../../messages.php:158
+#: ../../../messages.php:160
+msgid "A task description"
+msgstr "Die Aufgabenbeschreibung"
+
+#: ../../../messages.php:162
 msgid "Is this a full day event?"
 msgstr "Ist dies ein ganztägiges Event?"
 
-#: ../../../messages.php:159
+#: ../../../messages.php:163
 msgid "The time this event starts"
 msgstr "Die Zeit, zu welcher dieses Event beginnt"
 
-#: ../../../messages.php:160
+#: ../../../messages.php:164
 msgid "The time this event ends"
 msgstr "Die Zeit, zu welcher dieses Event endet"

@@ -1257,7 +1257,7 @@ grades.controller("GroupInputController", ['$scope', '$sessionStorage', '$http',
 		
 		var filters = {search: string, items_per_page: 10, page:0};
 		
-		if($me.inputType != ""){
+		if(typeof $me.inputType !== "undefined" && $me.inputType != ""){
 			filters['group_type'] = $me.inputType.split(":")[1];
 		}
 		

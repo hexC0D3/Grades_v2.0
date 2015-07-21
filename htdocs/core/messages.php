@@ -127,6 +127,9 @@
 				$this->DYNAMIC_GROUP_TYPE_OPTIONS_ADDRESS_DESC=_("This schools address");
 				$this->DYNAMIC_GROUP_TYPE_OPTIONS_SCHOOL_ADMIN_DESC=_("The member of this school who's able to manage it");
 				
+				//Subjects
+				$this->DYNAMIC_GROUP_TYPE_OPTIONS_SUBJECT_NAME=_("Subject Name");
+				
 				//User Options
 				$this->DYNAMIC_USER_OPTIONS_FIRST_NAME_DESC=_("Your First Name");
 				$this->DYNAMIC_USER_OPTIONS_LAST_NAME_DESC=_("Your Last Name");
@@ -154,6 +157,7 @@
 				$this->DYNAMIC_EVENT_TYPE_OPTIONS_LESSON_TIME_TO_DESC=_("The time this lesson ends");
 				
 				$this->DYNAMIC_EVENT_TYPE_OPTIONS_TASK_TIME_LESSON=_("The lesson this task is scheduled on");
+				$this->DYNAMIC_EVENT_TYPE_OPTIONS_TASK_DESC=_("A task description");
 				
 				$this->DYNAMIC_EVENT_TYPE_OPTIONS_EVENT_FULL_DAY_DESC=_("Is this a full day event?");
 				$this->DYNAMIC_EVENT_TYPE_OPTIONS_EVENT_TIME_FROM_DESC=_("The time this event starts");
