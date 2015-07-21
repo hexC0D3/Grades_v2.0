@@ -12,7 +12,8 @@
 	</ul>
 	
 	
-	<button class="btn" i18n="common.join" ng-show="groupC.canJoin" ng-click="groupC.join()"></button>
-	<button class="btn" i18n="common.leave" ng-show="groupC.canLeave" ng-click="groupC.leave()"></button>
-	<button class="btn" i18n="common.edit" ng-show="jQuery.inArray('manage_options', groupC.capabilities) != -1" ng-click="groupC.edit()"></button>
+	<button class="btn btn-primary" i18n="common.join" ng-show="groupC.canJoin" ng-click="groupC.join()"></button>
+	<button class="btn btn-primary" i18n="common.leave" ng-show="groupC.canLeave" ng-click="groupC.leave()"></button>
+	<button class="btn btn-primary" i18n="common.edit" ng-show="groupC.canEdit()" ng-click="groupC.edit()"></button>
+	
 </div>

@@ -1,21 +1,11 @@
 <?php
 	
 if(!defined('grades_loaded')){
-	//header("Location: /");
-	die("INSECURE LOAD!");
+	header("Location: /");
 }
-	
-/*
-	* Starting with the grades core file by defining our absolute paths
-*/
-
-define("AJAX_DIR", ROOT_DIR  .'ajax/');
-define("CSS_DIR" , ROOT_DIR  .'css/');
-define("FONT_DIR", ROOT_DIR  .'fonts/');
-define("IMG_DIR" , ROOT_DIR  .'img/');
 
 /*
-	* Now we include the database
+	* We include the database access file
 */
 
 require_once 'db.php';
@@ -61,7 +51,7 @@ function getErrors(){
 }
 
 /*
-	* If not started yet, we start a php session by setting a session cookie
+	* If not started yet, we start a php session
 */
 
 if(session_status() != PHP_SESSION_ACTIVE) {
@@ -81,7 +71,7 @@ require_once 'lang.php';
 require_once CORE_DIR."/messages.php";
 
 /*
-	* Now we load out auth systems
+	* Now we load our auth system
 */
 
 require_once 'auth.php';
@@ -305,6 +295,34 @@ function deleteGrades($user_id, $group_id){
 	
 }
 
+function getParentGroups($member_type_id, $member_id){
+	
+	global $db;
+	
+	$data = $db->doQueryWithArgs("SELECT group_id FROM group_relations WHERE member_id=? AND member_type=?", array($member_id, $member_type_id), "ii");
+	
+	$g_ids = array();
+	
+	foreach($data as $data_set){
+	
+		$db->doQueryWithArgs("CALL `getParentGroups`(?, @p2);", array($data_set["group_id"]), "i");
+		$group_member_ids = $db->doQueryWithoutArgs("SELECT @p2 AS group_member_ids");
+		
+		if(count($group_member_ids) == 1){
+			
+			$group_member_ids = explode(",", $group_member_ids[0]['group_member_ids']);
+			$g_ids = array_merge($g_ids, $group_member_ids);
+			
+		}else{
+			addError(getMessages()->UNKNOWN_ERROR(14));
+		}
+		
+	}
+	
+	return array_unique($g_ids);
+	
+}
+
 function isInGroup($group_id, $member_type_id, $member_id){
 	global $db;
 	
@@ -312,29 +330,64 @@ function isInGroup($group_id, $member_type_id, $member_id){
 	
 	$data = $db->doQueryWithArgs("SELECT group_id FROM group_relations WHERE member_id=? AND member_type=?", array($member_id, $member_type_id), "ii");
 	
-	if(count($data) == 1){
+	$result = false;
+	
+	foreach($data as $data_set){
 		
-		$db->doQueryWithArgs("CALL `getParentGroups`(?, @p1);", array($data[0]["group_id"]), "i");
+		$db->doQueryWithArgs("CALL `getParentGroups`(?, @p2);", array($data_set["group_id"]), "i");
+		$group_member_ids = $db->doQueryWithoutArgs("SELECT @p2 AS group_member_ids");
 		
-		$db->doQueryWithArgs("CALL `getParentGroups`(?, @p2);", array($group_id), "i");
-		
-		$data = $db->doQueryWithoutArgs("SELECT @p1 AS group_member_ids, @p2 AS group_ids;");
-		
-		if(count($data)==1){
-			$group_member_ids = explode(",", $data[0]['group_member_ids']);
-			$group_ids = explode(",", $data[0]['group_ids']);
+		if(count($group_member_ids) == 1){
 			
-			return (count(array_intersect($group_member_ids, $group_ids)) > 0);
+			$group_member_ids = explode(",", $group_member_ids[0]['group_member_ids']);
+			$result = $result || (in_array($group_id, $group_member_ids));
+			
 		}else{
 			addError(getMessages()->UNKNOWN_ERROR(9));
 		}
-
-	}else{
-		addError(getMessages()->ERROR_API_INVALID_INPUT);
+		
 	}
 	
-	return false;
+	return $result;
 }
+
+/*function isInGroup($group_id, $member_type_id, $member_id){
+	global $db;
+	
+	//get direct parent group
+	
+	$data = $db->doQueryWithArgs("SELECT group_id FROM group_relations WHERE member_id=? AND member_type=?", array($member_id, $member_type_id), "ii");
+	
+	$result = true;
+	
+	$db->doQueryWithArgs("CALL `getParentGroups`(?, @p1);", array($group_id), "i");
+	$group_ids = $db->doQueryWithoutArgs("SELECT @p1 AS group_ids;");
+	if(count($group_ids) == 1){
+	
+		$group_ids = explode(",", $group_ids[0]['group_ids']);
+		
+		foreach($data as $data_set){
+		
+			$db->doQueryWithArgs("CALL `getParentGroups`(?, @p2);", array($data_set["group_id"]), "i");
+			$group_member_ids = $db->doQueryWithoutArgs("SELECT @p2 AS group_member_ids");
+			
+			if(count($group_member_ids) == 1){
+				
+				$group_member_ids = explode(",", $group_member_ids[0]['group_member_ids']);
+				$result = $result && (count(array_intersect($group_member_ids, $group_ids)) > 0);
+				
+			}else{
+				addError(getMessages()->UNKNOWN_ERROR(9));
+			}
+			
+		}
+		
+	}else{
+		addError(getMessages()->UNKNOWN_ERROR(13));
+	}
+	
+	return $result;
+}*/
 
 function currentUserCanJoin($group_id){
 	global $db;

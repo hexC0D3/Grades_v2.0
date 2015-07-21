@@ -1,7 +1,7 @@
-<div ng-controller="DateInputController as dateiC" ng-init="dateiC.genPlaceholder(inputPlaceholder, inputTransPlaceholder);dateiC.value = inputValue;dateiC.inputType = inputType;dateiC.useTime = inputTime;">
+<div ng-controller="DateInputController as dateiC" ng-init="dateiC.genPlaceholder(inputPlaceholder, inputTransPlaceholder);dateiC.value = inputValue;dateiC.inputType = inputType; dateiC.initDatepicker(inputTime)">
 	
 	<div class="datepicker-wrapper relative">
-		<input class="form-control datepicker" type="text" placeholder="{{dateiC.placeholder}}" ng-model="$parent.inputModel" name="{{$parent.inputName}}" autocomplete="off" data-time="{{dateiC.useTime}}">
+		<input class="form-control datepicker" type="text" placeholder="{{dateiC.placeholder}}" ng-model="$parent.inputModel" name="{{$parent.inputName}}" autocomplete="off" data-time="{{dateiC.useTime}}" default-date>
 	</div>
 	
 </div>

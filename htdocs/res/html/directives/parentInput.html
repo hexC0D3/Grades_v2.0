@@ -1,5 +1,0 @@
-<div ng-controller="ParentInputController as parentiC" ng-init="parentiC.value = inputValue;parentiC.genPlaceholder(inputPlaceholder, inputTransPlaceholder)">
-	
-	<input class="form-control" type="text" placeholder="{{parentiC.placeholder}}" ng-model="$parent.inputModel" typeahead-loading="loadingData" typeahead="group.id as group.desc for group in parentiC.getParent($viewValue)" typeahead-on-select="parentiC.selectValue($item, $model, $label)" name="{{$parent.inputName}}" autocomplete="off">
-	
-</div>

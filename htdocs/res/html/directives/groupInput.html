@@ -1,0 +1,5 @@
+<div ng-controller="GroupInputController as groupiC" ng-init="groupiC.genPlaceholder(inputPlaceholder, inputTransPlaceholder);groupiC.value = inputValue;groupiC.inputType = inputType;">
+	
+	<input class="form-control" type="text" placeholder="{{groupiC.placeholder}}" ng-model="$parent.inputModel" typeahead-loading="loadingData" typeahead="group.id as group.desc for group in groupiC.getGroup($viewValue)" typeahead-on-select="groupiC.selectValue($item, $model, $label)" name="{{$parent.inputName}}" autocomplete="off">
+	
+</div>

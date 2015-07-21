@@ -1,4 +1,4 @@
-<div ng-repeat="field in fields" class="form-group" ng-class="{'required' : field.required}">
+<div ng-repeat="field in fields" repeat-done="repeatDoneCallback()" class="form-group" ng-class="{'required' : field.required}">
 			
 	<div class="text" ng-if="field.input_data_type == 'text'">
 		
@@ -21,15 +21,21 @@
 	
 	<div class="int" ng-if="field.input_data_type == 'int'">
 		
-		
+		<select class="form-control" name="{{field.key}}" ng-if="field.options.input_type == 'select'">
+			<option ng-repeat="option in field.options.select" value="{{option.value}}">{{option.description}}</option>
+		</select>
 		
 	</div>
 	
 	<div class="float" ng-if="field.input_data_type == 'float'">
 		
 		<div class="grade_weight" ng-if="field.options.input_type == 'grade_weight'">
-			<input type="range" min="0" max="1" step="0.05" name="{{field.key}}">
+			<input type="text" placeholder="{{field.description}}" name="{{field.key}}" class="form-control">
 		</div>
+		
+		<select class="form-control" name="{{field.key}}" ng-if="field.options.input_type == 'select'">
+			<option ng-repeat="option in field.options.select" value="{{option.value}}">{{option.description}}</option>
+		</select>
 		
 	</div>
 	
@@ -39,23 +45,15 @@
 		
 	</div>
 	
-	<div class="subject" ng-if="field.input_data_type == 'subject_id'">
-		
-		<subject-input ng-if="field.options.input_type == 'subject'" input-name="field.key" input-placeholder="field.description" input-group-id="parentGroupID" input-value=""></subject-input>
-		
-	</div>
-	
-	<div class="select" ng-if="field.input_data_type == 'select'">
-		
-		<select class="form-control" name="{{field.key}}" ng-if="field.options.input_type == 'select'">
-			<option ng-repeat="option in field.options.select" value="{{option.value}}">{{option.description}}</option>
-		</select>
-		
-	</div>
-	
 	<div class="event" ng-if="field.input_data_type.indexOf('event') !== -1">
 		
-		<event-input input-name="field.key" input-type="field.input_data_type" input-trans-placeholder="'common.input_'+(field.input_data_type.split(':')[1])"></event-input>
+		<event-input input-name="field.key" input-type="field.input_data_type" input-trans-placeholder="field.description"></event-input>
+		
+	</div>
+	
+	<div class="group" ng-if="field.input_data_type.indexOf('group') !== -1">
+		
+		<group-input input-model="''" input-name="field.key" input-type="field.input_data_type" input-trans-placeholder="field.description"></group-input>
 		
 	</div>
 	
@@ -67,7 +65,7 @@
 	
 	<div class="timestamp" ng-if="field.input_data_type == 'timestamp'">
 		
-		<date-input input-name="field.key" input-trans-placeholder="'common.input_date_'+field.key" input-time="field.options.time"></date-input>
+		<date-input input-name="field.key" input-trans-placeholder="field.description" input-time="field.options.time"></date-input>
 		
 	</div>
 	

@@ -25,11 +25,14 @@ function getBestMatchingLanguage(){
     return $lang;
 }
 /** gen localization string **/
-function getLang(){
- 	$lang = getLanguage(); 
-	$locale = "";
+function getLang($lang){
+	
+	$locale = "en_US";
+	
 	switch ($lang) {
 		case "de":
+			$locale = "de_DE";
+			break;
 		case "ch":
 			$locale = "de_DE";
 			break;
@@ -46,9 +49,14 @@ function getLang(){
 function setLang($locale, $domain, $encoding){
 	putenv("LC_ALL=".$locale);
 	setlocale(LC_ALL, $locale);
-	bindtextdomain($domain, ROOT_DIR."lang/");
+	bindtextdomain($domain, CORE_DIR."lang/");
 	bind_textdomain_codeset($domain, $encoding);
 	textdomain($domain);
 }
-setLang(getBestMatchingLanguage(), "grades", "UTF-8");
+
+global $lang;
+
+$lang = getLang(getBestMatchingLanguage());
+setLang($lang, "grades", "UTF-8");
+
 ?>

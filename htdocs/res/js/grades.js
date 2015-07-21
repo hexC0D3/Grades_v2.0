@@ -40,7 +40,7 @@ function grades_add(){
 
 /* Angular */
 
-var grades = angular.module('grades', ['ngRoute', 'noCAPTCHA', 'ngStorage', 'ngLocalize', 'ui.bootstrap', 'ui.calendar']);
+var grades = angular.module('grades', ['ngRoute', 'noCAPTCHA', 'ngStorage', 'ngLocalize', 'ui.bootstrap', 'ui.calendar', 'smart-table']);
 
 /* App */
 
@@ -126,6 +126,34 @@ var appController = grades.controller("AppController", ['$scope', '$http', '$ses
 	this.$storage.pageTitle			=		'-';
 	this.$storage.apiURL			=		'http://grades.dev/api/v1';
 	
+	this.user = {};
+	
+	$scope.$on('$routeChangeSuccess', function(next, current) { 
+		
+		if(typeof $me.$storage.modalInstance !== "undefined" && $me.$storage.modalInstance !== null && typeof $me.$storage.modalInstance.close !== "undefined"){
+			$me.$storage.modalInstance.close();
+		}
+		
+	});
+	
+	this.updateUser = function(){
+		
+		var user = $me.$storage.user;
+		
+		if(typeof user.option_keys !== "undefined" && user.option_keys !== null){
+			
+			for(var i=0;i<user.option_keys.length;i++){
+				user[user.option_keys[i]] = user.values[i];
+			}
+			
+			delete user.option_keys;
+			delete user.values;
+			
+		}
+		
+		$me.user = user;
+	};
+	
 	if(typeof this.$storage.user === "undefined"){
 		this.$storage.user = {};
 	}
@@ -173,6 +201,8 @@ var appController = grades.controller("AppController", ['$scope', '$http', '$ses
 			
 	}
 	
+	$me.updateUser();
+	
 }]);
 
 appController.directive("userInput", function(){
@@ -187,41 +217,30 @@ appController.directive("userInput", function(){
 	};
 });
 
-appController.directive("subjectInput", function(){
-	return {
-		restrict: 'E',
-		scope: {
-			inputName: '=inputName',
-			inputPlaceholder: '=inputPlaceholder',
-			inputGroupID: '=inputGroupId',
-			inputValue: '=inputValue'
-	    },
-		templateUrl: '/res/html/directives/subjectInput.html'
-	};
-});
-
 appController.directive("repeatFields", function(){
 	return {
 		restrict: 'E',
 		scope: {
 			fields: '=fields',
-			parentGroupID: '=parentGroupId'
+			parentGroupID: '=parentGroupId',
+			repeatDoneCallback: '=repeatDoneCallback'
 	    },
 		templateUrl: '/res/html/directives/fields.html'
 	};
 });
 
-appController.directive("parentInput", function(){
+appController.directive("groupInput", function(){
 	return {
 		restrict: 'E',
 		scope: {
 			inputName: '=inputName',
 			inputPlaceholder: '=inputPlaceholder',
 			inputTransPlaceholder: '=inputTransPlaceholder',
+			inputType: '=inputType',
 			inputModel: '=inputModel',
 			inputValue: '=inputValue'
 	    },
-		templateUrl: '/res/html/directives/parentInput.html'
+		templateUrl: '/res/html/directives/groupInput.html'
 	};
 });
 
@@ -252,6 +271,41 @@ appController.directive("dateInput", function(){
 	    },
 		templateUrl: '/res/html/directives/dateInput.html'
 	};
+});
+
+appController.directive('repeatDone', function() {
+    return function(scope, element, attrs) {
+	    
+        if (scope.$last) {
+            scope.$eval(attrs.repeatDone);
+        }
+    }
+});
+
+appController.directive('defaultDate', function() {
+    return {
+        link: function($scope, element, attrs) {
+            // Trigger when number of children changes,
+            // including by directives like ng-repeat
+            var watch = $scope.$watch(function() {
+                return element.children().length;
+            }, function() {
+                // Wait for templates to render
+                $scope.$evalAsync(function() {
+                    // Finally, directives are evaluated
+                    // and templates are renderer here
+                    if(jQuery(element).attr("data-time") == "false"){
+	                    jQuery(element).val(jQuery(".calendar").fullCalendar('getDate').format("DD. MM. YYYY"));
+                    }else{
+	                    var minute = moment().minute();
+	                    
+	                    jQuery(element).val(jQuery(".calendar").fullCalendar('getDate').minute(5 * Math.round( minute / 5 )).format("DD. MM. YYYY HH:mm"));   
+                    }
+                    
+                });
+            });
+        },
+    };
 });
 
 /* Header */
@@ -392,7 +446,28 @@ grades.controller("DashboardController", ['$scope', '$http' ,'$sessionStorage', 
 	
 	this.$scope	= $scope;
     
-    this.events = [];
+    this.static_events = [];
+    this.repeating_events = [];
+    
+    this.eventSource = [];
+    
+    this.getRepeatingEvents = function(start, end, timezone, callback) {
+	    
+	    var events = [];
+	    
+	    for(var i=0;i < $me.repeating_events.length;i++){
+		    
+		    for (var d = start.toDate(); d <= end.toDate(); d.setDate(d.getDate() + ($me.repeating_events[i].repetition_interval * 7))) {
+			    
+			    
+			    
+    		}
+		    
+	    }
+	    
+	    callback(events);
+	    
+	};
 	
 	this.refreshEvents = function(){
 		
@@ -402,32 +477,41 @@ grades.controller("DashboardController", ['$scope', '$http' ,'$sessionStorage', 
 				data = angular.fromJson(data);
 				
 				if(grades_validateAPIResponse(data)){
-					var e = [];
+					
+					$me.static_events		= [];
+					$me.repeating_events	= [];
+					
 					for(var i=0;i<data.events.length;i++){
 						
-						e[i] = {id:data.events[i].id, title:data.events[i].title, editable:data.events[i].canEdit, className:[]};
+						var event = {
+							id:			data.events[i].id,
+							title:		data.events[i].title,
+							editable:	data.events[i].canEdit,
+							className:	['event-type-'+data.events[i].event_type]
+						};
 						
 						if(data.events[i].event_type == 'event'){
 							
-							e[i].allDay		= Boolean(data.events[i].options.event_full_day);
-							e[i].start		= new Date(data.events[i].options.time_from *1000);
-							e[i].end		= new Date(data.events[i].options.time_to   *1000);
-							e[i].className.push('event-type-event');
+							event.allDay		= data.events[i].options.event_full_day == true;
+							event.start			= moment.unix(data.events[i].options.time_from);
+							event.end			= moment.unix(data.events[i].options.time_to);
+							
+							$me.static_events.push(event);
 							
 						}else if(data.events[i].event_type == 'lesson'){
-							e[i].allDay		= false;
-							e[i].start		= new Date(data.events[i].options.time_from *1000);
-							e[i].end		= new Date(data.events[i].options.time_to   *1000);
-							e[i].className.push('event-type-lesson');
+							event.allDay				= false;
+							event.start					= moment.unix(data.events[i].options.time_from);
+							event.end					= moment.unix(data.events[i].options.time_to);
+							event.repetition_interval	= data.events[i].options.lesson_repetition_interval;
+							
+							$me.repeating_events.push(event);
 						}
 					}
 				}
 				
-				$me.events = e;
-				$me.eventSource = [$me.events];
-				
 				jQuery(".calendar").fullCalendar('removeEvents');
-				jQuery(".calendar").fullCalendar('addEventSource', $me.events);
+				jQuery(".calendar").fullCalendar('addEventSource', $me.static_events);
+				jQuery(".calendar").fullCalendar('addEventSource', $me.getRepeatingEvents);
 				jQuery(".calendar").fullCalendar('rerenderEvents');
 			});
 		
@@ -437,27 +521,133 @@ grades.controller("DashboardController", ['$scope', '$http' ,'$sessionStorage', 
 	
 	this.$storage = $sessionStorage;
 	
+	this.setTimeline = function () {
+		
+	    var parentDiv = jQuery(".fc-agenda-view:visible .fc-time-grid-container");
+	    
+	    if(jQuery(".fc-today").length > 0){
+		    
+		    var timeline = parentDiv.children(".timeline");
+		    if (timeline.length == 0) { //if timeline isn't there, add it
+		        timeline = jQuery("<hr>").addClass("timeline");
+		        parentDiv.prepend(timeline);
+		    }
+		
+		    var curTime = new Date();
+		
+		    var curCalView = jQuery(".calendar").fullCalendar('getView');
+		
+		    var curSeconds = (curTime.getHours() * 60 * 60) + (curTime.getMinutes() * 60) + curTime.getSeconds();
+		    var percentOfDay = curSeconds / 86400; //24 * 60 * 60 = 86400, # of seconds in a day
+		    var topLoc = Math.floor(parentDiv[0].scrollHeight * percentOfDay);
+		
+		    timeline.css("top", topLoc + "px");
+		
+		    if (curCalView.name == "agendaWeek") { //week view, don't want the timeline to go the whole way across
+		        var dayCol = jQuery(".fc-today:visible");
+		        var left = dayCol.position().left + 1;
+		        var width = dayCol.width() - 2;
+		        timeline.css({
+		            left: left + "px",
+		            width: width + "px"
+		        });
+		    }
+		      
+	    }
+	
+	};
+	
+	this.updateDashboardLayout = function(callback){
+		
+		var curCalView = jQuery(".calendar").fullCalendar('getView');
+		if (curCalView.name == "agendaDay") {
+			jQuery(".row.widgets").removeClass("expandCalendar");
+			setTimeout(function(){
+				jQuery(".widget").removeAttr("style");
+			}, 1000);
+		}else{
+			jQuery(".widget").each(function(){
+				jQuery(this).css("height", (jQuery(this).height()));
+			}).promise().done(function(){
+				jQuery(".row.widgets").addClass("expandCalendar");
+			});
+		}
+		
+		setTimeout(function(){
+			callback();
+		}, 1000);
+	};
+	
 	this.calendar = {
-		height: (jQuery(".widget.wX2.wY1-5").height()-40),
+		height: (jQuery(".widget.timetable").height()-40),
 		defaultView: 'agendaDay',
 		lang: 'de',
+		timezone: 'local',
 		timeFormat: 'H:mm',
 		editable: true,
 		header:{
-			left: 'month agendaWeek agendaDay',
-			center: 'title',
-			right: 'today prev,next'
+			left: 'title,prev,next',
+			center: '',
+			right: 'agendaDay, agendaWeek, month'
 		},
 		eventClick: function(calEvent, jsEvent, view){
+			
+			if(calEvent.editable){
+				
+				$me.$storage.modalInstance = $modal.open({
+					animation: true,
+					controller: 'ModalController',
+					templateUrl: '/res/html/event/edit.html',
+					size: 'lg',
+					resolve: {
+						modalParams: function(){
+							
+							return {
+								event_id: calEvent.id
+							};
+							
+						}
+					}
+				});
+				
+			}else{
+				
+				$me.$storage.modalInstance = $modal.open({
+					animation: true,
+					controller: 'ModalController',
+					templateUrl: '/res/html/event/event.html',
+					size: 'lg',
+					resolve: {
+						modalParams: function(){
+							
+							return {
+								event_id: calEvent.id
+							};
+							
+						}
+					}
+				});
+				
+			}
+			
+			
 			
 		},
 		dayClick: function(date, jsEvent, view){
 			
-			var modalInstance = $modal.open({
-				animation: $scope.animationsEnabled,
-				templateUrl: '/res/html/event/add.html',
-				size: 'lg'
-			});
+			if(view.name == "agendaDay"){
+				
+				$me.$storage.modalInstance = $modal.open({
+					animation: true,
+					templateUrl: '/res/html/event/add.html',
+					size: 'lg'
+				});
+				
+			}else{
+				jQuery('.calendar').fullCalendar('changeView', 'agendaDay');
+				jQuery('.calendar').fullCalendar('gotoDate', date);
+				
+			}
 			
 		},
 		eventMouseover: function(event, jsEvent, view){
@@ -468,13 +658,54 @@ grades.controller("DashboardController", ['$scope', '$http' ,'$sessionStorage', 
 		},
 		eventDrop: function(event, delta, revertFunc, jsEvent, ui, view){
 			
+			$me.updateEvent(event, revertFunc);
 		},
 		eventResize: function(event, delta, revertFunc, jsEvent, ui, view){
-			
-		}
+			$me.updateEvent(event, revertFunc);
+		},
+		viewRender: function (view) {
+	        
+	        $me.updateDashboardLayout(function(){
+		        try{
+					$me.setTimeline();
+			    }catch(err){
+				    
+				}
+	        });
+	        
+	    },
     };
     
-    this.eventSource = [$me.events];
+    this.updateEvent = function(event, revertFunc){
+	    $http.put($me.$storage.apiURL+"/event/"+event.id+"/settings/?" + jQuery.param({session_token:$me.$storage.sessionToken}), {option_key: 'time_from', value: event.start.unix()}).
+			
+			success(function(data, status, headers, config) {
+				data = angular.fromJson(data);
+				
+				if(!grades_validateAPIResponse(data)){
+					revertFunc();
+				}
+			});
+		
+		var end;	
+		
+		if(typeof event.end !== "undefined" && event.end !== null){
+			end = event.end.unix();
+		}else{
+			end = event.start.unix();
+		}
+		
+		$http.put($me.$storage.apiURL+"/event/"+event.id+"/settings/?" + jQuery.param({session_token:$me.$storage.sessionToken}), {option_key: 'time_to', value: end}).
+			
+			success(function(data, status, headers, config) {
+				data = angular.fromJson(data);
+				
+				if(!grades_validateAPIResponse(data)){
+					revertFunc();
+				}
+			});
+    }
+    
 	this.refreshEvents();
 	
 }]);
@@ -489,7 +720,7 @@ grades.controller("GroupAddController", ['$scope', '$http' ,'$sessionStorage', '
 		
 	this.name			= "";
 	this.invite_only	= false;
-	this.group_type		=  3;
+	this.group_type		=  2;
 	this.parentID		= -1;
 		
 	this.parents = [];
@@ -499,9 +730,7 @@ grades.controller("GroupAddController", ['$scope', '$http' ,'$sessionStorage', '
 	this.parent_relation = {
 		1:-1,
 		2:1,
-		3:2,
-		4:3,
-		5:3
+		3:2
 	};
 	
 	
@@ -529,7 +758,7 @@ grades.controller("GroupAddController", ['$scope', '$http' ,'$sessionStorage', '
 		});
 		
 		
-		$http.post($me.$storage.apiURL+"/group/", {group_name:$me.name, parent_group_id:$me.parentID, group_type_id:$me.group_type, invite_only: $me.invite_only, options: settings}).
+		$http.post($me.$storage.apiURL+"/group/?" + jQuery.param({session_token:$me.$storage.sessionToken}), {group_name:$me.name, parent_group_id:$me.parentID, group_type_id:$me.group_type, invite_only: $me.invite_only, options: settings}).
 					
 			success(function(data, status, headers, config) {
 				
@@ -597,15 +826,124 @@ grades.controller("GroupAddController", ['$scope', '$http' ,'$sessionStorage', '
 	
 }]);
 
+grades.filter('to_trusted', ['$sce', function($sce){
+    return function(text) {
+        return $sce.trustAsHtml(text);
+    };
+}]);
 
-grades.controller("GroupEditController", ['$scope', '$http' ,'$sessionStorage', '$location', '$routeParams', function($scope, $http, $sessionStorage, $location, $routeParams){
+
+grades.controller("GroupOverviewController", ['$scope', '$http' ,'$sessionStorage', '$location', '$routeParams', '$modal', function($scope, $http, $sessionStorage, $location, $routeParams, $modal){
 	
 	var $me = this;
 	
 	this.$storage = $sessionStorage;
 	
-	this.name			= "";
-	this.invite_only	= false;
+	$scope.groupRows = [];
+	$scope.displayedGroupRows = [].concat($scope.groupRows);
+	
+	this.page = 0;
+	this.items_per_page = 30;
+	
+	this.updateGroups = function(){
+		
+		$http.get($me.$storage.apiURL+"/group/?" + jQuery.param({filters:{items_per_page: $me.items_per_page, page:$me.page},session_token:$me.$storage.sessionToken})).
+				
+			success(function(data, status, headers, config) {
+				
+				data = angular.fromJson(data);
+				
+				if(grades_validateAPIResponse(data)){
+					
+					$scope.groupRows = data.groups;
+					
+				}
+			});
+		
+	};
+	
+	this.about = function(group_id){
+		
+		$me.$storage.modalInstance = $modal.open({
+			animation: true,
+			controller: 'ModalController',
+			templateUrl: '/res/html/group/group.html',
+			size: 'lg',
+			resolve: {
+				modalParams: function(){
+					
+					return {
+						group_id: group_id
+					};
+					
+				}
+			}
+		});
+		
+	};
+	
+	this.addGroup = function(){
+		
+		$location.path('/group/add');
+		
+	};
+	
+	this.updateGroups();
+	
+}]);
+
+
+grades.controller("GroupEditController", ['$scope', '$http' ,'$sessionStorage', '$location', '$routeParams', '$timeout', function($scope, $http, $sessionStorage, $location, $routeParams, $timeout){
+	
+	var $me = this;
+	
+	this.$storage = $sessionStorage;
+	
+	this.groupType 			= "";
+	this.inviteOnly 		= "";
+	this.name				= "";
+	this.canJoin			= "";
+	this.canLeave			= "";
+	this.capabilities		= [];
+	
+	$scope.settings = [];
+	
+	this.group_id = -1;
+	
+	if(typeof $routeParams.groupID !== "undefined" && (! isNaN($routeParams.groupID))){
+		
+		this.group_id = $routeParams.groupID;
+		
+	}else if(typeof $scope.$parent.modalParams.group_id !== "undefined"){
+		
+		this.group_id = $scope.$parent.modalParams.group_id;
+		
+	}
+	
+	this.fillData = function(){
+		
+		$scope.$evalAsync(function(){
+			
+			jQuery("[name="+$scope.settings[$scope.settings.length -1].key+"]").waitUntilExists(function(){
+				
+				var field;
+				
+				for(var i=0;i<$scope.settings.length;i++){
+					field = jQuery("[name="+$scope.settings[i].key+"]");
+					if(field.is("input[type='checkbox']")){
+						field.prop('checked', ($scope.settings[i].value == true));
+					}else{
+						field.val($scope.settings[i].value);
+					}
+				}
+				
+			});
+		});
+	};
+	
+	this.repeatDone = function(){
+		$me.fillData();
+	};
 	
 	this.update = function($event){
 		
@@ -626,10 +964,8 @@ grades.controller("GroupEditController", ['$scope', '$http' ,'$sessionStorage', 
 		for (var key in settings) {
 
 			if (settings.hasOwnProperty(key)) {
-				
-				console.log({option_key:key, value:settings[key]});
 		          
-				$http.put($me.$storage.apiURL+"/group/"+$routeParams.groupID+"/settings/?" + jQuery.param({session_token:$me.$storage.sessionToken}), {option_key:key, value:settings[key]}).
+				$http.put($me.$storage.apiURL+"/group/"+$me.group_id+"/settings/?" + jQuery.param({session_token:$me.$storage.sessionToken}), {option_key:key, value:settings[key]}).
 			
 					success(function(data, status, headers, config) {
 						
@@ -648,7 +984,23 @@ grades.controller("GroupEditController", ['$scope', '$http' ,'$sessionStorage', 
 	
 	this.updateFields = function(){
 		
-		$http.get($me.$storage.apiURL+"/group/"+$routeParams.groupID+"/settings/?" + jQuery.param({session_token:$me.$storage.sessionToken})).
+		$http.get($me.$storage.apiURL+"/group/" + $me.group_id + "/?" + jQuery.param({session_token:$me.$storage.sessionToken})).
+					
+			success(function(data, status, headers, config) {
+				
+				data = angular.fromJson(data);
+				
+				if(grades_validateAPIResponse(data)){
+					$me.groupType		= data.group.group_type;
+					$me.inviteOnly		= data.group.inviteOnly == true;
+					$me.name			= data.group.name;
+					$me.canJoin			= data.group.can_join;
+					$me.canLeave		= data.group.can_leave;
+					$me.capabilities	= data.group.capabilities;
+				}
+			});
+		
+		$http.get($me.$storage.apiURL+"/group/"+$me.group_id+"/settings/?" + jQuery.param({session_token:$me.$storage.sessionToken})).
 				
 			success(function(data, status, headers, config) {
 				
@@ -656,11 +1008,7 @@ grades.controller("GroupEditController", ['$scope', '$http' ,'$sessionStorage', 
 				
 				if(grades_validateAPIResponse(data)){
 					
-					for(var i=0;i<data.length;i++){
-						data[i].options = angular.fromJson(data[i].options);
-					}
-					
-					$me.settings = data.settings;
+					$scope.settings = data.settings;
 					
 				}
 			});
@@ -684,49 +1032,68 @@ grades.controller("GroupController", ['$scope', '$http' ,'$sessionStorage', '$ro
 	this.canLeave			= "";
 	this.capabilities		= [];
 	
+	this.group_id = -1;
+	
+	if(typeof $routeParams.groupID !== "undefined" && (! isNaN($routeParams.groupID))){
+		
+		this.group_id = $routeParams.groupID;
+		
+	}else if(typeof $scope.$parent.modalParams.group_id !== "undefined"){
+		
+		this.group_id = $scope.$parent.modalParams.group_id;
+		
+	}
+	
 	this.$storage = $sessionStorage;
 	
 	this.loadData = function(){
-		if(typeof $routeParams.groupID !== "undefined" && (! isNaN($routeParams.groupID))){
 		
-			$http.get($me.$storage.apiURL+"/group/" + $routeParams.groupID + "/?" + jQuery.param({session_token:$me.$storage.sessionToken})).
-						
-				success(function(data, status, headers, config) {
+		$http.get($me.$storage.apiURL+"/group/" + $me.group_id + "/?" + jQuery.param({session_token:$me.$storage.sessionToken})).
 					
-					data = angular.fromJson(data);
-					
-					if(grades_validateAPIResponse(data)){
-						$me.groupType		= data.group.group_type;
-						$me.inviteOnly		= Boolean(data.group.inviteOnly);
-						$me.name			= data.group.name;
-						$me.canJoin			= data.group.can_join;
-						$me.canLeave		= data.group.can_leave;
-						$me.capabilities	= data.group.capabilities;
-					}
-				});
-			
-		}else{
-			error("Keine gülitige ID!");
-		}
+			success(function(data, status, headers, config) {
+				
+				data = angular.fromJson(data);
+				
+				if(grades_validateAPIResponse(data)){
+					$me.groupType		= data.group.group_type;
+					$me.inviteOnly		= data.group.inviteOnly == true;
+					$me.name			= data.group.name;
+					$me.canJoin			= data.group.can_join;
+					$me.canLeave		= data.group.can_leave;
+					$me.capabilities	= data.group.capabilities;
+				}
+			});
 	}
 	
 	this.join = function(){
-		$me.$scope.$parent.$parent.join_group($routeParams.groupID, $me.$storage.user.id, 1, function(){
+		$me.$scope.$parent.$parent.join_group($me.group_id, $me.$storage.user.id, 1, function(){
 			$me.loadData();
 		});
 	}
 	this.leave = function(){
-		$me.$scope.$parent.$parent.leave_group($routeParams.groupID, $me.$storage.user.id, 1, function(){
+		$me.$scope.$parent.$parent.leave_group($me.group_id, $me.$storage.user.id, 1, function(){
 			$me.loadData();
 		});
 	}
 	
+	this.canEdit = function(){
+		
+		return $me.capabilities.indexOf('manage_options') != -1;
+		
+	};
+	
 	this.edit = function(){
-		$location.path('/group/edit/'+$routeParams.groupID);
+		$location.path('/group/edit/'+$me.group_id);
 	};
 	
 	this.loadData();
 	
+}]);
+
+grades.controller("ModalController", ['$scope', '$http' ,'$sessionStorage', '$routeParams', '$location', 'modalParams', function($scope, $http, $sessionStorage, $routeParams, $location, modalParams){
+	
+	$scope.modalParams = modalParams;
+		
 }]);
 
 grades.controller("EventController", ['$scope', '$http' ,'$sessionStorage', '$routeParams', '$location', function($scope, $http, $sessionStorage, $routeParams, $location){
@@ -736,32 +1103,41 @@ grades.controller("EventController", ['$scope', '$http' ,'$sessionStorage', '$ro
 	this.$scope				= $scope;
 	this.eventType 			= "";
 	this.title				= "";
-	this.canEdit			= "";
+	
+	this.event_id = -1;
+		
+	if(typeof $routeParams.eventID !== "undefined" && (! isNaN($routeParams.eventID))){
+		
+		this.event_id = $routeParams.eventID;
+		
+	}else if(typeof $scope.$parent.modalParams.event_id !== "undefined"){
+		
+		this.event_id = $scope.$parent.modalParams.event_id;
+		
+	}
 	
 	this.$storage = $sessionStorage;
 	
 	this.loadData = function(){
-		if(typeof $routeParams.eventID !== "undefined" && (! isNaN($routeParams.eventID))){
-		
-			$http.get($me.$storage.apiURL+"/event/" + $routeParams.eventID + "/?" + jQuery.param({session_token:$me.$storage.sessionToken})).
-						
-				success(function(data, status, headers, config) {
-					
-					data = angular.fromJson(data);
-					
-					if(grades_validateAPIResponse(data)){
-						
-					}
-				});
 			
-		}else{
-			error("Keine gülitige ID!");
-		}
+		$http.get($me.$storage.apiURL+"/event/" + $me.event_id + "/?" + jQuery.param({session_token:$me.$storage.sessionToken})).
+					
+			success(function(data, status, headers, config) {
+				
+				data = angular.fromJson(data);
+				
+				if(grades_validateAPIResponse(data)){
+					
+					console.log(data);
+					
+					$me.title				= data.event.title;
+					$me.eventType			= data.event.event_type;
+					
+				}
+			});
+		
+		
 	}
-	
-	this.edit = function(){
-		$location.path('/event/edit/'+$routeParams.groupID);
-	};
 	
 	this.loadData();
 	
@@ -868,46 +1244,24 @@ grades.controller("UserInputController", ['$scope', '$sessionStorage', '$http', 
 	
 }]);
 
-grades.controller("SubjectInputController", ['$scope', '$sessionStorage', '$http', function($scope, $sessionStorage, $http){
-	
-	var $me = this;
-	
-	this.value = "";
-	
-	this.$storage = $sessionStorage;
-	
-	this.getSubject = function(string, group_id){
-		
-		return $http.get($me.$storage.apiURL+"/subject/?" + jQuery.param({filters:{search: string, group_id:group_id}, session_token:$me.$storage.sessionToken})).
-						
-			then(function(response) {
-				
-				for(var i=0;i<response.data.subjects.length;i++){
-					response.data.subjects[i].desc = response.data.subjects[i].name + " (" + response.data.subjects[i].id + ")";
-				}
-				
-				return response.data.subjects;
-				
-			});
-		
-	}
-	
-	this.selectValue = function($item, $model, $label){
-	}
-	
-}]);
-
-grades.controller("ParentInputController", ['$scope', '$sessionStorage', '$http', 'locale', function($scope, $sessionStorage, $http, locale){
+grades.controller("GroupInputController", ['$scope', '$sessionStorage', '$http', 'locale', function($scope, $sessionStorage, $http, locale){
 	
 	var $me = this;
 	
 	this.placeholder = "";
+	this.inputType = "";
 	
 	this.$storage = $sessionStorage;
 	
-	this.getParent = function(string, group_id){
+	this.getGroup = function(string, group_id){
 		
-		return $http.get($me.$storage.apiURL+"/group/?" + jQuery.param({filters:{search: string, items_per_page: 10, page:0}, session_token:$me.$storage.sessionToken})).
+		var filters = {search: string, items_per_page: 10, page:0};
+		
+		if($me.inputType != ""){
+			filters['group_type'] = $me.inputType.split(":")[1];
+		}
+		
+		return $http.get($me.$storage.apiURL+"/group/?" + jQuery.param({filters:filters, session_token:$me.$storage.sessionToken})).
 						
 			then(function(response) {
 				
@@ -987,7 +1341,7 @@ grades.controller("DateInputController", ['$scope', '$sessionStorage', '$http', 
 	this.placeholder = "";
 	this.$storage = $sessionStorage;
 	this.inputType = "";
-	this.useTime = false;
+	$scope.useTime = false;
 	this.format = "";
 	
 	this.genPlaceholder = function(inputPlaceholder, inputTransPlaceholder){
@@ -1003,10 +1357,11 @@ grades.controller("DateInputController", ['$scope', '$sessionStorage', '$http', 
 	this.selectValue = function($item, $model, $label){
 	}
 	
-	this.initDatepicker = function(){
+	this.initDatepicker = function(useTime){
+		$me.useTime = useTime;
 		
 		jQuery($element).find(".datepicker").each(function(index){
-			$me.format = (jQuery(this).attr("data-time") == "true") ? 'DD. MM. YYYY HH:mm' : 'DD. MM. YYYY';
+			$me.format = (useTime == true) ? 'DD. MM. YYYY HH:mm' : 'DD. MM. YYYY';
 			
 			jQuery(this).datetimepicker({
 				format: $me.format,
@@ -1016,9 +1371,5 @@ grades.controller("DateInputController", ['$scope', '$sessionStorage', '$http', 
 		});
 		
 	};
-	
-	this.initDatepicker();
-	
-	
 	
 }]);

@@ -1,0 +1,32 @@
+<div class="content" ng-controller="GroupOverviewController as gOController">
+	
+	<table st-table="displayedGroupRows" st-safe-src="groupRows" class="table table-striped">
+		<thead>
+			<tr>
+				<th st-sort="name" i18n="common.name"></th>
+				<th st-sort="type" i18n="common.type"></th>
+				<th><input st-search="" class="form-control" data-i18n-attr="{placeholder: 'common.search'}" type="text"></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="group in displayedGroupRows">
+				<td>{{group.name}}</td>
+				<td i18n="common.{{group.type}}"></td>
+				<td>
+					<button class='btn btn-primary' ng-click="gOController.about(group.id)" i18n="common.info"></button>
+					<button class='btn btn-primary' ng-click="gOController.about(group.id)" i18n="common.subjects"></button>
+				</td>
+			</tr>
+		</tbody>
+		<tfoot>
+			<tr>
+				<td colspan="3" class="text-center">
+					<div st-pagination="" st-items-by-page="gOController.items_per_page" st-displayed-pages=""></div>
+				</td>
+			</tr>
+		</tfoot>
+	</table>
+	
+	<button class="btn btn-primary" i18n="common.add_group" ng-click="gOController.addGroup()"></button>
+	
+</div>

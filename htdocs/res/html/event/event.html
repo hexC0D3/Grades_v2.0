@@ -1,8 +1,7 @@
-<div class="content" ng-controller="EventController as groupC">
+<div class="content" ng-controller="EventController as eventC">
 	
 	<h2>{{eventC.title}}</h2>
 	
 	<h3><span i18n="common.type"></span>:</h3><span class="type" i18n="common.{{eventC.eventType}}"></span>
 	
-	<button class="btn" i18n="common.edit" ng-show="jQuery.inArray('manage_options', groupC.capabilities) != -1" ng-click="groupC.edit()"></button>
 </div>

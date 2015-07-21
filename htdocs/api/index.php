@@ -20,9 +20,9 @@
 		die(json_encode($JSON));
 	}
 	
-	global $JSON, $SESSION_TOKEN, $_PUT, $_DELETE;
+	global $JSON, $SESSION_TOKEN, $_PUT, $_DELETE, $lang;
 	
-	$JSON=array("version"=>$version);
+	$JSON=array("version"=>$version, "lang"=>$lang);
 	
 	if($_SERVER['REQUEST_METHOD'] == 'GET'){
 		//get
@@ -68,7 +68,7 @@
 	$SESSION_TOKEN = getPseudoGetParams('session_token');
 	
 	//check if user is logged in or wants to login/register/reset_password, otherwise we block
-	if(isUserLoggedIn() || ($_GET['type']=='user' && isset($_GET['action']) && in_array($_GET['action'], array('verify','reset_pw','login'))) || (!isset($_GET['action']) && $is_post)){
+	if(isUserLoggedIn() || ($_GET['type']=='user' && isset($_GET['action']) && in_array($_GET['action'], array('verify','reset_pw','login'))) || (!isset($_GET['action']) && $is_post && $_GET['type']=='user')){
 		
 		if(isset($_GET['type'])){
 			if($_GET['type']=='user'){

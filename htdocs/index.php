@@ -25,8 +25,10 @@
 		<script src="res/js/modernizr.custom.js" charset="utf-8"></script>
 
 		<script src="res/js/jquery.min.js" charset="utf-8"></script>
+		<script src="res/js/waitUntilExists.js" charset="utf-8"></script>
 		
 		<script src="res/js/angular.min.js" charset="utf-8"></script>
+		<script src="res/js/angular-animate.min.js" charset="utf-8"></script>
 		
 		<script src="res/js/angular-route.min.js" charset="utf-8"></script>
 		
@@ -49,6 +51,8 @@
 		<script src="res/js/lang-all.js" charset="utf-8"></script>
 		<script src="res/js/angular-ui-calendar.js" charset="utf-8"></script>
 		
+		<script src="res/js/smart-table.min.js" charset="utf-8"></script>
+		
 		<script src="res/js/grades.js" charset="utf-8"></script>
 		
 	</head>
@@ -64,17 +68,18 @@
 							<li><a href="/login" i18n="common.login"></a></li>
 						</ul>
 						<ul class="nav-dashboard" ng-show="navigation.isNavigation(1)">
-							<li><a href="#" i18n="common.groups"></a></li>
-							<li><a href="#" i18n="common.grades"></a></li>
-							<li><a href="#" i18n="common.excercises"></a></li>
-							<li><a href="#">{{app.user.username}}</a></li>
+							<li><a href="/dashboard" i18n="common.dashboard"></a></li>
+							<li><a href="/group/overview" i18n="common.groups"></a></li>
+							<li><a href="/grade/overview" i18n="common.grades"></a></li>
+							<li><a href="/task/overview" i18n="common.tasks"></a></li>
+							<li><a href="/profile">{{app.user.first_name + " " + app.user.last_name}}</a></li>
 						</ul>
 					</nav>
 				</div>
 			</div>
 		</header>
 				
-		<main class="container" ng-view>
+		<main class="container dynamic-content" ng-view>
 			
 		</main>
 

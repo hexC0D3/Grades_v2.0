@@ -1,15 +1,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Grades\n"
-"POT-Creation-Date: 2015-02-27 08:52+0100\n"
-"PO-Revision-Date: 2015-02-27 08:53+0100\n"
+"POT-Creation-Date: 2015-07-21 10:30+0200\n"
+"PO-Revision-Date: 2015-07-21 10:31+0200\n"
 "Last-Translator: Nico Hauser <me@tyratox.ch>\n"
 "Language-Team: \n"
 "Language: de_DE\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.7.1\n"
+"X-Generator: Poedit 1.8.2\n"
 "X-Poedit-Basepath: .\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
@@ -17,125 +17,313 @@ msgstr ""
 "X-Poedit-SearchPathExcluded-0: ../../../ajax\n"
 "X-Poedit-SearchPathExcluded-1: ../../../lang\n"
 
-#: ../../../messages.php:14
+#: ../../../messages.php:18
 msgid "Invalid Request Method!"
-msgstr ""
+msgstr "Ungültige Anfrage!"
 
-#: ../../../messages.php:17
+#: ../../../messages.php:21
 msgid "Invalid E-Mail address"
-msgstr ""
-
-#: ../../../messages.php:20
-msgid "Unknown error while logging in!"
-msgstr ""
-
-#: ../../../messages.php:23
-msgid "The entered E-Mail address is already in use and was verified!"
-msgstr ""
+msgstr "Ungültige Mail Adresse"
 
 #: ../../../messages.php:24
-msgid ""
-"The entered E-Mail address is already in use but wasn't verified! You may "
-"try again in 10 minutes."
+msgid "The entered E-Mail address is already in use and was verified!"
 msgstr ""
+"Die eingegebene Mail-Adresse wurde bereits von jemandem verifiziert und "
+"verwendet!"
 
 #: ../../../messages.php:25
-msgid "Unknown error while registering in, please contact our support!"
+msgid ""
+"The entered E-Mail address is already in use but wasn't verified! You may "
+"try again in 10 minutes"
 msgstr ""
+"Die eingegebene Mail-Adresse wurde bereits von jemandem benutzt, wurde "
+"jedoch bisher nicht verifiziert. Versuch es in 10 Minuten wieder."
 
 #: ../../../messages.php:26
-msgid "Your captcha is invalid! Please re-enter it."
-msgstr ""
+msgid "Your captcha is invalid! Please re-enter it"
+msgstr "Der Captcha ist ungültig!"
 
 #: ../../../messages.php:29
-msgid "Unknown error while generating a token! Please contact our support!"
-msgstr ""
+msgid "Hi script-kiddie!"
+msgstr "Hallo script-kiddie!"
+
+#: ../../../messages.php:30
+msgid "Please send all required fields"
+msgstr "Bitte sende alle benötigten Felder"
+
+#: ../../../messages.php:31
+msgid "You don't have the permission to do that!"
+msgstr "Du hast nicht die Erlaubnis dies zu tun!"
 
 #: ../../../messages.php:32
-msgid "Hi script-kiddie! "
-msgstr ""
-
-#: ../../../messages.php:33
-msgid "Please send all required fields"
-msgstr ""
-
-#: ../../../messages.php:34
-msgid "You don't have the permission to do that!"
-msgstr ""
+msgid "Unknown error! Please report this"
+msgstr "Unbekannter Fehler! Bitte melde dies!"
 
 #: ../../../messages.php:35
-msgid "Unknown error! Please report this."
-msgstr ""
+msgid "The given input is invalid!"
+msgstr "Die gesendeten Informationen sind ungültig!"
 
 #: ../../../messages.php:38
 msgid "The requested api version doesn't exist!"
-msgstr ""
-
-#: ../../../messages.php:42
-msgid "Your code is invalid! Please request a new one."
-msgstr ""
+msgstr "The verlange API Version existiert nicht!"
 
 #: ../../../messages.php:44
+msgid "Login failed! Username or password is invalid!"
+msgstr "Login fehlgeschlagen! Der Benutzername oder das Passwort ist ungültig!"
+
+#: ../../../messages.php:47
+msgid "Your code is invalid! Please request a new one"
+msgstr "Dein Code ist ungültig! Lass dir einen Neuen senden!"
+
+#: ../../../messages.php:49
 msgid "Your passwords needs to have more than 5 letters!"
-msgstr ""
+msgstr "Dein Passwort braucht mehr als 5 Buchstaben!"
 
-#: ../../../messages.php:46
-msgid "You cannot list all users! Please use a filter."
-msgstr ""
+#: ../../../messages.php:51
+msgid "You cannot list all users! Please use a filter"
+msgstr "Du kannst nicht alle Benutzer auflisten! Bitte benutze einen Filter!"
 
-#: ../../../messages.php:48
+#: ../../../messages.php:56
 msgid "You're already a member of this group!"
-msgstr ""
+msgstr "Du bist bereits Mitglied dieser Gruppe!"
 
-#: ../../../messages.php:52
-msgid "yourname@domain.tld"
-msgstr ""
-
-#: ../../../messages.php:54
-msgid "Register"
-msgstr ""
+#: ../../../messages.php:57
+msgid "This group name already exists!"
+msgstr "Dieser Gruppenname existiert bereits!"
 
 #: ../../../messages.php:58
-msgid "Get Started"
-msgstr ""
+msgid "The given parent doesn't exist!"
+msgstr "Die angegebene übergeordnete Gruppe existiert nicht!"
+
+#: ../../../messages.php:59
+msgid "You can't join this group, it is invite only!"
+msgstr "Du kannst dieser Gruppe nicht beitreten, man muss eingeladen werden!"
 
 #: ../../../messages.php:62
+msgid "This user already has the chosen capability!"
+msgstr "Dieser Benutzer hat die angegebene Berechtigung bereits!"
+
+#: ../../../messages.php:63
+msgid "This user doesn't have the chosen capability!"
+msgstr "Dieser Benutzer hat die angegebene Berechtigung nicht!"
+
+#: ../../../messages.php:66
+msgid "You cannot list all groups! Please use a filter"
+msgstr "Du kannst nicht alle Gruppen listen. Bitte benutz einen Filter!"
+
+#: ../../../messages.php:70
+msgid "You cannot list all events! Please use a filter"
+msgstr "Du kannst nicht alle Events listen! Bitte benutz einen Filter"
+
+#: ../../../messages.php:74
+msgid "yourname@domain.tld"
+msgstr "deinname@domain.tld"
+
+#: ../../../messages.php:76
+msgid "Register"
+msgstr "Registrieren"
+
+#: ../../../messages.php:80
+msgid "Get Started"
+msgstr "Beginnen"
+
+#: ../../../messages.php:84
 msgid "Grades - Support"
-msgstr ""
+msgstr "Grades - Support"
 
-#: ../../../messages.php:64
+#: ../../../messages.php:86
 msgid "Hi"
-msgstr ""
+msgstr "Hallo"
 
-#: ../../../messages.php:65
+#: ../../../messages.php:87
 msgid "Regards"
-msgstr ""
+msgstr "Viele Grüsse"
 
-#: ../../../messages.php:65
+#: ../../../messages.php:87
 msgid "Your Grades Team"
-msgstr ""
+msgstr "Dein Grades Team"
 
-#: ../../../messages.php:68
+#: ../../../messages.php:90
 msgid "Grades Support - Registration"
-msgstr ""
+msgstr "Grades Support - Registrierung"
 
-#: ../../../messages.php:69
+#: ../../../messages.php:91
 msgid ""
 "You have successfully registered yourself in the grade management system "
 "'Grades'. To complete your registration you just need enter the following "
 "verification code:"
 msgstr ""
+"Du hast die erfolgreich beim Notenmanagmentsystem 'Grades' registriert. Um "
+"die Registration abzuschliessen musst du jetzt den folgenden "
+"Verifizierungscode eingeben."
 
-#: ../../../messages.php:72
+#: ../../../messages.php:94
 msgid "Grades Support - Password Reset"
-msgstr ""
+msgstr "Grades Support - Passwort zurückgsesetzt"
 
-#: ../../../messages.php:73
+#: ../../../messages.php:95
 msgid ""
 "A reset of your password has been requested! If you still want to reset it, "
-"then please click on the following link."
+"then please click on the following link"
 msgstr ""
+"Eine Zurücksetzung deines Passworts wurde angefragt! Falls du es immer noch "
+"zurücksetzen willst, kannst du den folgenden Link anklicken"
 
-#: ../../../messages.php:74
+#: ../../../messages.php:96
 msgid "Reset Password"
+msgstr "Passwort zurücksetzen"
+
+#: ../../../messages.php:100
+msgid "Enable this if you want nobody to join this group without invitation"
 msgstr ""
+"Aktiviere dies, falls du nicht willst, dass man ohne Einladung dieser Gruppe "
+"beitreten kann"
+
+#: ../../../messages.php:101
+msgid "The name of this group"
+msgstr "Der Name dieser Gruppe"
+
+#: ../../../messages.php:104
+msgid ""
+"Gives a user the capability to manage the capabilities of users in this group"
+msgstr ""
+"Gibt einem Benutzer die Berechtigung die Berechtigungen dieser Gruppe zu "
+"bearbeiten"
+
+#: ../../../messages.php:105
+msgid "Gives a user the capability to manage the options of this group"
+msgstr ""
+"Gibt einem Benutzer die Berechtigung, die Einstellungen dieser Gruppe zu "
+"bearbeiten"
+
+#: ../../../messages.php:106
+msgid "Gives a user the capability to manage members in this group"
+msgstr ""
+"Gibt einem Benutzer die Berechtigung, die Mitglieder dieser Gruppe zu "
+"verwalten"
+
+#: ../../../messages.php:110
+msgid "The title of this event"
+msgstr "Der Titel dieses Events"
+
+#: ../../../messages.php:113
+msgid "The grade you received"
+msgstr "Die erhaltene Note"
+
+#: ../../../messages.php:118
+msgid "The method this school uses to calculate your average grade"
+msgstr "Die Methode, dieser Schule, Noten zu berechnen"
+
+#: ../../../messages.php:120
+msgid "Range: 1-6, Best:6"
+msgstr "Bereich: 1-6, Beste Note: 6"
+
+#: ../../../messages.php:121
+msgid "Range: 1-6, Best:6, Negative Points 1x"
+msgstr "Bereich: 1-6, Beste Note: 6, Negative Saldopunkte: 1x"
+
+#: ../../../messages.php:122
+msgid "Range: 1-6, Best:6, Negative Points 2x"
+msgstr "Bereich: 1-6, Beste Note: 6, Negative Saldopunkte: 2x"
+
+#: ../../../messages.php:124
+msgid ""
+"If the grades received in this subject, are used in the calculations for the "
+"average grade"
+msgstr "Ob dieses Fach promotionswirksam ist"
+
+#: ../../../messages.php:126
+msgid "This schools website URL"
+msgstr "Die URL der Webseite dieser Schule"
+
+#: ../../../messages.php:127
+msgid "This schools address"
+msgstr "Die Adresse dieser Schule"
+
+#: ../../../messages.php:128
+msgid "The member of this school who's able to manage it"
+msgstr "Das Mitglied der Schule, welches in der Lage ist, diese zu verwalten"
+
+#: ../../../messages.php:131
+msgid "Your First Name"
+msgstr "Dein Vorname"
+
+#: ../../../messages.php:132
+msgid "Your Last Name"
+msgstr "Dein Nachname"
+
+#: ../../../messages.php:134
+msgid "Your Gender"
+msgstr "Dein Geschlecht"
+
+#: ../../../messages.php:135
+msgid "Male"
+msgstr "Männlich"
+
+#: ../../../messages.php:136
+msgid "Female"
+msgstr "Weiblich"
+
+#: ../../../messages.php:138
+msgid "Your Birthday"
+msgstr "Dein Geburtstag"
+
+#: ../../../messages.php:140
+msgid "About me"
+msgstr "Über micht"
+
+#: ../../../messages.php:143
+msgid "The lesson this test takes place"
+msgstr "Die Lektion, in welcher dieser Test stattfinden wird"
+
+#: ../../../messages.php:144
+msgid "The day this lesson takes place"
+msgstr "Der Tag, an dem dieser Test stattfinden wird"
+
+#: ../../../messages.php:145
+msgid "The grade weight this test has"
+msgstr "Das Notengewicht dieses Tests"
+
+#: ../../../messages.php:147
+msgid "Repetition interval in weeks"
+msgstr "Wiederholungsintervall in Wochen"
+
+#: ../../../messages.php:148
+msgid "No Repetition, a one time lesson"
+msgstr "Keine Wiederholungen, dies ist eine einmalige Lektion"
+
+#: ../../../messages.php:149
+msgid "Every week"
+msgstr "Jede Woche"
+
+#: ../../../messages.php:150
+msgid "Every second week"
+msgstr "Alle 2 Wochen"
+
+#: ../../../messages.php:152
+msgid "The subject of this lesson"
+msgstr "Das Fach dieser Lektion"
+
+#: ../../../messages.php:153
+msgid "The time this lesson starts"
+msgstr "Die Zeit, zu welcher diese Lektion beginnt"
+
+#: ../../../messages.php:154
+msgid "The time this lesson ends"
+msgstr "Die Zeit zu welcher diese Lektion endet"
+
+#: ../../../messages.php:156
+msgid "The lesson this task is scheduled on"
+msgstr "Die Lektion, auf welche diese Aufgabe zu erledigen ist"
+
+#: ../../../messages.php:158
+msgid "Is this a full day event?"
+msgstr "Ist dies ein ganztägiges Event?"
+
+#: ../../../messages.php:159
+msgid "The time this event starts"
+msgstr "Die Zeit, zu welcher dieses Event beginnt"
+
+#: ../../../messages.php:160
+msgid "The time this event ends"
+msgstr "Die Zeit, zu welcher dieses Event endet"

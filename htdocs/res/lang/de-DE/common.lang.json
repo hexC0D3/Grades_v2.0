@@ -1,4 +1,6 @@
 {
+	"about"							:		"Über",
+	"info"							:		"Info",
     "about_us"						:		"Über uns",
     "register"						:		"Registrieren",
     "login"							:		"Login",
@@ -13,6 +15,11 @@
     "unjoinable"					:		"Nicht beitretbar",
     "group_no_action"				:		"Keine Aktionen verfügbar",
     
+    "action"						:		"Aktion",
+    "actions"						:		"Aktionen",
+    
+    "search"						:		"Suchen...",
+    
     "add_event"						:		"Füge ein Event hinzu",
     "test"							:		"Prüfung",
     "lesson"						:		"Lektion",
@@ -24,11 +31,6 @@
     "input_task"					:		"Die dazugehörige Aufgabe",
     "input_event"					:		"Das dazugehörige Event",
     
-    "input_date_time_from"			:		"Das Startdatum",
-    "input_date_time_to"			:		"Das Enddatum",
-    "input_date_time_reminder"		:		"Die Erinnerungszeit",
-    "input_date_test_date"			:		"Das Prüfungsdatum",
-    
     "edit"							:		"Bearbeiten",
     
     "grade"							:		"Note",
@@ -37,8 +39,10 @@
     "event"							:		"Event",
     "events"						:		"Evente",
     
-    "excercise"						:		"Aufgabe",
-    "excercises"					:		"Aufgaben",
+    "task"							:		"Aufgabe",
+    "tasks"							:		"Aufgaben",
+    
+    "dashboard"						:		"Dashboard",
     
     "subject"						:		"Fach",
     "subjects"						:		"Fächer",

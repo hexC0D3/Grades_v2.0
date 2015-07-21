@@ -126,11 +126,6 @@ if(isset($_GET['id'])){
 						'description'=>getMessages()->GROUP_CAPABILITIES_MANAGE_MEMBERS,
 						'users'=>getUsersWithCap($_GET['id'], 'manage_members')
 					);
-					$JSON["capabilities"][]=array(
-						'key'=>'create_events',
-						'description'=>getMessages()->GROUP_CAPABILITIES_CREATE_EVENTS,
-						'users'=>getUsersWithCap($_GET['id'], 'create_events')
-					);
 					/*TODO: capabilities for different event types */
 					
 					$JSON["capabilities"][]=array(
@@ -355,7 +350,7 @@ if(isset($_GET['id'])){
 							$types.="iis";
 							
 							//special handling with admins
-							if(in_array($group_type_option_id, array(2,5))){
+							if(in_array($group_type_option_id, array(5))){
 								$admin_user_id = $option;
 							}
 						}
@@ -369,7 +364,7 @@ if(isset($_GET['id'])){
 						//get relation id
 						$relation_id = $db->doQueryWithArgs("SELECT id FROM group_relations WHERE member_id=? AND group_id=? AND member_type=?", array($admin_user_id,$id,1), "iii");
 						
-						if(count($relation_id)==1){
+						if(count($relation_id) == 1){
 							$relation_id=$relation_id[0]['id'];
 							
 							//give him all capabilites
@@ -482,7 +477,7 @@ if(isset($_GET['id'])){
 			}else{
 				
 				
-				$query="SELECT groups.id,groups.name FROM groups LEFT JOIN group_types ON groups.type_id=group_types.id WHERE 1=1";
+				$query="SELECT groups.id,groups.name,group_types.title as type FROM groups LEFT JOIN group_types ON groups.type_id=group_types.id WHERE 1=1";
 				
 				if(isset($filters['parent_group_id'])){
 					
@@ -509,7 +504,11 @@ if(isset($_GET['id'])){
 					$args[]=$filters['group_type_id'];
 					$types.="s";
 				}
-				
+				if(isset($filters['group_type'])){
+					$query.=" AND groups_types.title = ?";
+					$args[]=$filters['group_type'];
+					$types.="s";
+				}
 				if(isset($filters['items_per_page']) && isset($filters['page'])){
 					$query.=" LIMIT ?,?";
 					$args[]=(((int)$filters['items_per_page']) * ((int)$filters['page']));

@@ -3,12 +3,12 @@
 
 @import url(https://fonts.googleapis.com/css?family=Roboto:400,300,100,500);
 
-@mixin transitions($duration){
-	-webkit-transition: all $duration ease-in-out;
-	-moz-transition: all $duration ease-in-out;
-	-ms-transition: all $duration ease-in-out;
-	-o-transition: all $duration ease-in-out;
-	transition: all $duration ease-in-out;
+@mixin transitions($duration, $property){
+	-webkit-transition: $property $duration ease-in-out;
+	-moz-transition: $property $duration ease-in-out;
+	-ms-transition: $property $duration ease-in-out;
+	-o-transition: $property $duration ease-in-out;
+	transition: $property $duration ease-in-out;
 }
 
 @mixin transform($transform){
@@ -60,6 +60,11 @@ body, html{
 	
 	margin:0;
 	padding:0;
+}
+html, body{
+	width: 100vw;
+	min-height: 100vh;
+	overflow-x: hidden;
 }
 
 h1, h2, h3, h4, h5, h6{
@@ -176,6 +181,18 @@ body > footer{
 .widgets{
 	width: 101%;
 	margin-left:-1%;
+	
+	@include transitions(1s, width);
+	
+	.widget{
+		@include transitions(1s, width);
+	}
+}
+.widgets.expandCalendar{
+	width: 202%;
+	.widget:before, .widget{
+		padding-top:0;
+	}
 }
 /* general */
 .widget{	
@@ -254,6 +271,19 @@ body > footer{
 	position: relative;
 }
 
+.timeline {
+    position: absolute;    
+    border-top: 2px dashed red;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    z-index: 999;
+}
+
+.fc-time-grid-container{
+	position: relative;
+}
+
 @include keyframe(animateSpinner){
 	0% {
 		@include transform(rotate(0));
@@ -267,4 +297,13 @@ body > footer{
 .content form input{
 	width: 100%;
 	box-shadow: none;
+}
+
+
+.st-sort-ascent:before{
+	content: '\25B2';
+}
+
+.st-sort-descent:before{
+	content: '\25BC';
 }
