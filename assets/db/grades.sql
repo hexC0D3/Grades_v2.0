@@ -1,9 +1,9 @@
 -- phpMyAdmin SQL Dump
--- version 4.3.6
+-- version 4.4.12
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 21. Jul 2015 um 13:16
+-- Erstellungszeit: 24. Jul 2015 um 12:23
 -- Server-Version: 5.6.22
 -- PHP-Version: 5.5.24
 
@@ -14,49 +14,16 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
+/*!40101 SET NAMES utf8mb4 */;
 
 --
 -- Datenbank: `grades`
 --
-CREATE DATABASE IF NOT EXISTS `grades` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
-USE `grades`;
 
 DELIMITER $$
 --
 -- Prozeduren
 --
-CREATE DEFINER=`root`@`localhost` PROCEDURE `getCapabilities`(IN `input_group_id` BIGINT(20) UNSIGNED, IN `input_user_id` BIGINT(20) UNSIGNED, OUT `caps` VARCHAR(512))
-    READS SQL DATA
-BEGIN
-	
-	SET caps = ''; /*Init output value*/
-	SET @new_caps = '';
-	SET @query_group_id = input_group_id; /*Init group id value*/
-	SET @count = 1;
-
-	
-	/* Loop through group and parent group */
-	WHILE (@count != 0) DO
-	
-		/* Get capabilities of current group */
-		
-		SELECT @new_caps:=group_concat(group_capabilities.capability separator ',')
-			FROM group_relations
-				LEFT JOIN group_capabilities ON group_relations.id=group_capabilities.relation_id
-			WHERE group_relations.group_id=@query_group_id
-				AND group_relations.member_id=input_user_id 
-				AND group_relations.member_type=1
-			GROUP BY group_capabilities.relation_id;
-		
-		SET caps = CONCAT(caps,",",@new_caps);
-	
-		SELECT @query_group_id:=group_id, @count:=COUNT(*) FROM group_relations WHERE member_type = 2 AND member_id=@query_group_id;
-		
-	END WHILE;
-
-END$$
-
 CREATE DEFINER=`root`@`localhost` PROCEDURE `getParentGroups`(IN `input_group_id` BIGINT(20) UNSIGNED, OUT `group_ids` VARCHAR(64))
 BEGIN
 	
@@ -90,7 +57,7 @@ CREATE TABLE IF NOT EXISTS `events` (
   `id` bigint(20) unsigned NOT NULL,
   `title` varchar(256) NOT NULL,
   `type_id` bigint(20) unsigned NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
 
 --
 -- Daten für Tabelle `events`
@@ -99,7 +66,10 @@ CREATE TABLE IF NOT EXISTS `events` (
 INSERT INTO `events` (`id`, `title`, `type_id`) VALUES
 (9, 'MaturprÃ¼fung', 4),
 (10, 'Test Event', 4),
-(11, 'LektÃ¼re', 4);
+(11, 'LektÃ¼re', 4),
+(12, 'Mathematik, Donnerstag', 2),
+(13, 'Trigonometrie', 1),
+(14, 'Trigonometrie Arbeitsblatt 1', 3);
 
 -- --------------------------------------------------------
 
@@ -112,7 +82,7 @@ CREATE TABLE IF NOT EXISTS `event_options` (
   `event_id` bigint(20) unsigned NOT NULL,
   `event_type_option_id` bigint(20) unsigned NOT NULL,
   `value` varchar(512) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=latin1;
 
 --
 -- Daten für Tabelle `event_options`
@@ -126,8 +96,17 @@ INSERT INTO `event_options` (`id`, `event_id`, `event_type_option_id`, `value`) 
 (8, 10, 7, '1436227200'),
 (9, 10, 8, '1436400000'),
 (10, 11, 6, '0'),
-(11, 11, 7, '1437627000'),
-(12, 11, 8, '1437654300');
+(11, 11, 7, '1438231800'),
+(12, 11, 8, '1438259100'),
+(13, 12, 3, '1437636900'),
+(14, 12, 4, '1437645900'),
+(15, 12, 13, '1'),
+(16, 13, 1, '12'),
+(17, 13, 11, '1'),
+(18, 13, 12, '1437602400'),
+(19, 14, 14, '12'),
+(20, 14, 15, 'Es muss bla und bla erledigt werden. Tipp: Blablabla'),
+(21, 14, 16, '1438207200');
 
 -- --------------------------------------------------------
 
@@ -164,7 +143,7 @@ CREATE TABLE IF NOT EXISTS `event_type_options` (
   `required` tinyint(1) NOT NULL,
   `options` varchar(1024) NOT NULL,
   `description_translation_key` varchar(255) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
 
 --
 -- Daten für Tabelle `event_type_options`
@@ -172,17 +151,17 @@ CREATE TABLE IF NOT EXISTS `event_type_options` (
 
 INSERT INTO `event_type_options` (`id`, `event_type_id`, `option_key`, `input_data_type`, `required`, `options`, `description_translation_key`) VALUES
 (1, 1, 'lesson_id', 'event_id:lesson', 1, '{"input_type":"event:lesson"}', 'DYNAMIC_EVENT_TYPE_OPTIONS_TEST_LESSON_ID_DESC'),
-(2, 2, 'subject_id', 'group_id:subject', 1, '{"input_type":"group:subject"}', 'DYNAMIC_EVENT_TYPE_OPTIONS_LESSON_SUBJECT_ID_DESC'),
 (3, 2, 'time_from', 'timestamp', 1, '{"input_type":"datepicker","time":true}', 'DYNAMIC_EVENT_TYPE_OPTIONS_LESSON_TIME_FROM_DESC'),
 (4, 2, 'time_to', 'timestamp', 1, '{"input_type":"datepicker", "time":true}', 'DYNAMIC_EVENT_TYPE_OPTIONS_LESSON_TIME_TO_DESC'),
 (6, 4, 'event_full_day', 'boolean', 1, '{"input_type":"checkbox"}', 'DYNAMIC_EVENT_TYPE_OPTIONS_EVENT_FULL_DAY_DESC'),
 (7, 4, 'time_from', 'timestamp', 1, '{"input_type":"datepicker", "time":true}', 'DYNAMIC_EVENT_TYPE_OPTIONS_EVENT_TIME_FROM_DESC'),
 (8, 4, 'time_to', 'timestamp', 1, '{"input_type":"datepicker", "time":true}', 'DYNAMIC_EVENT_TYPE_OPTIONS_EVENT_TIME_TO_DESC'),
 (11, 1, 'grade_weight', 'float', 1, '{"input_type":"grade_weight"}', 'DYNAMIC_EVENT_TYPE_OPTIONS_TEST_GRADE_WEIGT_DESC'),
-(12, 1, 'test_date', 'timestamp', 1, '{"input_type":"datepicker", "time":false}', 'DYNAMIC_EVENT_TYPE_OPTIONS_TEST_DAY_DESC'),
+(12, 1, 'date', 'timestamp', 1, '{"input_type":"datepicker", "time":false}', 'DYNAMIC_EVENT_TYPE_OPTIONS_TEST_DAY_DESC'),
 (13, 2, 'lesson_repetition_interval', 'int', 1, '{"input_type":"select","select":[{"value":0, "title_tanslation_key":"DYNAMIC_EVENT_TYPE_OPTIONS_REPETITION_INTERVAL_0_DESC"},{"value":1, "title_tanslation_key":"DYNAMIC_EVENT_TYPE_OPTIONS_REPETITION_INTERVAL_1_DESC"}, {"value":2, "title_tanslation_key":"DYNAMIC_EVENT_TYPE_OPTIONS_REPETITION_INTERVAL_2_DESC"}]}', 'DYNAMIC_EVENT_TYPE_OPTIONS_REPETITION_INTERVAL_DESC'),
 (14, 3, 'lesson_id', 'event_id:lesson', 1, '{"input_type":"event:lesson"}', 'DYNAMIC_EVENT_TYPE_OPTIONS_TASK_TIME_LESSON'),
-(15, 3, 'description', 'text', 1, '{"input_type":"textfield"}', 'DYNAMIC_EVENT_TYPE_OPTIONS_TASK_DESC');
+(15, 3, 'description', 'text', 1, '{"input_type":"textarea"}', 'DYNAMIC_EVENT_TYPE_OPTIONS_TASK_DESC'),
+(16, 3, 'date', 'timestamp', 1, '{"input_type":"datepicker", "time":false}', 'DYNAMIC_EVENT_TYPE_OPTIONS_TASK_DAY_DESC');
 
 -- --------------------------------------------------------
 
@@ -195,7 +174,14 @@ CREATE TABLE IF NOT EXISTS `grades` (
   `user_id` bigint(20) unsigned NOT NULL,
   `event_id` bigint(20) unsigned NOT NULL,
   `grade` float unsigned NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+--
+-- Daten für Tabelle `grades`
+--
+
+INSERT INTO `grades` (`id`, `user_id`, `event_id`, `grade`) VALUES
+(1, 6, 13, 5.5);
 
 -- --------------------------------------------------------
 
@@ -229,7 +215,7 @@ CREATE TABLE IF NOT EXISTS `group_capabilities` (
   `id` bigint(20) unsigned NOT NULL,
   `relation_id` bigint(20) unsigned NOT NULL,
   `capability` varchar(255) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
 --
 -- Daten für Tabelle `group_capabilities`
@@ -238,10 +224,7 @@ CREATE TABLE IF NOT EXISTS `group_capabilities` (
 INSERT INTO `group_capabilities` (`id`, `relation_id`, `capability`) VALUES
 (1, 2, 'manage_capabilities'),
 (2, 2, 'manage_options'),
-(5, 2, 'manage_members'),
-(9, 24, 'manage_capabilities'),
-(10, 24, 'manage_options'),
-(11, 24, 'manage_members');
+(5, 2, 'manage_members');
 
 -- --------------------------------------------------------
 
@@ -274,7 +257,7 @@ CREATE TABLE IF NOT EXISTS `group_options` (
   `group_id` bigint(20) unsigned NOT NULL,
   `group_type_option_id` bigint(20) unsigned NOT NULL,
   `value` varchar(512) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=latin1;
 
 --
 -- Daten für Tabelle `group_options`
@@ -284,11 +267,10 @@ INSERT INTO `group_options` (`id`, `group_id`, `group_type_option_id`, `value`) 
 (9, 1, 5, '6'),
 (11, 1, 4, 'KÃ¼ttigerstrasse 44 5018'),
 (14, 1, 3, 'http://nksa.com'),
-(15, 1, 1, '0'),
-(16, 2, 1, '2'),
 (17, 2, 4, 'ka'),
 (18, 2, 5, '6'),
-(25, 9, 7, '1');
+(25, 9, 7, '1'),
+(26, 9, 8, 'Mathematik');
 
 -- --------------------------------------------------------
 
@@ -301,7 +283,7 @@ CREATE TABLE IF NOT EXISTS `group_relations` (
   `member_id` bigint(20) unsigned NOT NULL,
   `group_id` bigint(20) unsigned NOT NULL,
   `member_type` bigint(20) unsigned NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=latin1;
 
 --
 -- Daten für Tabelle `group_relations`
@@ -312,8 +294,12 @@ INSERT INTO `group_relations` (`id`, `member_id`, `group_id`, `member_type`) VAL
 (20, 9, 1, 3),
 (21, 10, 1, 3),
 (22, 11, 1, 3),
-(24, 6, 9, 1),
-(25, 9, 2, 2);
+(25, 9, 2, 2),
+(27, 6, 9, 1),
+(28, 2, 1, 2),
+(29, 12, 9, 3),
+(30, 13, 9, 3),
+(31, 14, 9, 3);
 
 -- --------------------------------------------------------
 
@@ -357,7 +343,6 @@ CREATE TABLE IF NOT EXISTS `group_type_options` (
 --
 
 INSERT INTO `group_type_options` (`id`, `group_type_id`, `option_key`, `input_data_type`, `required`, `options`, `description_translation_key`) VALUES
-(1, 2, 'mark_calc_method', 'int', 1, '{"input_type":"select","select":[{"value":0, "title_tanslation_key":"DYNAMIC_GROUP_TYPE_OPTIONS_MARK_CALC_METHOD_0"},{"value":1, "title_tanslation_key":"DYNAMIC_GROUP_TYPE_OPTIONS_MARK_CALC_METHOD_1"},{"value":2, "title_tanslation_key":"DYNAMIC_GROUP_TYPE_OPTIONS_MARK_CALC_METHOD_2"}]}', 'DYNAMIC_GROUP_TYPE_OPTIONS_MARK_CALC_METHOD_DESC'),
 (3, 2, 'website', 'url', 0, '{"input_type":"url"}', 'DYNAMIC_GROUP_TYPE_OPTIONS_WEBSITE_DESC'),
 (4, 2, 'address', 'text', 1, '{"input_type":"textfield"}', 'DYNAMIC_GROUP_TYPE_OPTIONS_ADDRESS_DESC'),
 (5, 2, 'school_admin', 'user_id', 1, '{"input_type":"user"}', 'DYNAMIC_GROUP_TYPE_OPTIONS_SCHOOL_ADMIN_DESC'),
@@ -375,14 +360,14 @@ CREATE TABLE IF NOT EXISTS `login_tokens` (
   `user_id` bigint(20) unsigned NOT NULL,
   `login_token` varchar(128) NOT NULL,
   `ip` varchar(64) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=117 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=132 DEFAULT CHARSET=latin1;
 
 --
 -- Daten für Tabelle `login_tokens`
 --
 
 INSERT INTO `login_tokens` (`id`, `user_id`, `login_token`, `ip`) VALUES
-(116, 6, '6cf15a650fcdcecd792b8c379b12d19d', '127.0.0.1');
+(131, 6, '3f87f40ea74722cd91bc095dfd47a2ff', '127.0.0.1');
 
 -- --------------------------------------------------------
 
@@ -444,7 +429,7 @@ CREATE TABLE IF NOT EXISTS `user_meta` (
   `user_id` bigint(20) unsigned NOT NULL,
   `user_meta_option_id` bigint(20) unsigned NOT NULL,
   `value` varchar(512) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 
 --
 -- Daten für Tabelle `user_meta`
@@ -452,7 +437,10 @@ CREATE TABLE IF NOT EXISTS `user_meta` (
 
 INSERT INTO `user_meta` (`id`, `user_id`, `user_meta_option_id`, `value`) VALUES
 (3, 6, 1, 'Nico'),
-(4, 6, 2, 'Hauser');
+(4, 6, 2, 'Hauser'),
+(6, 6, 4, '890607600'),
+(7, 6, 3, '0'),
+(8, 6, 5, '2');
 
 -- --------------------------------------------------------
 
@@ -464,6 +452,7 @@ CREATE TABLE IF NOT EXISTS `user_meta_options` (
   `id` bigint(20) unsigned NOT NULL,
   `option_key` varchar(255) NOT NULL,
   `input_data_type` varchar(32) NOT NULL,
+  `required` tinyint(1) NOT NULL,
   `options` varchar(1024) NOT NULL,
   `description_translation_key` varchar(255) NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
@@ -472,12 +461,12 @@ CREATE TABLE IF NOT EXISTS `user_meta_options` (
 -- Daten für Tabelle `user_meta_options`
 --
 
-INSERT INTO `user_meta_options` (`id`, `option_key`, `input_data_type`, `options`, `description_translation_key`) VALUES
-(1, 'first_name', 'text', '{"input_type":"textfield"}', 'DYNAMIC_USER_OPTIONS_FIRST_NAME_DESC'),
-(2, 'last_name', 'text', '{"input_type":"textfield"}', 'DYNAMIC_USER_OPTIONS_LAST_NAME_DESC'),
-(3, 'gender', 'number', '{"input_type":"select","select":[{"value":0,"title_tanslation_key":"DYNAMIC_USER_OPTIONS_GENDER_MALE"},{"value":1,"title_tanslation_key":"DYNAMIC_USER_OPTIONS_GENDER_FEMALE"}]}', 'DYNAMIC_USER_OPTIONS_GENDER_DESC'),
-(4, 'birthday', 'timestamp', '{"input_type":"datepicker"}', 'DYNAMIC_USER_OPTIONS_BIRTHDAY_DESC'),
-(5, 'about', 'text', '{"input_type":"textarea"}', 'DYNAMIC_USER_OPTIONS_ABOUT_DESC');
+INSERT INTO `user_meta_options` (`id`, `option_key`, `input_data_type`, `required`, `options`, `description_translation_key`) VALUES
+(1, 'first_name', 'text', 1, '{"input_type":"textfield"}', 'DYNAMIC_USER_OPTIONS_FIRST_NAME_DESC'),
+(2, 'last_name', 'text', 1, '{"input_type":"textfield"}', 'DYNAMIC_USER_OPTIONS_LAST_NAME_DESC'),
+(3, 'gender', 'int', 0, '{"input_type":"select","select":[{"value":0,"title_tanslation_key":"DYNAMIC_USER_OPTIONS_GENDER_MALE"},{"value":1,"title_tanslation_key":"DYNAMIC_USER_OPTIONS_GENDER_FEMALE"}]}', 'DYNAMIC_USER_OPTIONS_GENDER_DESC'),
+(4, 'birthday', 'timestamp', 0, '{"input_type":"datepicker", "time":false}', 'DYNAMIC_USER_OPTIONS_BIRTHDAY_DESC'),
+(5, 'mark_calc_method', 'int', 1, '{"input_type":"select","select":[{"value":0, "title_tanslation_key":"DYNAMIC_USER_OPTIONS_MARK_CALC_METHOD_0"},{"value":1, "title_tanslation_key":"DYNAMIC_USER_OPTIONS_MARK_CALC_METHOD_1"},{"value":2, "title_tanslation_key":"DYNAMIC_USER_OPTIONS_MARK_CALC_METHOD_2"}]}', 'DYNAMIC_USER_OPTIONS_MARK_CALC_METHOD_DESC');
 
 -- --------------------------------------------------------
 
@@ -507,13 +496,16 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 -- Indizes für die Tabelle `events`
 --
 ALTER TABLE `events`
-  ADD PRIMARY KEY (`id`), ADD KEY `events_link_event_type_id` (`type_id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `events_link_event_type_id` (`type_id`);
 
 --
 -- Indizes für die Tabelle `event_options`
 --
 ALTER TABLE `event_options`
-  ADD PRIMARY KEY (`id`), ADD KEY `eo_event_id` (`event_id`), ADD KEY `eo_event_type_option_id` (`event_type_option_id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `eo_event_id` (`event_id`),
+  ADD KEY `eo_event_type_option_id` (`event_type_option_id`);
 
 --
 -- Indizes für die Tabelle `event_types`
@@ -525,91 +517,115 @@ ALTER TABLE `event_types`
 -- Indizes für die Tabelle `event_type_options`
 --
 ALTER TABLE `event_type_options`
-  ADD PRIMARY KEY (`id`), ADD KEY `event_type_options_link_event_type_id` (`event_type_id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `event_type_options_link_event_type_id` (`event_type_id`);
 
 --
 -- Indizes für die Tabelle `grades`
 --
 ALTER TABLE `grades`
-  ADD PRIMARY KEY (`id`), ADD KEY `gr_user_id` (`user_id`), ADD KEY `gr_event_id` (`event_id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `gr_user_id` (`user_id`),
+  ADD KEY `gr_event_id` (`event_id`);
 
 --
 -- Indizes für die Tabelle `groups`
 --
 ALTER TABLE `groups`
-  ADD PRIMARY KEY (`id`), ADD KEY `groups_link_type_id` (`type_id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `groups_link_type_id` (`type_id`);
 
 --
 -- Indizes für die Tabelle `group_capabilities`
 --
 ALTER TABLE `group_capabilities`
-  ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `id` (`id`), ADD KEY `group_capabilities_link_relation_id` (`relation_id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `id` (`id`),
+  ADD KEY `group_capabilities_link_relation_id` (`relation_id`);
 
 --
 -- Indizes für die Tabelle `group_member_types`
 --
 ALTER TABLE `group_member_types`
-  ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `id` (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `id` (`id`);
 
 --
 -- Indizes für die Tabelle `group_options`
 --
 ALTER TABLE `group_options`
-  ADD PRIMARY KEY (`id`), ADD KEY `group_options_link_options_id` (`group_type_option_id`), ADD KEY `group_id` (`group_id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `group_options_link_options_id` (`group_type_option_id`),
+  ADD KEY `group_id` (`group_id`);
 
 --
 -- Indizes für die Tabelle `group_relations`
 --
 ALTER TABLE `group_relations`
-  ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `id` (`id`), ADD KEY `group_relations_link_member_id` (`member_id`), ADD KEY `group_relations_link_group_id` (`group_id`), ADD KEY `group_relations_link_member_type` (`member_type`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `id` (`id`),
+  ADD KEY `group_relations_link_member_id` (`member_id`),
+  ADD KEY `group_relations_link_group_id` (`group_id`),
+  ADD KEY `group_relations_link_member_type` (`member_type`);
 
 --
 -- Indizes für die Tabelle `group_types`
 --
 ALTER TABLE `group_types`
-  ADD PRIMARY KEY (`id`), ADD KEY `group_types_link_group_type_id` (`parent_group_type_id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `group_types_link_group_type_id` (`parent_group_type_id`);
 
 --
 -- Indizes für die Tabelle `group_type_options`
 --
 ALTER TABLE `group_type_options`
-  ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `option_key` (`option_key`), ADD KEY `group_type_options_ibfk_1` (`group_type_id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `option_key` (`option_key`),
+  ADD KEY `group_type_options_ibfk_1` (`group_type_id`);
 
 --
 -- Indizes für die Tabelle `login_tokens`
 --
 ALTER TABLE `login_tokens`
-  ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `login_token` (`login_token`), ADD KEY `login_tokens_link_user_id` (`user_id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `login_token` (`login_token`),
+  ADD KEY `login_tokens_link_user_id` (`user_id`);
 
 --
 -- Indizes für die Tabelle `notifications`
 --
 ALTER TABLE `notifications`
-  ADD PRIMARY KEY (`id`), ADD KEY `ntfc_event_id` (`event_id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `ntfc_event_id` (`event_id`);
 
 --
 -- Indizes für die Tabelle `reset_tokens`
 --
 ALTER TABLE `reset_tokens`
-  ADD PRIMARY KEY (`id`), ADD KEY `reset_tokens_link_user_id` (`user_id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `reset_tokens_link_user_id` (`user_id`);
 
 --
 -- Indizes für die Tabelle `users`
 --
 ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `mail` (`mail`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `mail` (`mail`);
 
 --
 -- Indizes für die Tabelle `user_meta`
 --
 ALTER TABLE `user_meta`
-  ADD PRIMARY KEY (`id`), ADD KEY `user_meta_ibfk_2` (`user_meta_option_id`), ADD KEY `user_meta_ibfk_3` (`user_id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_meta_ibfk_2` (`user_meta_option_id`),
+  ADD KEY `user_meta_ibfk_3` (`user_id`);
 
 --
 -- Indizes für die Tabelle `user_meta_options`
 --
 ALTER TABLE `user_meta_options`
-  ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `option_key` (`option_key`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `option_key` (`option_key`);
 
 --
 -- AUTO_INCREMENT für exportierte Tabellen
@@ -619,12 +635,12 @@ ALTER TABLE `user_meta_options`
 -- AUTO_INCREMENT für Tabelle `events`
 --
 ALTER TABLE `events`
-  MODIFY `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=12;
+  MODIFY `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=15;
 --
 -- AUTO_INCREMENT für Tabelle `event_options`
 --
 ALTER TABLE `event_options`
-  MODIFY `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=13;
+  MODIFY `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=22;
 --
 -- AUTO_INCREMENT für Tabelle `event_types`
 --
@@ -634,12 +650,12 @@ ALTER TABLE `event_types`
 -- AUTO_INCREMENT für Tabelle `event_type_options`
 --
 ALTER TABLE `event_type_options`
-  MODIFY `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=16;
+  MODIFY `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=17;
 --
 -- AUTO_INCREMENT für Tabelle `grades`
 --
 ALTER TABLE `grades`
-  MODIFY `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT für Tabelle `groups`
 --
@@ -649,7 +665,7 @@ ALTER TABLE `groups`
 -- AUTO_INCREMENT für Tabelle `group_capabilities`
 --
 ALTER TABLE `group_capabilities`
-  MODIFY `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=12;
+  MODIFY `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT für Tabelle `group_member_types`
 --
@@ -659,12 +675,12 @@ ALTER TABLE `group_member_types`
 -- AUTO_INCREMENT für Tabelle `group_options`
 --
 ALTER TABLE `group_options`
-  MODIFY `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=26;
+  MODIFY `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=27;
 --
 -- AUTO_INCREMENT für Tabelle `group_relations`
 --
 ALTER TABLE `group_relations`
-  MODIFY `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=26;
+  MODIFY `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=32;
 --
 -- AUTO_INCREMENT für Tabelle `group_types`
 --
@@ -679,7 +695,7 @@ ALTER TABLE `group_type_options`
 -- AUTO_INCREMENT für Tabelle `login_tokens`
 --
 ALTER TABLE `login_tokens`
-  MODIFY `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=117;
+  MODIFY `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=132;
 --
 -- AUTO_INCREMENT für Tabelle `notifications`
 --
@@ -699,7 +715,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT für Tabelle `user_meta`
 --
 ALTER TABLE `user_meta`
-  MODIFY `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=9;
 --
 -- AUTO_INCREMENT für Tabelle `user_meta_options`
 --
@@ -713,90 +729,90 @@ ALTER TABLE `user_meta_options`
 -- Constraints der Tabelle `events`
 --
 ALTER TABLE `events`
-ADD CONSTRAINT `events_link_event_type_id` FOREIGN KEY (`type_id`) REFERENCES `event_types` (`id`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `events_link_event_type_id` FOREIGN KEY (`type_id`) REFERENCES `event_types` (`id`) ON UPDATE CASCADE;
 
 --
 -- Constraints der Tabelle `event_options`
 --
 ALTER TABLE `event_options`
-ADD CONSTRAINT `eo_event_id` FOREIGN KEY (`event_id`) REFERENCES `events` (`id`) ON UPDATE CASCADE,
-ADD CONSTRAINT `eo_event_type_option_id` FOREIGN KEY (`event_type_option_id`) REFERENCES `event_type_options` (`id`);
+  ADD CONSTRAINT `eo_event_id` FOREIGN KEY (`event_id`) REFERENCES `events` (`id`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `eo_event_type_option_id` FOREIGN KEY (`event_type_option_id`) REFERENCES `event_type_options` (`id`);
 
 --
 -- Constraints der Tabelle `event_type_options`
 --
 ALTER TABLE `event_type_options`
-ADD CONSTRAINT `event_type_options_link_event_type_id` FOREIGN KEY (`event_type_id`) REFERENCES `event_types` (`id`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `event_type_options_link_event_type_id` FOREIGN KEY (`event_type_id`) REFERENCES `event_types` (`id`) ON UPDATE CASCADE;
 
 --
 -- Constraints der Tabelle `grades`
 --
 ALTER TABLE `grades`
-ADD CONSTRAINT `gr_event_id` FOREIGN KEY (`event_id`) REFERENCES `events` (`id`) ON UPDATE CASCADE,
-ADD CONSTRAINT `gr_user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `gr_event_id` FOREIGN KEY (`event_id`) REFERENCES `events` (`id`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `gr_user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON UPDATE CASCADE;
 
 --
 -- Constraints der Tabelle `groups`
 --
 ALTER TABLE `groups`
-ADD CONSTRAINT `groups_link_type_id` FOREIGN KEY (`type_id`) REFERENCES `group_types` (`id`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `groups_link_type_id` FOREIGN KEY (`type_id`) REFERENCES `group_types` (`id`) ON UPDATE CASCADE;
 
 --
 -- Constraints der Tabelle `group_capabilities`
 --
 ALTER TABLE `group_capabilities`
-ADD CONSTRAINT `group_capabilities_link_relation_id` FOREIGN KEY (`relation_id`) REFERENCES `group_relations` (`id`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `group_capabilities_link_relation_id` FOREIGN KEY (`relation_id`) REFERENCES `group_relations` (`id`) ON UPDATE CASCADE;
 
 --
 -- Constraints der Tabelle `group_options`
 --
 ALTER TABLE `group_options`
-ADD CONSTRAINT `group_options_ibfk_1` FOREIGN KEY (`group_id`) REFERENCES `groups` (`id`),
-ADD CONSTRAINT `group_options_link_options_id` FOREIGN KEY (`group_type_option_id`) REFERENCES `group_type_options` (`id`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `group_options_ibfk_1` FOREIGN KEY (`group_id`) REFERENCES `groups` (`id`),
+  ADD CONSTRAINT `group_options_link_options_id` FOREIGN KEY (`group_type_option_id`) REFERENCES `group_type_options` (`id`) ON UPDATE CASCADE;
 
 --
 -- Constraints der Tabelle `group_relations`
 --
 ALTER TABLE `group_relations`
-ADD CONSTRAINT `group_relations_link_group_id` FOREIGN KEY (`group_id`) REFERENCES `groups` (`id`) ON UPDATE CASCADE,
-ADD CONSTRAINT `group_relations_link_member_type` FOREIGN KEY (`member_type`) REFERENCES `group_member_types` (`id`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `group_relations_link_group_id` FOREIGN KEY (`group_id`) REFERENCES `groups` (`id`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `group_relations_link_member_type` FOREIGN KEY (`member_type`) REFERENCES `group_member_types` (`id`) ON UPDATE CASCADE;
 
 --
 -- Constraints der Tabelle `group_types`
 --
 ALTER TABLE `group_types`
-ADD CONSTRAINT `group_types_link_group_type_id` FOREIGN KEY (`parent_group_type_id`) REFERENCES `group_types` (`id`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `group_types_link_group_type_id` FOREIGN KEY (`parent_group_type_id`) REFERENCES `group_types` (`id`) ON UPDATE CASCADE;
 
 --
 -- Constraints der Tabelle `group_type_options`
 --
 ALTER TABLE `group_type_options`
-ADD CONSTRAINT `group_type_options_ibfk_1` FOREIGN KEY (`group_type_id`) REFERENCES `group_types` (`id`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `group_type_options_ibfk_1` FOREIGN KEY (`group_type_id`) REFERENCES `group_types` (`id`) ON UPDATE CASCADE;
 
 --
 -- Constraints der Tabelle `login_tokens`
 --
 ALTER TABLE `login_tokens`
-ADD CONSTRAINT `login_tokens_link_user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `login_tokens_link_user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON UPDATE CASCADE;
 
 --
 -- Constraints der Tabelle `notifications`
 --
 ALTER TABLE `notifications`
-ADD CONSTRAINT `ntfc_event_id` FOREIGN KEY (`event_id`) REFERENCES `events` (`id`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `ntfc_event_id` FOREIGN KEY (`event_id`) REFERENCES `events` (`id`) ON UPDATE CASCADE;
 
 --
 -- Constraints der Tabelle `reset_tokens`
 --
 ALTER TABLE `reset_tokens`
-ADD CONSTRAINT `reset_tokens_link_user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `reset_tokens_link_user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON UPDATE CASCADE;
 
 --
 -- Constraints der Tabelle `user_meta`
 --
 ALTER TABLE `user_meta`
-ADD CONSTRAINT `user_meta_ibfk_2` FOREIGN KEY (`user_meta_option_id`) REFERENCES `user_meta_options` (`id`) ON UPDATE CASCADE,
-ADD CONSTRAINT `user_meta_ibfk_3` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `user_meta_ibfk_2` FOREIGN KEY (`user_meta_option_id`) REFERENCES `user_meta_options` (`id`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `user_meta_ibfk_3` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON UPDATE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
