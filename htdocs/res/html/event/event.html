@@ -2,6 +2,152 @@
 	
 	<h2>{{eventC.title}}</h2>
 	
-	<h3><span i18n="common.type"></span>:</h3><span class="type" i18n="common.{{eventC.eventType}}"></span>
+	<div ng-if="eventC.eventType == 'event' || eventC.eventType == 'lesson'">
+		
+		<time>{{(eventC.start.format('DD. MM. YYYY HH:mm')) + ' - ' + (eventC.end.format('DD. MM. YYYY HH:mm'))}}</time>
+		
+	</div>
+	
+	<div ng-if="eventC.eventType == 'lesson'">
+		
+		<hr>
+		
+		<div ng-repeat="event in eventC.events">
+			
+			<div ng-if="eventC.calendarIs(event.options.date)">
+				
+				<h3 i18n="common.{{event.type}}"></h3>
+				
+				<div ng-if="event.type == 'test'">
+					
+					<table class="table">
+						
+						<thead>
+							<tr>
+								<th i18n="common.description">
+									
+								</th>
+								<th i18n="common.value">
+									
+								</th>
+							</tr>
+						</thead>
+						
+						<tbody>
+							<tr>
+								<td class="desc" i18n="common.topic">
+									
+								</td>
+								<td class="value">
+									{{event.title}}
+								</td>
+							</tr>
+							<tr>
+								<td class="desc" i18n="common.test_weight">
+									
+								</td>
+								<td class="value">
+									{{event.options.grade_weight}}
+								</td>
+							</tr>
+							<tr>
+								<td class="desc" i18n="common.grade">
+									
+								</td>
+								<td class="value">
+									<form ng-submit="eventC.addGrade($event)">
+										<p><input type="number" min="1" max="6" step="0.1" name="grade" value="{{event.grade}}"></p>
+										<input type="hidden" name="test_id" value="{{event.id}}">
+										<input type="hidden" name="grade_id" value="{{event.grade_id}}">
+										<p><button type="submit" i18n="common.update"></button></p>
+									</form>
+								</td>
+							</tr>
+						</tbody>
+						
+					</table>
+					
+				</div>
+				
+				<div ng-if="event.type == 'task'">
+					
+					<table class="table">
+						
+						<thead>
+							<tr>
+								<th i18n="common.description">
+									
+								</th>
+								<th i18n="common.value">
+									
+								</th>
+							</tr>
+						</thead>
+						
+						<tbody>
+							<tr>
+								<td class="desc" i18n="common.topic">
+									
+								</td>
+								<td class="value">
+									{{event.title}}
+								</td>
+							</tr>
+							<tr>
+								<td class="desc" i18n="common.description">
+									
+								</td>
+								<td class="value">
+									{{event.options.description}}
+								</td>
+							</tr>
+						</tbody>
+						
+					</table>
+					
+				</div>
+				
+			</div>
+			
+		</div>
+		
+		
+	</div>
+	
+	<div ng-if="eventC.eventType == 'event'">
+		
+		<hr>
+		
+		<h3 i18n="common.event"></h3>
+		
+		<table class="table">
+						
+			<thead>
+				<tr>
+					<th i18n="common.description">
+						
+					</th>
+					<th i18n="common.value">
+						
+					</th>
+				</tr>
+			</thead>
+			
+			<tbody>
+				<tr>
+					<td class="desc" i18n="common.full_day_event">
+						
+					</td>
+					<td class="value">
+						<input type="checkbox" disabled readonly checked ng-if="event.options.event_full_day">
+						<input type="checkbox" disabled readonly ng-if="!event.options.event_full_day">
+					</td>
+				</tr>
+			</tbody>
+			
+		</table>
+		
+		
+	</div>
 	
 </div>

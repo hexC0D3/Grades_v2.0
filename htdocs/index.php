@@ -69,10 +69,8 @@
 						</ul>
 						<ul class="nav-dashboard" ng-show="navigation.isNavigation(1)">
 							<li><a href="/dashboard" i18n="common.dashboard"></a></li>
-							<li><a href="/group/overview" i18n="common.groups"></a></li>
 							<li><a href="/grade/overview" i18n="common.grades"></a></li>
-							<li><a href="/task/overview" i18n="common.tasks"></a></li>
-							<li><a href="/profile">{{app.user.first_name + " " + app.user.last_name}}</a></li>
+							<li><a href="/profile/me">{{app.user.first_name + " " + app.user.last_name}}</a></li>
 						</ul>
 					</nav>
 				</div>

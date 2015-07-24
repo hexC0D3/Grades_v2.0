@@ -1,0 +1,22 @@
+<div class="content" ng-controller="ProfileController as profileC">
+	
+	<h2>{{profileC.userProperty('first_name') + ' ' + profileC.userProperty('last_name')}}</h2>
+	
+	<h3 i18n="common.gender"></h3>
+	<p i18n="common.{{profileC.userProperty('gender') | toGender}}"></p>
+	
+	<h3 i18n="common.birthday"></h3>
+	<p>{{profileC.userProperty('birthday') | toDate}}</p>
+	
+	<h3 i18n="common.about_me"></h3>
+	<p>{{profileC.userProperty('about')}}</p>
+	
+	<h3 i18n="common.my_subjects"></h3>
+	<ul>
+		<li ng-repeat="subject in profileC.subjects">{{subject.name}}</li>
+	</ul>
+	
+	
+	<button class="btn btn-primary" i18n="common.edit" ng-click="profileC.edit()"></button>
+	
+</div>

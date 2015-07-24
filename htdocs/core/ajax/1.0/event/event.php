@@ -89,10 +89,9 @@ if(isset($_GET['id'])){
 		//get event informations if member of group
 		global $db;
 		
+		
 		$data = $db->doQueryWithArgs("SELECT group_id FROM group_relations WHERE member_id=? AND member_type=3", array($_GET['id']), "i");
 		if(count($data)==1){
-			
-			$group_id = $data[0]["group_id"];
 			
 			$event = $db->doQueryWithArgs("SELECT events.id, events.title, events.type_id, event_types.title as event_type FROM events LEFT JOIN event_types ON events.type_id=event_types.id WHERE events.id=?", array($_GET['id']), "i")[0];
 			
@@ -100,7 +99,36 @@ if(isset($_GET['id'])){
 			
 			$data = $db->doQueryWithArgs("SELECT group_id FROM group_relations WHERE member_id=? AND member_type=3", array($event['id']), "i");
 
-			$event['canEdit'] = (count($data) > 0) ? (currentUserCan('manage_members', $data[0]['group_id'])) : false;
+			$event['canEdit'] = (count($data) > 0) ? (currentUserCan('manage_members', $data[0]["group_id"])) : false;
+			
+			if($event['type_id'] == 2/*lesson*/){
+				$data = $db->doQueryWithArgs("SELECT events.*,event_types.title as type FROM event_options LEFT JOIN event_type_options ON event_options.event_type_option_id=event_type_options.id LEFT JOIN events ON event_options.event_id=events.id LEFT JOIN event_types ON events.type_id=event_types.id WHERE event_type_options.option_key='lesson_id' AND event_options.value=?", array($event['id']), "i");
+				
+				$events = array();
+				
+				foreach($data as $e){
+					
+					$e['options'] = getEventOptions($e['type_id'], $e['id'], false);
+					$g_data = $db->doQueryWithArgs("SELECT group_id FROM group_relations WHERE member_id=? AND member_type=3", array($e['id']), "i");
+					
+					$e['canEdit'] = (count($g_data) > 0) ? (currentUserCan('manage_members', $g_data[0]["group_id"])) : false;
+					
+					$grade = $db->doQueryWithArgs("SELECT id, grade FROM grades WHERE user_id=? AND event_id=?", array(getUser()['id'],$e['id']), "ii");
+					
+					if(count($grade) > 0){
+						$e['grade'] = $grade[0]['grade'];
+						$e['grade_id'] = $grade[0]['id'];
+					}else{
+						$e['grade'] = '';
+						$e['grade_id'] = -1;
+					}
+					
+					$events[] = $e;
+				}
+				
+				$event['events'] = $events;
+				
+			}
 			
 			$JSON['event'] = $event;
 			
@@ -130,6 +158,7 @@ if(isset($_GET['id'])){
 								$options[$val['id']] = $validation[1];
 							}else{
 								$all_fields=false;
+								var_dump($val);
 								addError(getMessages()->ERROR_API_INVALID_INPUT);
 							}
 						}else{
@@ -315,7 +344,7 @@ function getEventOptions($event_type_id, $event_id = null, $fields = true){
 	
 	$data = $db->doQueryWithArgs("SELECT * FROM event_type_options WHERE event_type_id=? ORDER BY id ASC", array($event_type_id), "i");
 	
-	$e_title = "";
+	$e_name = "";
 	
 	$values = array();
 	
@@ -356,7 +385,7 @@ function getEventOptions($event_type_id, $event_id = null, $fields = true){
 			);
 			
 			if($value){
-				$event_options[($i + 2)]['value'] = $values[$event_option["option_key"]];
+				$event_options[($i + 2)]['value'] = isset($values[$event_option["option_key"]]) ? $values[$event_option["option_key"]] : null;
 			}
 			
 		}
@@ -367,7 +396,7 @@ function getEventOptions($event_type_id, $event_id = null, $fields = true){
 		
 			$event_option = $data[$i];
 			
-			$event_options[$event_option["option_key"]]=$values[$event_option["option_key"]];
+			$event_options[$event_option["option_key"]] = isset($values[$event_option["option_key"]]) ? $values[$event_option["option_key"]] : null;
 			
 		}
 	}

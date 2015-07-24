@@ -71,11 +71,6 @@ function logInUser($mail, $password){
 			
 			$JSON['session_token'] = $token;
 			
-			
-			$user_info = $db->doQueryWithArgs("SELECT users.id, users.mail, GROUP_CONCAT(user_meta_options.option_key) as option_keys, GROUP_CONCAT(user_meta.value) as 'values' FROM users LEFT JOIN user_meta ON users.id=user_meta.user_id LEFT JOIN user_meta_options ON user_meta.user_meta_option_id = user_meta_options.id WHERE users.id=?", array($user['id']), "s");
-			
-			$JSON['user'] = $user_info[0];
-			
 			return true;
 		}else{
 			addError(getMessages()->ERROR_SET_PASSWORD_INVALID_LOGIN); /*Wrong pword */
@@ -261,21 +256,23 @@ function currentUserCan($capability, $group_id){
 	
 	if(!isset($capabilityCache)||!is_array($capabilityCache)){
 		$capabilityCache=array();
+		
+		$v_user_caps = $db->doQueryWithoutArgs("SELECT * FROM v_user_caps");
+		foreach($v_user_caps as $cap_s){
+			$capabilityCache[$cap_s['group_id']][$cap_s['user_id']] = explode(",", $cap_s['caps']);
+		}
 	}
 	
-	if(isset($capabilityCache[getUser()['id']][$group_id])){
-		$caps = $capabilityCache[getUser()['id']][$group_id];
-	}else{
-		$caps = $db->doQueryWithArgs("SELECT caps FROM v_user_caps WHERE user_id=? AND group_id=?", array(getUser()["id"], $group_id), "ii");
+	$parents = getParentGroups(2, $group_id);
+	
+	$parents[] = $group_id; //add main group itself
+	
+	foreach($parents as $parent){
 		
-		if(count($caps) == 1){
-			
-			$caps = $caps[0]['caps'];
-		}else{
-			$caps = "";
+		if(isset($capabilityCache[$parent][getUser()['id']])){
+			$caps = array_merge($caps, $capabilityCache[$parent][getUser()['id']]);
 		}
-		$caps=explode(",", $caps);
-		$capabilityCache[getUser()['id']][$group_id]=$caps;
+		
 	}
 	
 	return in_array($capability, $caps);

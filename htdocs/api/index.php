@@ -83,13 +83,9 @@
 				
 				require_once CORE_DIR.'ajax/'.$version.'/event/event.php';
 				
-			}else if($_GET['type']=='subject'){
+			}else if($_GET['type']=='grade'){
 				
-				require_once CORE_DIR.'ajax/'.$version.'/subject/subject.php';
-				
-			}else if($_GET['type']=='mark'){
-				
-				require_once CORE_DIR.'ajax/'.$version.'/mark/mark.php';
+				require_once CORE_DIR.'ajax/'.$version.'/grade/grade.php';
 				
 			}else if($_GET['type']=='notification'){
 				

@@ -274,11 +274,10 @@ if(isset($_GET['id'])){
 		//get group informations
 		
 		global $db;
-		$groups = $db->doQueryWithArgs("SELECT groups.id, groups.name, groups.invite_only, group_types.title as group_type  FROM groups LEFT JOIN group_types ON groups.type_id=group_types.id WHERE groups.id = ?", array($_GET['id']), "i");
+		$groups = $db->doQueryWithArgs("SELECT groups.id, groups.name, groups.invite_only, group_types.title as group_type FROM groups LEFT JOIN group_types ON groups.type_id=group_types.id WHERE groups.id = ?", array($_GET['id']), "i");
 
 		if(count($groups) == 1){
 			$JSON['group'] = $groups[0];
-			  //TODO
 			
 			$JSON['group']['can_join'] = currentUserCanJoin($_GET['id']);
 			$JSON['group']['can_leave'] = currentUserCanLeave($_GET['id']);
@@ -481,11 +480,11 @@ if(isset($_GET['id'])){
 				
 				if(isset($filters['parent_group_id'])){
 					
-					$query="SELECT groups.id,groups.name FROM (".
-						"SELECT * from group_relations LEFT JOIN groups ON group_relations.member_id=groups.id WHERE group_relations.group_id=? AND member_type=2".
-					") LEFT JOIN group_types ON groups.type_id=group_types.id WHERE 1=1";
+					$query="SELECT group_id as id,group_name as name, group_types.title as type FROM (".
+						"SELECT group_relations.member_id as group_id, group_relations.member_type, groups.type_id, groups.name as group_name from group_relations LEFT JOIN groups ON group_relations.member_id=groups.id WHERE group_relations.group_id=? AND member_type=2".
+					") as c LEFT JOIN group_types ON c.type_id=group_types.id WHERE 1=1";
 					$args[]=$filters['parent_group_id'];
-					$type.="i";
+					$types.="i";
 					
 				}
 				
@@ -517,12 +516,35 @@ if(isset($_GET['id'])){
 				}
 				
 				if(!empty($args)){
+					
 					$groups=$db->doQueryWithArgs($query, $args, $types);
+					
+					if(isset($filters['member_of'])){
+						foreach($groups as $key => $group){
+							if(!isInGroup($group['id'], 1, getUser()['id'])){
+								unset($groups[$key]);
+							}
+						}
+					}
+					
+					if(isset($filters['not_member_of'])){
+						foreach($groups as $key => $group){
+							if(isInGroup($group['id'], 1, getUser()['id'])){
+								unset($groups[$key]);
+							}
+						}
+					}
+					
+					foreach($groups as $key => $group){
+						$groups[$key]['can_join'] = currentUserCanJoin($group['id']);
+						$groups[$key]['can_leave'] = currentUserCanLeave($group['id']);
+					}
+					
+					$JSON["groups"]=$groups;
+					
 				}else{
 					addError(getMessages()->ERROR_API_GROUPS_LIST_ALL);
 				}
-				
-				$JSON["groups"]=$groups;
 			}
 			
 		}else{
@@ -593,7 +615,7 @@ function getGroupOptions($group_type_id, $group_id = null){
 		);
 		
 		if($value){
-			$group_options[($i + 2)]['value'] = $values[$group_option["option_key"]];
+			$group_options[($i + 2)]['value'] = isset($values[$group_option["option_key"]]) ? $values[$group_option["option_key"]] : null;
 		}
 		
 	}

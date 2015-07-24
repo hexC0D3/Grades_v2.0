@@ -8,37 +8,44 @@
 					
 					global $db;
 					
-					$JSON["settings"]=array();
-					
-					$metas=$db->doQueryWithArgs("SELECT user_meta.value,user_meta_options.* FROM user_meta LEFT JOIN user_meta_options ON user_meta.user_meta_option_id = user_meta_options.id WHERE user_meta.user_id=?", array(getUser()['id']), "i");
-					
-					foreach($metas as $meta){
-						$JSON["settings"][]=array(
-							'setting'=>$meta["option_key"],
-							'input_data_type'=>$meta["input_data_type"],
-							'options'=>$meta["options"],
-							'description'=>getMessages()->$meta["description_translation_key"]
-						);
-					}
+					$JSON["settings"]=getUserOptions(getUser()['id']);
 					
 				}else if($is_put){
 					//update settings
 					
-					if(isset($_PUT['setting'])&&isset($_PUT['value'])){
+					if(isset($_PUT['option_key'])&&isset($_PUT['value'])){
 						global $db;
 						
-						$data=$db->doQueryWithArgs("SELECT id,input_data_type FROM user_meta_options WHERE option_key=?", array($_PUT['setting']), "s");
+						
+						if($_PUT['option_key'] == 'mail'){
+							//TODO
+						}
+						
+						$data=$db->doQueryWithArgs("SELECT id,input_data_type FROM user_meta_options WHERE option_key=?", array($_PUT['option_key']), "s");
 						
 						if(count($data)==1){
+							
 							$data=$data[0];
 							
-							$id=$data->id;
+							$id=$data['id'];
 							
-							$validation=validateDynamicInput($_PUT['value'], $data->input_data_type);
+							$validation=validateDynamicInput($_PUT['value'], $data['input_data_type']);
 							$_PUT['value']=$validation[1];
 							
 							if($validation[0]){
-								$db->doQueryWithArgs("REPLACE into group_options (group_type_option_id,value) values(?, ?)", array($id, $_PUT['value']), "is");
+								
+								$cnt = $db->doQueryWithArgs("SELECT id FROM user_meta WHERE user_id=? AND user_meta_option_id = ?", array(getUser()['id'], $id), "ii");
+									
+								if(count($cnt) <= 0){
+									
+									$db->doQueryWithArgs("INSERT INTO user_meta(user_id, user_meta_option_id, value) VALUES (?,?,?)", array(getUser()['id'], $id, $_PUT['value']), "iis");
+									
+								}else{
+									
+									$db->doQueryWithArgs("UPDATE user_meta SET value = ? WHERE id = ?", array($_PUT['value'], $cnt[0]['id']), "si");									
+									
+								}
+								
 							}else{
 								addError(getMessages()->ERROR_API_INVALID_INPUT);
 							}
@@ -89,14 +96,16 @@
 		}else{
 			//get user informations
 			
-			global $db;
+			if($_GET['id'] == 'me'){
 				
-			$user_data=$db->doQueryWithArgs("SELECT users.id, user_meta.first_name, user_meta.last_name, user_meta.birthday, user_meta.about FROM users LEFT JOIN user_meta ON users.id=user_meta.user_id WHERE users.id=?", array($_GET['id']), "i");
-			
-			if(count($groups) == 1){
-				$JSON["user"]=$user_data[0];
+				$user = getUser();
+				
+				$JSON["user"]=array_merge(array("id"=>$user['id'], "mail"=>$user['mail']),getUserOptions(getUser()['id'], false));
+				
 			}else{
-				addError(getMessages()->ERROR_API_INVALID_INPUT);
+				
+				$JSON["user"]=array_merge(array("id"=>$_GET['id']),getUserOptions($_GET['id'], false));
+				
 			}
 			
 		}
@@ -184,5 +193,66 @@
 			}
 		}
 		
-	}	
+	}
+	
+
+function getUserOptions($user_id = null, $fields = true){
+	
+	global $db;
+	
+	$user_options = array();
+	
+	$value = !is_null($user_id);
+	
+	$data = $db->doQueryWithoutArgs("SELECT * FROM user_meta_options ORDER BY id ASC");
+	
+	$u_mail = "";
+	
+	$values = array();
+	
+	if($value){
+		$v_data = $db->doQueryWithArgs("SELECT users.mail, user_meta.value, user_meta_options.option_key FROM user_meta_options LEFT JOIN user_meta ON user_meta_options.id=user_meta.user_meta_option_id LEFT JOIN users ON user_meta.user_id=users.id WHERE users.id=? ORDER BY user_meta_options.id ASC", array($user_id), "i");
+		
+		foreach($v_data as $v){
+			$values[$v['option_key']] = $v['value'];
+		}
+		
+		$u_mail = $v_data[0]['mail'];
+			
+		unset($v_data);
+	}
+	
+	if($fields){
+		for($i=0;$i<count($data);$i++){
+		
+			$user_option = $data[$i];
+			
+			$user_options[]=array(
+				'key'=>$user_option["option_key"],
+				'input_data_type'=>$user_option["input_data_type"],
+				'required'=>$user_option["required"],
+				'options'=>translateOptions($user_option["options"]),
+				'description'=>getMessages()->$user_option["description_translation_key"]
+			);
+			
+			if($value){
+				$user_options[($i)]['value'] = isset($values[$user_option["option_key"]]) ? $values[$user_option["option_key"]] : null;
+			}
+			
+		}
+	}else{
+		$user_options = array();
+		
+		for($i=0;$i<count($data);$i++){
+		
+			$user_option = $data[$i];
+			
+			$user_options[$user_option["option_key"]] = isset($values[$user_option["option_key"]]) ? $values[$user_option["option_key"]] : null;
+			
+		}
+	}
+	
+	return $user_options;
+}
+
 ?>

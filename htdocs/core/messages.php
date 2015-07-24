@@ -69,6 +69,9 @@
 						//List
 						$this->ERROR_API_EVENTS_LIST_ALL=_("You cannot list all events! Please use a filter");
 						
+					//Grades
+					$this->ERROR_GRADES_ALREADY_EXISTS=_("You've already added a grade for this test, you need to update it.");
+						
 			//Texts
 				//Input
 				$this->TEXT_INPUT_MAIL=_("yourname@domain.tld");
@@ -111,15 +114,16 @@
 			
 			//Grades
 			$this->GRADE_OPTIONS_GRADE_DESC=_("The grade you received");
+			$this->GRADE_OPTIONS_GRADE_TEST_DESC=_("The test related to this grade");
 				
 			//Dynamic
 			
 				//Group Options
-				$this->DYNAMIC_GROUP_TYPE_OPTIONS_MARK_CALC_METHOD_DESC=_("The method this school uses to calculate your average grade");
+				$this->DYNAMIC_USER_OPTIONS_MARK_CALC_METHOD_DESC=_("The method this school uses to calculate your average grade");
 				
-				$this->DYNAMIC_GROUP_TYPE_OPTIONS_MARK_CALC_METHOD_0=_("Range: 1-6, Best:6");
-				$this->DYNAMIC_GROUP_TYPE_OPTIONS_MARK_CALC_METHOD_1=_("Range: 1-6, Best:6, Negative Points 1x");
-				$this->DYNAMIC_GROUP_TYPE_OPTIONS_MARK_CALC_METHOD_2=_("Range: 1-6, Best:6, Negative Points 2x");
+				$this->DYNAMIC_USER_OPTIONS_MARK_CALC_METHOD_0=_("Range: 1-6, Best:6");
+				$this->DYNAMIC_USER_OPTIONS_MARK_CALC_METHOD_1=_("Range: 1-6, Best:6, Negative Points 1x");
+				$this->DYNAMIC_USER_OPTIONS_MARK_CALC_METHOD_2=_("Range: 1-6, Best:6, Negative Points 2x");
 				
 				$this->DYNAMIC_GROUP_TYPE_OPTIONS_SUBJECT_GRADES_INCLUDED_AVERAGE=_("If the grades received in this subject, are used in the calculations for the average grade");
 				
@@ -157,6 +161,7 @@
 				$this->DYNAMIC_EVENT_TYPE_OPTIONS_LESSON_TIME_TO_DESC=_("The time this lesson ends");
 				
 				$this->DYNAMIC_EVENT_TYPE_OPTIONS_TASK_TIME_LESSON=_("The lesson this task is scheduled on");
+				$this->DYNAMIC_EVENT_TYPE_OPTIONS_TASK_DAY_DESC=_("The day until this task needs to be done");
 				$this->DYNAMIC_EVENT_TYPE_OPTIONS_TASK_DESC=_("A task description");
 				
 				$this->DYNAMIC_EVENT_TYPE_OPTIONS_EVENT_FULL_DAY_DESC=_("Is this a full day event?");

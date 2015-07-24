@@ -1,10 +1,10 @@
 <div ng-repeat="field in fields" repeat-done="repeatDoneCallback()" class="form-group" ng-class="{'required' : field.required}">
-			
+	
 	<div class="text" ng-if="field.input_data_type == 'text'">
 		
 		<input class="form-control" type="text" name="{{field.key}}" ng-if="field.options.input_type == 'textfield'" placeholder="{{field.description}}" autocomplete="off">
 		
-		<textarea class="form-control" name="{{field.key}}" ng-if="field.options.input_type == 'textarea'"></textarea>
+		<textarea class="form-control" name="{{field.key}}" ng-if="field.options.input_type == 'textarea'" placeholder="{{field.description}}"></textarea>
 		
 	</div>
 	
@@ -45,13 +45,13 @@
 		
 	</div>
 	
-	<div class="event" ng-if="field.input_data_type.indexOf('event') !== -1">
+	<div class="event" ng-if="field.input_data_type.indexOf('event') != -1">
 		
 		<event-input input-name="field.key" input-type="field.input_data_type" input-trans-placeholder="field.description"></event-input>
 		
 	</div>
 	
-	<div class="group" ng-if="field.input_data_type.indexOf('group') !== -1">
+	<div class="group" ng-if="field.input_data_type.indexOf('group') != -1">
 		
 		<group-input input-model="''" input-name="field.key" input-type="field.input_data_type" input-trans-placeholder="field.description"></group-input>
 		

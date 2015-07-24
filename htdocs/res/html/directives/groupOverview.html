@@ -1,5 +1,5 @@
-<div class="content" ng-controller="GroupOverviewController as gOController">
-	
+<div ng-controller="GroupOverviewController as gOController">
+	{{g0Controller.btns}}
 	<table st-table="displayedGroupRows" st-safe-src="groupRows" class="table table-striped">
 		<thead>
 			<tr>
@@ -9,12 +9,11 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr ng-repeat="group in displayedGroupRows">
+			<tr ng-repeat="group in displayedGroupRows" class="{{group.classes.join(' ')}}">
 				<td>{{group.name}}</td>
 				<td i18n="common.{{group.type}}"></td>
 				<td>
-					<button class='btn btn-primary' ng-click="gOController.about(group.id)" i18n="common.info"></button>
-					<button class='btn btn-primary' ng-click="gOController.about(group.id)" i18n="common.subjects"></button>
+					<button type="button" class='btn btn-primary' ng-repeat="btn in gOController.groupButtons" ng-show="btn.condition(group)" ng-click="btn.click(group)" i18n="common.{{btn.transKey}}">
 				</td>
 			</tr>
 		</tbody>
@@ -26,7 +25,5 @@
 			</tr>
 		</tfoot>
 	</table>
-	
-	<button class="btn btn-primary" i18n="common.add_group" ng-click="gOController.addGroup()"></button>
 	
 </div>

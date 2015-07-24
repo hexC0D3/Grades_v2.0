@@ -1,0 +1,19 @@
+<div class="content" ng-controller="ProfileEditController as profileC">
+	
+	<h2>{{profileC.userProperty('first_name') + ' ' + profileC.userProperty('last_name')}}</h2>
+	
+	<form ng-submit="profileC.update($event)">
+		<repeat-fields fields="profileC.settings" repeat-done-callback="profileC.repeatDone" ></repeat-fields>
+	
+		<h3 i18n="common.my_subjects"></h3>
+		
+		<div class="form-group required">
+			<group-input input-model="profileC.parentID" input-trans-placeholder="'common.parent'"</group-input>
+		</div>
+		
+		<group-overview group-type="'subject'" parent-group-id="profileC.parentID" group-buttons="profileC.btns"></group-overview>
+	
+		<input type="submit" class="btn btn-primary" i18n="common.update"></button>
+	</form>
+	
+</div>

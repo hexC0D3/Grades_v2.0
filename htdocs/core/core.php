@@ -111,7 +111,7 @@ function validateDynamicInput($value, $type){
 	
 	$valid=false;
 	
-	$ids = array('user_id' => 'users', 'subject_id' => 'subjects', 'group_id' => 'groups', 'event_id' => 'events');
+	$ids = array('user_id' => 'users', 'group_id' => 'groups', 'event_id' => 'events');
 							
 	if($type == 'int'){
 		$valid = is_numeric($value);
@@ -134,13 +134,6 @@ function validateDynamicInput($value, $type){
 		$value=(int)$value;
 		
 		$valid=in_array($value, array(0,1,2));
-
-		/*
-			* 0 : switzerland, 1 => worst, 6 => best, 4 => ok
-			* 1 : switzerland, 1 => worst, 6 => best, 4 => ok, Saldopunkte 1x negativ
-			* 2 : switzerland, 1 => worst, 6 => best, 4 => ok, Saldopunkte 2x negativ
-			...	
-		*/
 
 	}else{		
 		global $db;
@@ -184,9 +177,10 @@ function validateDynamicInput($value, $type){
 			$table = $ids[$type];
 			
 			$values[]=$value;
+			$AND.=" AND id=?";
 			$types.="i";
 			
-			$data = $db->doQueryWithArgs("SELECT id FROM ".$table." WHERE id=?".$AND, $values, $types);
+			$data = $db->doQueryWithArgs("SELECT id FROM ".$table." WHERE 1=1".$AND, $values, $types);
 			
 			if(count($data) == 1){ /* Check if given id exists in table */
 				$valid = true;
@@ -201,7 +195,7 @@ function validateDynamicInput($value, $type){
 
 function translateOptions($options){
 	$data = json_decode($options);
-	
+
 	if($data->input_type == 'select'){
 		foreach($data->select as $key => $option){
 			
