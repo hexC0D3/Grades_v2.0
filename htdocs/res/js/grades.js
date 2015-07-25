@@ -123,7 +123,6 @@ var appController = grades.controller("AppController", ['$scope', '$http', '$ses
 	
 	this.$storage = $sessionStorage;
 	
-	this.$storage.pageTitle			=		'-';
 	this.$storage.apiURL			=		'http://grades.dev/api/v1';
 	
 	this.user = $me.$storage.user;
@@ -143,15 +142,6 @@ var appController = grades.controller("AppController", ['$scope', '$http', '$ses
 	if(typeof this.$storage.activeNavigation === "undefined"){
 		this.$storage.activeNavigation = 0;
 	}
-	
-	
-	$scope.setTitle = function(title){
-		$me.$storage.pageTitle = title;
-	};
-	
-	$scope.title = function(){
-		return "Grades" + ($me.$storage.pageTitle == "" ? "" : " - " + $me.$storage.pageTitle);
-	};
 	
 	$scope.join_group  = function(group_id, member_id, member_type_id, callback){
 		
