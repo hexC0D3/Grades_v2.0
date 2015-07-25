@@ -5,7 +5,7 @@
 
 if(typeof(Storage) === "undefined"){
 	alert("Your browser is too old! Upgrade it!");
-	throw new Error("Browser Version too old!");
+	throw new Error("Browser version too old to use this piece of software! Consider updating.");
 }
 
 
@@ -332,6 +332,12 @@ appController.filter('toGender', ['$sce', function($sce){
 appController.filter('toDate', ['$sce', function($sce){
     return function(text) {
         return moment.unix(text).format("DD. MM. YYYY");
+    };
+}]);
+
+appController.filter('toShortDate', ['$sce', function($sce){
+    return function(text) {
+        return moment.unix(text).format("DD. MM");
     };
 }]);
 
@@ -1571,6 +1577,91 @@ grades.controller("DateInputController", ['$scope', '$sessionStorage', '$http', 
 		});
 		
 	};
+	
+}]);
+
+grades.controller("DashboardAverageGradeController", ['$scope', '$sessionStorage', '$http', '$location', function($scope, $sessionStorage, $http, $location){
+	
+	var $me = this;
+	
+	this.$storage = $sessionStorage;
+	
+	this.average = "";
+	this.points = "";
+	
+	this.loadData = function(){
+		
+		$http.get($me.$storage.apiURL+"/grade/?" + jQuery.param({session_token:$me.$storage.sessionToken})).
+					
+			success(function(data, status, headers, config) {
+				
+				data = angular.fromJson(data);
+				
+				if(grades_validateAPIResponse(data)){
+					$me.average = data.average;
+					$me.points = data.points;
+				}
+			});
+		
+	};
+	
+	this.loadData();
+	
+}]);
+
+grades.controller("DashboardFutureTestsController", ['$scope', '$sessionStorage', '$http', '$location', function($scope, $sessionStorage, $http, $location){
+	
+	var $me = this;
+	
+	this.$storage = $sessionStorage;
+	
+	this.tests = [];
+	
+	this.loadData = function(){
+		
+		$http.get($me.$storage.apiURL+"/event/?" + jQuery.param({filters:{future_only:true,event_type:'test',order_by_date:'ASC'},session_token:$me.$storage.sessionToken})).
+					
+			success(function(data, status, headers, config) {
+				
+				data = angular.fromJson(data);
+				
+				if(grades_validateAPIResponse(data)){
+					$me.tests = data.events;
+					
+					console.log(data.events);
+				}
+			});
+		
+	};
+	
+	this.loadData();
+	
+}]);
+
+grades.controller("DashboardTaskController", ['$scope', '$sessionStorage', '$http', '$location', function($scope, $sessionStorage, $http, $location){
+	
+	var $me = this;
+	
+	this.$storage = $sessionStorage;
+	
+	this.tasks = [];
+	
+	this.loadData = function(){
+		
+		$http.get($me.$storage.apiURL+"/event/?" + jQuery.param({filters:{future_only:true,event_type:'task',order_by_date:'ASC'},session_token:$me.$storage.sessionToken})).
+					
+			success(function(data, status, headers, config) {
+				
+				data = angular.fromJson(data);
+				
+				if(grades_validateAPIResponse(data)){
+					$me.tasks = data.events;
+				}
+			});
+		
+	};
+	
+	this.loadData();
 	
 }]);
 

@@ -272,7 +272,7 @@ if(isset($_GET['id'])){
 					$types.="s";
 				}
 				if(isset($filters['items_per_page']) && isset($filters['page'])){
-					$query.=" LIMIT ?,?";
+					$query.=" ORDER BY events. ?,?";
 					$args[]=(((int)$filters['items_per_page']) * ((int)$filters['page']));
 					$args[]=$filters['items_per_page'];
 					$types.="ii";
@@ -318,11 +318,70 @@ if(isset($_GET['id'])){
 				
 			}
 			
-			foreach($events as $key => $event){
-				$events[$key]['options'] = getEventOptions($event['type_id'], $event['id'], false);
-				$data = $db->doQueryWithArgs("SELECT group_id FROM group_relations WHERE member_id=? AND member_type=3", array($event['id']), "i");
-	
-				$events[$key]['canEdit'] = (count($data) > 0) ? (currentUserCan('manage_members', $data[0]['group_id'])) : false;
+			//again 'if' outside for more efficency
+			
+			if(isset($filters['future_only'])){
+				
+				$now = new DateTime();
+				$now->setTime(0,0,0);
+				$now = $now->getTimestamp();
+				
+				foreach($events as $key => $event){
+					$events[$key]['options'] = getEventOptions($event['type_id'], $event['id'], false);
+					
+					if(isset($events[$key]['options']['time_from']) && $event['event_type']!='lesson' && $now > $events[$key]['options']['time_from']){
+						unset($events[$key]);
+						continue;
+					}
+					
+					if(isset($events[$key]['options']['date']) && $now > $events[$key]['options']['date']){
+						unset($events[$key]);
+						continue;
+					}
+					
+					$data = $db->doQueryWithArgs("SELECT group_id FROM group_relations WHERE member_id=? AND member_type=3", array($event['id']), "i");
+		
+					$events[$key]['canEdit'] = (count($data) > 0) ? (currentUserCan('manage_members', $data[0]['group_id'])) : false;
+					
+				}
+				
+			}else{
+				
+				foreach($events as $key => $event){
+					$events[$key]['options'] = getEventOptions($event['type_id'], $event['id'], false);
+					$data = $db->doQueryWithArgs("SELECT group_id FROM group_relations WHERE member_id=? AND member_type=3", array($event['id']), "i");
+		
+					$events[$key]['canEdit'] = (count($data) > 0) ? (currentUserCan('manage_members', $data[0]['group_id'])) : false;
+					
+				}
+				
+			}
+			
+			if(isset($filters['order_by_date']) && in_array($filters['order_by_date'], array('ASC','DESC'))){
+				
+				function cmp_date($a, $b, $multiplier){
+					$a_c = isset($a['options']['time_from']) ? $a['options']['time_from'] : (isset($a['options']['date']) ? $a['options']['date'] : (-10 * $multiplier));
+					$b_c = isset($b['options']['time_from']) ? $b['options']['time_from'] : (isset($b['options']['date']) ? $b['options']['date'] : (-10 * $multiplier));
+					
+					return $a_c == $b_c ? 0 : ($a_c > $b_c ? (1 * $multiplier) : (-1 * $multiplier));
+					
+				}
+				
+				function cmp_date_asc($a, $b){
+				    return cmp_date($a, $b, 1);
+				}
+				
+				function cmp_date_desc($a, $b){
+				    return cmp_date($a, $b, -1);
+				}
+				
+				if($filters['order_by_date'] == 'ASC'){
+					usort($events, 'cmp_date_asc');
+				}else{
+					usort($events, 'cmp_date_desc');
+				}
+				
+				
 			}
 			
 			$JSON["events"]=$events;

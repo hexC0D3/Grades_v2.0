@@ -30,6 +30,7 @@
     
     "add_event"						:		"Füge ein Event hinzu",
     "test"							:		"Prüfung",
+    "tests"							:		"Prüfungen",
     "test_weight"					:		"Gewichtung",
     "topic"							:		"Thema",
     "lesson"						:		"Lektion",
@@ -49,6 +50,7 @@
     "edit"							:		"Bearbeiten",
     
     "grade"							:		"Note",
+    "average_grade"					:		"Notenschnitt",
     "grades"						:		"Noten",
     
     "event"							:		"Event",

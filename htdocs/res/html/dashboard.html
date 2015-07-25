@@ -2,22 +2,58 @@
 	<div class="widget wX2 wY1-5 timetable">
 		<main>
 			<div ui-calendar="dashboardC.calendar" ng-model="dashboardC.eventSource" class="calendar"></div>
-			
+		</main>
+	</div>
+	<div class="widget wX1">
+		<main>
+			<div ng-controller="DashboardFutureTestsController as dFTController">
+				<h3 i18n="common.tests"></h3>
+				
+				<table class="table">
+					<tbody>
+						<tr ng-repeat="test in dFTController.tests">
+							<td>
+								{{test.options.date | toShortDate}}
+							</td>
+							<td>
+								{{test.title}}
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
 		</main>
 	</div>
 	<div class="widget wX1">
 		<main>
 			
-		</main>
-	</div>
-	<div class="widget wX1">
-		<main>
+			<div ng-controller="DashboardAverageGradeController as dAGController">
+				<h3 i18n="common.average_grade"></h3>
+				<div class="average">{{dAGController.average}}</div>
+				<div class="points">{{dAGController.points}}</div>
+				
+			</div>
 			
 		</main>
 	</div>
 	<div class="widget wX2">
 		<main>
-			
+			<div ng-controller="DashboardTaskController as dTController">
+				<h3 i18n="common.tasks"></h3>
+				
+				<table class="table">
+					<tbody>
+						<tr ng-repeat="task in dTController.tasks">
+							<td>
+								{{task.options.date | toShortDate}}
+							</td>
+							<td>
+								{{task.title}}
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
 		</main>
 	</div>
 </div>
