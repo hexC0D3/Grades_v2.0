@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 24. Jul 2015 um 12:23
+-- Erstellungszeit: 26. Jul 2015 um 08:12
 -- Server-Version: 5.6.22
 -- PHP-Version: 5.5.24
 
@@ -100,12 +100,12 @@ INSERT INTO `event_options` (`id`, `event_id`, `event_type_option_id`, `value`) 
 (12, 11, 8, '1438259100'),
 (13, 12, 3, '1437636900'),
 (14, 12, 4, '1437645900'),
-(15, 12, 13, '1'),
+(15, 12, 2, '1'),
 (16, 13, 1, '12'),
 (17, 13, 11, '1'),
 (18, 13, 12, '1437602400'),
 (19, 14, 14, '12'),
-(20, 14, 15, 'Es muss bla und bla erledigt werden. Tipp: Blablabla'),
+(20, 14, 15, 'Es muss bla und bla erledigt werden. Tipp: none'),
 (21, 14, 16, '1438207200');
 
 -- --------------------------------------------------------
@@ -151,6 +151,7 @@ CREATE TABLE IF NOT EXISTS `event_type_options` (
 
 INSERT INTO `event_type_options` (`id`, `event_type_id`, `option_key`, `input_data_type`, `required`, `options`, `description_translation_key`) VALUES
 (1, 1, 'lesson_id', 'event_id:lesson', 1, '{"input_type":"event:lesson"}', 'DYNAMIC_EVENT_TYPE_OPTIONS_TEST_LESSON_ID_DESC'),
+(2, 2, 'lesson_repetition_interval', 'int', 1, '{"input_type":"select","select":[{"value":0, "title_tanslation_key":"DYNAMIC_EVENT_TYPE_OPTIONS_REPETITION_INTERVAL_0_DESC"},{"value":1, "title_tanslation_key":"DYNAMIC_EVENT_TYPE_OPTIONS_REPETITION_INTERVAL_1_DESC"}, {"value":2, "title_tanslation_key":"DYNAMIC_EVENT_TYPE_OPTIONS_REPETITION_INTERVAL_2_DESC"}]}', 'DYNAMIC_EVENT_TYPE_OPTIONS_REPETITION_INTERVAL_DESC'),
 (3, 2, 'time_from', 'timestamp', 1, '{"input_type":"datepicker","time":true}', 'DYNAMIC_EVENT_TYPE_OPTIONS_LESSON_TIME_FROM_DESC'),
 (4, 2, 'time_to', 'timestamp', 1, '{"input_type":"datepicker", "time":true}', 'DYNAMIC_EVENT_TYPE_OPTIONS_LESSON_TIME_TO_DESC'),
 (6, 4, 'event_full_day', 'boolean', 1, '{"input_type":"checkbox"}', 'DYNAMIC_EVENT_TYPE_OPTIONS_EVENT_FULL_DAY_DESC'),
@@ -158,7 +159,6 @@ INSERT INTO `event_type_options` (`id`, `event_type_id`, `option_key`, `input_da
 (8, 4, 'time_to', 'timestamp', 1, '{"input_type":"datepicker", "time":true}', 'DYNAMIC_EVENT_TYPE_OPTIONS_EVENT_TIME_TO_DESC'),
 (11, 1, 'grade_weight', 'float', 1, '{"input_type":"grade_weight"}', 'DYNAMIC_EVENT_TYPE_OPTIONS_TEST_GRADE_WEIGT_DESC'),
 (12, 1, 'date', 'timestamp', 1, '{"input_type":"datepicker", "time":false}', 'DYNAMIC_EVENT_TYPE_OPTIONS_TEST_DAY_DESC'),
-(13, 2, 'lesson_repetition_interval', 'int', 1, '{"input_type":"select","select":[{"value":0, "title_tanslation_key":"DYNAMIC_EVENT_TYPE_OPTIONS_REPETITION_INTERVAL_0_DESC"},{"value":1, "title_tanslation_key":"DYNAMIC_EVENT_TYPE_OPTIONS_REPETITION_INTERVAL_1_DESC"}, {"value":2, "title_tanslation_key":"DYNAMIC_EVENT_TYPE_OPTIONS_REPETITION_INTERVAL_2_DESC"}]}', 'DYNAMIC_EVENT_TYPE_OPTIONS_REPETITION_INTERVAL_DESC'),
 (14, 3, 'lesson_id', 'event_id:lesson', 1, '{"input_type":"event:lesson"}', 'DYNAMIC_EVENT_TYPE_OPTIONS_TASK_TIME_LESSON'),
 (15, 3, 'description', 'text', 1, '{"input_type":"textarea"}', 'DYNAMIC_EVENT_TYPE_OPTIONS_TASK_DESC'),
 (16, 3, 'date', 'timestamp', 1, '{"input_type":"datepicker", "time":false}', 'DYNAMIC_EVENT_TYPE_OPTIONS_TASK_DAY_DESC');
@@ -283,7 +283,7 @@ CREATE TABLE IF NOT EXISTS `group_relations` (
   `member_id` bigint(20) unsigned NOT NULL,
   `group_id` bigint(20) unsigned NOT NULL,
   `member_type` bigint(20) unsigned NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=latin1;
 
 --
 -- Daten für Tabelle `group_relations`
@@ -295,11 +295,11 @@ INSERT INTO `group_relations` (`id`, `member_id`, `group_id`, `member_type`) VAL
 (21, 10, 1, 3),
 (22, 11, 1, 3),
 (25, 9, 2, 2),
-(27, 6, 9, 1),
 (28, 2, 1, 2),
 (29, 12, 9, 3),
 (30, 13, 9, 3),
-(31, 14, 9, 3);
+(31, 14, 9, 3),
+(32, 6, 9, 1);
 
 -- --------------------------------------------------------
 
@@ -360,14 +360,14 @@ CREATE TABLE IF NOT EXISTS `login_tokens` (
   `user_id` bigint(20) unsigned NOT NULL,
   `login_token` varchar(128) NOT NULL,
   `ip` varchar(64) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=132 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=136 DEFAULT CHARSET=latin1;
 
 --
 -- Daten für Tabelle `login_tokens`
 --
 
 INSERT INTO `login_tokens` (`id`, `user_id`, `login_token`, `ip`) VALUES
-(131, 6, '3f87f40ea74722cd91bc095dfd47a2ff', '127.0.0.1');
+(135, 6, 'ab40cd99e8351355332ad2eb69f78ef8', '127.0.0.1');
 
 -- --------------------------------------------------------
 
@@ -680,7 +680,7 @@ ALTER TABLE `group_options`
 -- AUTO_INCREMENT für Tabelle `group_relations`
 --
 ALTER TABLE `group_relations`
-  MODIFY `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=32;
+  MODIFY `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=33;
 --
 -- AUTO_INCREMENT für Tabelle `group_types`
 --
@@ -695,7 +695,7 @@ ALTER TABLE `group_type_options`
 -- AUTO_INCREMENT für Tabelle `login_tokens`
 --
 ALTER TABLE `login_tokens`
-  MODIFY `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=132;
+  MODIFY `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=136;
 --
 -- AUTO_INCREMENT für Tabelle `notifications`
 --
