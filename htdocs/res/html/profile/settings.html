@@ -8,11 +8,14 @@
 		<h3 i18n="common.my_subjects"></h3>
 		
 		<div class="form-group required">
-			<group-input input-model="profileC.parentID" input-trans-placeholder="'common.parent'"</group-input>
+			<group-input input-model="profileC.parentID" input-type="'group_id:school'" input-trans-placeholder="'common.parent'"</group-input>
 		</div>
 		
 		<group-overview group-type="'subject'" parent-group-id="profileC.parentID" group-buttons="profileC.btns"></group-overview>
-	
+		
+		<div class="form-group">
+			<button type="button" class="btn btn-primary" ng-click="profileC.addGroup()" i18n="common.add_group"></button>
+		</div>
 		<input type="submit" class="btn btn-primary" i18n="common.update"></button>
 	</form>
 	

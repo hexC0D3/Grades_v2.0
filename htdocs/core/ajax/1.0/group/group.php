@@ -281,7 +281,7 @@ if(isset($_GET['id'])){
 			
 			$JSON['group']['can_join'] = currentUserCanJoin($_GET['id']);
 			$JSON['group']['can_leave'] = currentUserCanLeave($_GET['id']);
-			
+			$JSON['group']['can_edit'] = currentUserCan('manage_options', $_GET['id']);
 			$JSON['group']['capabilities'] = getCurrentUserCapabilities($_GET['id']);
 			
 		}else{
@@ -538,6 +538,7 @@ if(isset($_GET['id'])){
 					foreach($groups as $key => $group){
 						$groups[$key]['can_join'] = currentUserCanJoin($group['id']);
 						$groups[$key]['can_leave'] = currentUserCanLeave($group['id']);
+						$groups[$key]['can_edit'] = currentUserCan('manage_options', $group['id']);
 					}
 					
 					$JSON["groups"]=$groups;

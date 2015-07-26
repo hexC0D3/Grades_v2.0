@@ -8,6 +8,8 @@
 		
 	</div>
 	
+	<button type="button" class="btn btn-primary" ng-click="eventC.editEvent()" ng-disabled="!eventC.canEdit" i18n="common.edit"></button>
+	
 	<div ng-if="eventC.eventType == 'lesson'">
 		
 		<hr>
@@ -107,6 +109,8 @@
 					
 				</div>
 				
+				<button type="button" class="btn btn-primary" ng-click="eventC.editEvent(event.id)" ng-disabled="!event.can_edit" i18n="common.edit"></button>
+				
 			</div>
 			
 		</div>
@@ -146,7 +150,6 @@
 			</tbody>
 			
 		</table>
-		
 		
 	</div>
 	

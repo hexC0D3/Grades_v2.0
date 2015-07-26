@@ -1,0 +1,12 @@
+<div class="content" ng-controller="EventEditController as eventC">
+	
+	<h1 i18n="common.edit_event"></h1>
+	
+	<form ng-submit="eventC.update($event)">
+		
+		<repeat-fields fields="eventC.settings" repeat-done-callback="eventC.repeatDone" parent-group-id="eventC.parentID" ></repeat-fields>
+				
+		<input class="btn btn-primary" type="submit" data-i18n-attr="{value: 'common.update'}">
+		
+	</form>
+</div>

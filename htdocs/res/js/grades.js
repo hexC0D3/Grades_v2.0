@@ -123,7 +123,12 @@ var appController = grades.controller("AppController", ['$scope', '$http', '$ses
 	
 	this.$storage = $sessionStorage;
 	
-	this.$storage.apiURL			=		'http://grades.dev/api/v1';
+	this.$storage.apiURL			= 'http://grades.dev/api/v1';
+	this.$storage.modalInstance		= {
+										close: function(){
+											return;
+										}
+									}
 	
 	this.user = $me.$storage.user;
 	
@@ -556,7 +561,7 @@ grades.controller("DashboardController", ['$scope', '$http' ,'$sessionStorage', 
 						var event = {
 							id:			data.events[i].id,
 							title:		data.events[i].title,
-							editable:	data.events[i].canEdit,
+							editable:	data.events[i].can_edit,
 							className:	['event-type-'+data.events[i].event_type]
 						};
 						
@@ -688,7 +693,7 @@ grades.controller("DashboardController", ['$scope', '$http' ,'$sessionStorage', 
 			right: 'agendaDay, agendaWeek, month'
 		},
 		eventClick: function(calEvent, jsEvent, view){
-			
+			$me.$storage.modalInstance.close();
 			$me.$storage.modalInstance = $modal.open({
 				animation: true,
 				controller: 'ModalController',
@@ -709,7 +714,7 @@ grades.controller("DashboardController", ['$scope', '$http' ,'$sessionStorage', 
 		dayClick: function(date, jsEvent, view){
 			
 			if(view.name == "agendaDay"){
-				
+				$me.$storage.modalInstance.close();
 				$me.$storage.modalInstance = $modal.open({
 					animation: true,
 					templateUrl: '/res/html/event/add.html',
@@ -998,7 +1003,7 @@ grades.controller("GroupOverviewController", ['$scope', '$http' ,'$sessionStorag
 	};
 	
 	this.about = function(group_id){
-		
+		$me.$storage.modalInstance.close();
 		$me.$storage.modalInstance = $modal.open({
 			animation: true,
 			controller: 'ModalController',
@@ -1032,14 +1037,7 @@ grades.controller("GroupEditController", ['$scope', '$http' ,'$sessionStorage', 
 	
 	this.$storage = $sessionStorage;
 	
-	this.groupType 			= "";
-	this.inviteOnly 		= "";
-	this.name				= "";
-	this.canJoin			= "";
-	this.canLeave			= "";
-	this.capabilities		= [];
-	
-	$scope.settings = [];
+	$me.settings = [];
 	
 	this.group_id = -1;
 	
@@ -1057,16 +1055,18 @@ grades.controller("GroupEditController", ['$scope', '$http' ,'$sessionStorage', 
 		
 		$scope.$evalAsync(function(){
 			
-			jQuery("[name="+$scope.settings[$scope.settings.length -1].key+"]").waitUntilExists(function(){
+			jQuery("[name="+$me.settings[$me.settings.length -1].key+"]").waitUntilExists(function(){
 				
 				var field;
 				
-				for(var i=0;i<$scope.settings.length;i++){
-					field = jQuery("[name="+$scope.settings[i].key+"]");
+				for(var i=0;i<$me.settings.length;i++){
+					field = jQuery("[name="+$me.settings[i].key+"]");
 					if(field.is("input[type='checkbox']")){
-						field.prop('checked', ($scope.settings[i].value == true));
+						field.prop('checked', ($me.settings[i].value == true));
+					}else if(field.is(".datepicker")){
+						field.val(moment.unix($me.settings[i].value).format("DD. MM. YYYY"));
 					}else{
-						field.val($scope.settings[i].value);
+						field.val($me.settings[i].value);
 					}
 				}
 				
@@ -1089,6 +1089,10 @@ grades.controller("GroupEditController", ['$scope', '$http' ,'$sessionStorage', 
 			
 			if(jQuery(this).is("input[type='checkbox']")){
 				settings[field_name] = jQuery(this).is(":checked");
+			}else if(jQuery(this).is(".datepicker")){
+				if(jQuery(this).val()!=""){
+					settings[field_name] = moment(jQuery(this).val(), "DD. MM. YYYY HH:mm").unix();
+				}
 			}else{
 				settings[field_name] = jQuery(this).val();
 			}
@@ -1117,22 +1121,6 @@ grades.controller("GroupEditController", ['$scope', '$http' ,'$sessionStorage', 
 	
 	this.updateFields = function(){
 		
-		$http.get($me.$storage.apiURL+"/group/" + $me.group_id + "/?" + jQuery.param({session_token:$me.$storage.sessionToken})).
-					
-			success(function(data, status, headers, config) {
-				
-				data = angular.fromJson(data);
-				
-				if(grades_validateAPIResponse(data)){
-					$me.groupType		= data.group.group_type;
-					$me.inviteOnly		= data.group.inviteOnly == true;
-					$me.name			= data.group.name;
-					$me.canJoin			= data.group.can_join;
-					$me.canLeave		= data.group.can_leave;
-					$me.capabilities	= data.group.capabilities;
-				}
-			});
-		
 		$http.get($me.$storage.apiURL+"/group/"+$me.group_id+"/settings/?" + jQuery.param({session_token:$me.$storage.sessionToken})).
 				
 			success(function(data, status, headers, config) {
@@ -1141,7 +1129,7 @@ grades.controller("GroupEditController", ['$scope', '$http' ,'$sessionStorage', 
 				
 				if(grades_validateAPIResponse(data)){
 					
-					$scope.settings = data.settings;
+					$me.settings = data.settings;
 					
 				}
 			});
@@ -1229,7 +1217,7 @@ grades.controller("ModalController", ['$scope', '$http' ,'$sessionStorage', '$ro
 		
 }]);
 
-grades.controller("EventController", ['$scope', '$http' ,'$sessionStorage', '$routeParams', '$location', function($scope, $http, $sessionStorage, $routeParams, $location){
+grades.controller("EventController", ['$scope', '$http' ,'$sessionStorage', '$routeParams', '$location', '$modal', function($scope, $http, $sessionStorage, $routeParams, $location, $modal){
 	
 	var $me = this;
 	
@@ -1237,6 +1225,7 @@ grades.controller("EventController", ['$scope', '$http' ,'$sessionStorage', '$ro
 	this.eventType 			= "";
 	this.title				= "";
 	this.options			= {};
+	this.canEdit			= false;
 	
 	this.start				= null;
 	this.end				= null;
@@ -1245,15 +1234,15 @@ grades.controller("EventController", ['$scope', '$http' ,'$sessionStorage', '$ro
 	
 	this.created = false;
 	
-	this.event_id = -1;
+	this.eventID = -1;
 		
 	if(typeof $routeParams.eventID !== "undefined" && (! isNaN($routeParams.eventID))){
 		
-		this.event_id = $routeParams.eventID;
+		this.eventID = $routeParams.eventID;
 		
 	}else if(typeof $scope.$parent.modalParams.event !== "undefined"){
 		
-		this.event_id = $scope.$parent.modalParams.event.id;
+		this.eventID = $scope.$parent.modalParams.event.id;
 		
 		this.start = $scope.$parent.modalParams.event.start;
 		this.end = $scope.$parent.modalParams.event.end;
@@ -1264,7 +1253,7 @@ grades.controller("EventController", ['$scope', '$http' ,'$sessionStorage', '$ro
 	
 	this.loadData = function(){
 			
-		$http.get($me.$storage.apiURL+"/event/" + $me.event_id + "/?" + jQuery.param({session_token:$me.$storage.sessionToken})).
+		$http.get($me.$storage.apiURL+"/event/" + $me.eventID + "/?" + jQuery.param({session_token:$me.$storage.sessionToken})).
 					
 			success(function(data, status, headers, config) {
 				
@@ -1275,6 +1264,7 @@ grades.controller("EventController", ['$scope', '$http' ,'$sessionStorage', '$ro
 					$me.title				= data.event.title;
 					$me.eventType			= data.event.event_type;
 					$me.options				= data.event.options;
+					$me.canEdit				= data.event.can_edit;
 					
 					$me.events				= data.event.events;
 					
@@ -1283,6 +1273,32 @@ grades.controller("EventController", ['$scope', '$http' ,'$sessionStorage', '$ro
 		
 		
 	}
+	
+	this.editEvent = function(id){
+		
+		if(typeof id === "undefined"){
+			id = $me.eventID;
+		}
+		$me.$storage.modalInstance.close();		
+		$me.$storage.modalInstance = $modal.open({
+			animation: true,
+			controller: 'ModalController',
+			templateUrl: '/res/html/event/edit.html',
+			size: 'lg',
+			resolve: {
+				modalParams: function(){
+					
+					return {
+						event: {
+							id:id
+						}
+					};
+					
+				}
+			}
+		});
+		
+	};
 	
 	this.calendarIs = function(date){
 		
@@ -1388,6 +1404,122 @@ grades.controller("EventAddController", ['$scope', '$http' ,'$sessionStorage', '
 	this.updateFields = function(){
 		
 		var url = $me.$storage.apiURL+"/event/?" + jQuery.param({filters: {event_type_id: $me.event_type, type: 'settings'}, session_token:$me.$storage.sessionToken});
+		
+		$http.get(url).
+				
+			success(function(data, status, headers, config) {
+				
+				data = angular.fromJson(data);
+				
+				if(grades_validateAPIResponse(data)){
+					
+					for(var i=0;i<data.length;i++){
+						data[i].options = angular.fromJson(data[i].options);
+					}
+					
+					$me.settings = data.settings;
+					
+				}
+			});
+		
+	};
+	
+	this.updateFields();
+	
+}]);
+
+grades.controller("EventEditController", ['$scope', '$http' ,'$sessionStorage', '$location', '$routeParams', function($scope, $http, $sessionStorage, $location, $routeParams){
+	
+	var $me = this;
+	
+	this.title = "";
+	$me.settings = [];
+	this.eventID = -1;
+	
+	if(typeof $routeParams.eventID !== "undefined" && (! isNaN($routeParams.eventID))){
+		
+		this.eventID = $routeParams.eventID;
+		
+	}else if(typeof $scope.$parent.modalParams.event !== "undefined"){
+		
+		this.eventID = $scope.$parent.modalParams.event.id;
+		
+	}
+	
+	this.$storage = $sessionStorage;
+	
+	
+	this.update = function($event){
+		
+		var formElement = angular.element($event.target);
+		var settings = {};
+		
+		jQuery(formElement).find("[name]").each(function(index){
+			
+			var field_name = jQuery(this).attr("name").trim();
+			
+			if(jQuery(this).is("input[type='checkbox']")){
+				settings[field_name] = jQuery(this).is(":checked");
+			}else if(jQuery(this).is(".datepicker")){
+				if(jQuery(this).val()!=""){
+					settings[field_name] = moment(jQuery(this).val(), "DD. MM. YYYY HH:mm").unix();
+				}
+			}else{
+				settings[field_name] = jQuery(this).val();
+			}
+		});
+		
+		for (var key in settings) {
+
+			if (settings.hasOwnProperty(key)) {
+		          
+				$http.put($me.$storage.apiURL+"/event/"+$me.eventID+"/settings/?" + jQuery.param({session_token:$me.$storage.sessionToken}), {option_key:key, value:settings[key]}).
+			
+					success(function(data, status, headers, config) {
+						
+						data = angular.fromJson(data);
+						
+						if(grades_validateAPIResponse(data)){
+							
+							return true;
+	
+						}
+					});
+		    }
+		}
+		
+	};
+	
+	this.fillData = function(){
+		
+		$scope.$evalAsync(function(){
+			
+			jQuery("[name="+$me.settings[$me.settings.length -1].key+"]").waitUntilExists(function(){
+				
+				var field;
+				
+				for(var i=0;i<$me.settings.length;i++){
+					field = jQuery("[name="+$me.settings[i].key+"]");
+					if(field.is("input[type='checkbox']")){
+						field.prop('checked', ($me.settings[i].value == true));
+					}else if(field.is(".datepicker")){
+						field.val(moment.unix($me.settings[i].value).format("DD. MM. YYYY"));
+					}else{
+						field.val($me.settings[i].value);
+					}
+				}
+				
+			});
+		});
+	};
+	
+	this.repeatDone = function(){
+		$me.fillData();
+	};
+	
+	this.updateFields = function(){
+		
+		var url = $me.$storage.apiURL+"/event/"+$me.eventID+"/settings/?" + jQuery.param({session_token:$me.$storage.sessionToken});
 		
 		$http.get(url).
 				
@@ -1617,8 +1749,6 @@ grades.controller("DashboardFutureTestsController", ['$scope', '$sessionStorage'
 				
 				if(grades_validateAPIResponse(data)){
 					$me.tests = data.events;
-					
-					console.log(data.events);
 				}
 			});
 		
@@ -1696,7 +1826,7 @@ grades.controller("ProfileController", ['$scope', '$sessionStorage', '$http', '$
 	
 }]);
 
-grades.controller("ProfileEditController", ['$scope', '$sessionStorage', '$http', '$location', '$element', function($scope, $sessionStorage, $http, $location, $element){
+grades.controller("ProfileEditController", ['$scope', '$sessionStorage', '$http', '$location', '$modal', function($scope, $sessionStorage, $http, $location, $modal){
 	
 	var $me = this;
 	
@@ -1730,6 +1860,30 @@ grades.controller("ProfileEditController", ['$scope', '$sessionStorage', '$http'
 				return group.can_leave;
 			},
 			transKey:'leave'
+		},
+		{
+			click: function(group){
+				$me.$storage.modalInstance.close();
+				$me.$storage.modalInstance = $modal.open({
+					animation: true,
+					controller: 'ModalController',
+					templateUrl: '/res/html/group/edit.html',
+					size: 'lg',
+					resolve: {
+						modalParams: function(){
+							
+							return {
+								group_id: group.id
+							};
+							
+						}
+					}
+				});
+			},
+			condition: function(group){
+				return group.can_edit;
+			},
+			transKey:'edit'
 		}
 	];
 	
@@ -1841,6 +1995,48 @@ grades.controller("ProfileEditController", ['$scope', '$sessionStorage', '$http'
 	
 	this.repeatDone = function(){
 		$me.fillData();
+	};
+	
+	this.editGroup = function(){
+		$me.$storage.modalInstance.close();
+		$me.$storage.modalInstance = $modal.open({
+			animation: true,
+			controller: 'ModalController',
+			templateUrl: '/res/html/group/edit.html',
+			size: 'lg',
+			resolve: {
+				modalParams: function(){
+					
+					return {
+						group_id: $me.parentID
+					};
+					
+				}
+			}
+		});
+	};
+	
+	this.isEditable = function(){
+		return $me.parentID != "" && !isNaN($me.parentID) && $me.parentID > 0;
+	};
+	
+	this.addGroup = function(){
+		$me.$storage.modalInstance.close();
+		$me.$storage.modalInstance = $modal.open({
+			animation: true,
+			controller: 'ModalController',
+			templateUrl: '/res/html/group/add.html',
+			size: 'lg',
+			resolve: {
+				modalParams: function(){
+					
+					return {
+						
+					};
+					
+				}
+			}
+		});
 	};
 	
 	

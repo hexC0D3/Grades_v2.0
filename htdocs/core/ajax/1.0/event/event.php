@@ -99,7 +99,7 @@ if(isset($_GET['id'])){
 			
 			$data = $db->doQueryWithArgs("SELECT group_id FROM group_relations WHERE member_id=? AND member_type=3", array($event['id']), "i");
 
-			$event['canEdit'] = (count($data) > 0) ? (currentUserCan('manage_members', $data[0]["group_id"])) : false;
+			$event['can_edit'] = (count($data) > 0) ? (currentUserCan('manage_members', $data[0]["group_id"])) : false;
 			
 			if($event['type_id'] == 2/*lesson*/){
 				$data = $db->doQueryWithArgs("SELECT events.*,event_types.title as type FROM event_options LEFT JOIN event_type_options ON event_options.event_type_option_id=event_type_options.id LEFT JOIN events ON event_options.event_id=events.id LEFT JOIN event_types ON events.type_id=event_types.id WHERE event_type_options.option_key='lesson_id' AND event_options.value=?", array($event['id']), "i");
@@ -111,16 +111,20 @@ if(isset($_GET['id'])){
 					$e['options'] = getEventOptions($e['type_id'], $e['id'], false);
 					$g_data = $db->doQueryWithArgs("SELECT group_id FROM group_relations WHERE member_id=? AND member_type=3", array($e['id']), "i");
 					
-					$e['canEdit'] = (count($g_data) > 0) ? (currentUserCan('manage_members', $g_data[0]["group_id"])) : false;
+					$e['can_edit'] = (count($g_data) > 0) ? (currentUserCan('manage_members', $g_data[0]["group_id"])) : false;
 					
-					$grade = $db->doQueryWithArgs("SELECT id, grade FROM grades WHERE user_id=? AND event_id=?", array(getUser()['id'],$e['id']), "ii");
+					if($e['type']=='test'){
+						
+						$grade = $db->doQueryWithArgs("SELECT id, grade FROM grades WHERE user_id=? AND event_id=?", array(getUser()['id'],$e['id']), "ii");
 					
-					if(count($grade) > 0){
-						$e['grade'] = $grade[0]['grade'];
-						$e['grade_id'] = $grade[0]['id'];
-					}else{
-						$e['grade'] = '';
-						$e['grade_id'] = -1;
+						if(count($grade) > 0){
+							$e['grade'] = $grade[0]['grade'];
+							$e['grade_id'] = $grade[0]['id'];
+						}else{
+							$e['grade'] = '';
+							$e['grade_id'] = -1;
+						}
+						
 					}
 					
 					$events[] = $e;
@@ -341,7 +345,7 @@ if(isset($_GET['id'])){
 					
 					$data = $db->doQueryWithArgs("SELECT group_id FROM group_relations WHERE member_id=? AND member_type=3", array($event['id']), "i");
 		
-					$events[$key]['canEdit'] = (count($data) > 0) ? (currentUserCan('manage_members', $data[0]['group_id'])) : false;
+					$events[$key]['can_edit'] = (count($data) > 0) ? (currentUserCan('manage_members', $data[0]['group_id'])) : false;
 					
 				}
 				
@@ -351,7 +355,7 @@ if(isset($_GET['id'])){
 					$events[$key]['options'] = getEventOptions($event['type_id'], $event['id'], false);
 					$data = $db->doQueryWithArgs("SELECT group_id FROM group_relations WHERE member_id=? AND member_type=3", array($event['id']), "i");
 		
-					$events[$key]['canEdit'] = (count($data) > 0) ? (currentUserCan('manage_members', $data[0]['group_id'])) : false;
+					$events[$key]['can_edit'] = (count($data) > 0) ? (currentUserCan('manage_members', $data[0]['group_id'])) : false;
 					
 				}
 				
@@ -410,11 +414,15 @@ function getEventOptions($event_type_id, $event_id = null, $fields = true){
 	if($value){
 		$v_data = $db->doQueryWithArgs("SELECT events.title, event_options.value, event_type_options.option_key FROM events LEFT JOIN event_type_options ON events.type_id=event_type_options.event_type_id LEFT JOIN event_options ON event_type_options.id=event_options.event_type_option_id WHERE events.id=? AND event_options.event_id=? ORDER BY event_type_options.id ASC", array($event_id,$event_id), "ii");
 		
-		foreach($v_data as $v){
-			$values[$v['option_key']] = $v['value'];
+		if(count($v_data)>0){
+			
+			foreach($v_data as $v){
+				$values[$v['option_key']] = $v['value'];
+			}
+			
+			$e_name = $v_data[0]['title'];
+			
 		}
-		
-		$e_name = $v_data[0]['title'];
 			
 		unset($v_data);
 	}
@@ -444,7 +452,7 @@ function getEventOptions($event_type_id, $event_id = null, $fields = true){
 			);
 			
 			if($value){
-				$event_options[($i + 2)]['value'] = isset($values[$event_option["option_key"]]) ? $values[$event_option["option_key"]] : null;
+				$event_options[($i + 1)]['value'] = isset($values[$event_option["option_key"]]) ? $values[$event_option["option_key"]] : null;
 			}
 			
 		}

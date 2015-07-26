@@ -6,7 +6,7 @@
     "register"						:		"Registrieren",
     "login"							:		"Login",
     
-    "my_subjects"					:		"Meine Fächer",
+    "my_subjects"					:		"Meine Kursgruppen",
     
     "gender"						:		"Geschlecht",
     "male"							:		"Männlich",
@@ -29,6 +29,7 @@
     "search"						:		"Suchen...",
     
     "add_event"						:		"Füge ein Event hinzu",
+    "edit_event"					:		"Bearbeite ein Event",
     "test"							:		"Prüfung",
     "tests"							:		"Prüfungen",
     "test_weight"					:		"Gewichtung",
@@ -61,8 +62,8 @@
     
     "dashboard"						:		"Dashboard",
     
-    "subject"						:		"Fach",
-    "subjects"						:		"Fächer",
+    "subject"						:		"Kursgruppe",
+    "subjects"						:		"Kursgruppen",
     
     "welcome_back"					:		"Willkommen zurück!",
     "create_account"				:		"Erstelle ein Account",
@@ -72,10 +73,6 @@
     "school"						:		"Schule",
     
     "class"							:		"Klasse",
-    
-    "sub_class"						:		"Teilklasse",
-    
-    "subject_related_class"			:		"Fach spezifische Klasse",
     
     "type"							:		"Typ",
     
@@ -89,7 +86,7 @@
     "manage_options"				:		"Einstellungen bearbeiten",
     "manage_members"				:		"Mitglieder verwalten",
     "create_events"					:		"Events erstellen",
-    "create_subject"				:		"Fächer erstellen",
+    "create_subject"				:		"Kursgruppen erstellen",
     
     "enter_mail"					:		"E-Mail eingeben",
     "enter_password"				:		"Passwort eingeben",

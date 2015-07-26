@@ -1,10 +1,10 @@
 <div class="content" ng-controller="GroupEditController as groupC">
 	
-	<h1>{{groupC.name}}</h1>
+	<h1 i18n="common.edit_group"></h1>
 	
 	<form ng-submit="groupC.update($event)">
 		
-		<repeat-fields fields="settings" repeat-done-callback="groupC.repeatDone" parent-group-id="groupC.parentID"></repeat-fields>
+		<repeat-fields fields="groupC.settings" repeat-done-callback="groupC.repeatDone" parent-group-id="groupC.parentID"></repeat-fields>
 		
 		<input class="btn btn-primary" type="submit" data-i18n-attr="{value: 'common.update'}">
 		

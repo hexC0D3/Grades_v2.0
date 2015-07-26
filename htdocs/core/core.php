@@ -372,7 +372,9 @@ function currentUserCanLeave($group_id){
 	
 	global $db;
 	
-	if(currentUserCan('manage_capabilities', $group_id)){
+	$cap = $db->doQueryWithArgs("SELECT COUNT(*) as count FROM group_capabilities LEFT JOIN group_relations ON group_capabilities.relation_id = group_relations.id WHERE capability='manage_capabilities' AND group_relations.group_id=? AND group_relations.member_type=1 AND group_relations.member_id=?", array($group_id,getUser()['id']), "ii");
+	
+	if($cap[0]['count'] > 0){
 		
 		$count = $db->doQueryWithArgs("SELECT COUNT(*) as count FROM group_capabilities LEFT JOIN group_relations ON group_capabilities.relation_id = group_relations.id WHERE capability='manage_capabilities' AND group_relations.group_id=?", array($group_id), "i");
 		
