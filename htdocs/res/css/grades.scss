@@ -210,118 +210,143 @@ body > footer{
 	@include transitions(1s, width);
 	
 	.widget{
-		@include transitions(1s, width);
+		background-color: white;
+		margin-bottom: 1%;
+		
+		@extend .shadow;
+		
+		main{
+			position:  absolute;
+			top: 10px;
+			left: 10px;
+			bottom: 10px;
+			right: 10px;
+		}
 	}
+	
+	.widget::before{
+		content: "";
+		display: block;
+		padding-top: 100%;
+	}
+	
+	.wX2{
+		@extend .col-md-6;
+		width: 49%;
+		margin-left: 1%;
+	}
+	.wX1{
+		@extend .col-md-3;
+		width: 24%;
+		margin-left: 1%;
+	}
+	.wX3{
+		@extend .col-md-9;
+		width: 74%;
+		margin-left: 1%;
+	}
+	.wX4{
+		@extend .col-md-12;
+		width: 99%;
+		margin-left: 1%;
+	}
+	
+	/* widget aspecet ratio */
+	
+	.wY2::before{
+		content: "";
+		display: block;
+		padding-top: 200%;
+	}
+	
+	.wY1-5::before{
+		content: "";
+		display: block;
+		padding-top: 148%;
+	}
+	
+	.wY0-75::before{
+		content: "";
+		display: block;
+		padding-top: 75%;
+	}
+	
+	.wY0-5::before{
+		content: "";
+		display: block;
+		padding-top: 50%;
+	}
+	
 }
+
 .widgets.expandCalendar{
 	width: 202%;
 	.widget:before, .widget{
 		padding-top:0;
 	}
 }
-/* general */
-.widget{	
-	background-color: white;
-	margin-bottom: 1%;
-	
-	@extend .shadow;
-}
-/* content */
-.widget{
-	main{
-		position:  absolute;
-		top: 10px;
-		left: 10px;
-		bottom: 10px;
-		right: 10px;
-	}
-}
-
-/* widget width */
-
-.widget::before{
-	content: "";
-	display: block;
-	padding-top: 100%;
-}
-
-.wX2{
-	@extend .col-md-6;
-	width: 49%;
-	margin-left: 1%;
-}
-.wX1{
-	@extend .col-md-3;
-	width: 24%;
-	margin-left: 1%;
-}
-.wX3{
-	@extend .col-md-9;
-	width: 74%;
-	margin-left: 1%;
-}
-.wX4{
-	@extend .col-md-12;
-	width: 99%;
-	margin-left: 1%;
-}
-
-/* widget aspecet ratio */
-
-.wY2::before{
-	content: "";
-	display: block;
-	padding-top: 200%;
-}
-
-.wY1-5::before{
-	content: "";
-	display: block;
-	padding-top: 148%;
-}
-
-.wY0-75::before{
-	content: "";
-	display: block;
-	padding-top: 75%;
-}
-
-.wY0-5::before{
-	content: "";
-	display: block;
-	padding-top: 50%;
-}
 
 .relative{
 	position: relative;
 }
 
-.timeline {
-    position: absolute;    
-    border-top: 2px dashed red;
-    width: 100%;
-    margin: 0;
-    padding: 0;
-    z-index: 999;
-}
-
-.fc-time-grid-container{
-	position: relative;
-}
-
-@include keyframe(animateSpinner){
-	0% {
-		@include transform(rotate(0));
+.calendar{
+	
+	.timeline {
+	    position: absolute;    
+	    border-top: 2px dashed red;
+	    width: 100%;
+	    margin: 0;
+	    padding: 0;
+	    z-index: 999;
 	}
-	100% {
-		@include transform(rotate(360));
+	
+	table{
+		tbody.fc-body{
+			.fc-time-grid-container{
+				position: relative;
+				
+				.fc-event-container{
+					
+					.fc-event{
+						background-color: $color-blue;
+						border:#fafafa 2px solid;
+						
+						padding:10px;
+						
+						border-radius: 0;
+						
+						.fc-bg{
+							opacity: 0;
+						}
+					}
+					.event-type-event{
+						
+					}
+					.event-type-lesson{
+						
+					}
+					.event-type-test{
+						
+					}
+					.event-type-task{
+						
+					}
+					
+				}
+			}
+		}
+		.fc-today{
+			background: #fff;
+		}
 	}
+	
 }
 
-/* input fields */
-.content form input{
-	width: 100%;
-	box-shadow: none;
+form{
+	input[type="text"],textarea{
+		width: 100%;
+	}
 }
 
 
