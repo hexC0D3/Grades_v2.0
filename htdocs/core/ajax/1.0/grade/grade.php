@@ -164,7 +164,6 @@ if(isset($_GET['id'])){
 		foreach($groups as $group_id => $grades){
 			$sum = 0;
 			$weight = 0;
-			$points = 0;
 			
 			foreach($grades as $grade){
 				$sum+=($grade['grade'] * $grade['grade_weight']);

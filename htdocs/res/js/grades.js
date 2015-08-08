@@ -122,6 +122,7 @@ var appController = grades.controller("AppController", ['$scope', '$http', '$ses
 	var $me = this;
 	
 	this.$storage = $sessionStorage;
+	$scope.$storage = $sessionStorage;
 	
 	this.$storage.apiURL			= 'http://grades.dev/api/v1';
 	this.$storage.modalInstance		= {
@@ -129,8 +130,6 @@ var appController = grades.controller("AppController", ['$scope', '$http', '$ses
 											return;
 										}
 									}
-	
-	this.user = $me.$storage.user;
 	
 	$scope.$on('$routeChangeSuccess', function(next, current) { 
 		

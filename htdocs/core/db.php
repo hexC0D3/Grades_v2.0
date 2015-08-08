@@ -1,7 +1,7 @@
 <?php
 
 global $db;
-$db=new DB(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
+$db=new DB(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME, DB_PORT);
 
 if($db->mysqli->connect_errno){
 	die("Not able to connect to db!");
@@ -11,8 +11,8 @@ class DB{
 	public $mysqli;
 	
 	/** Init Database Object **/
-	public function DB($DBhost, $username, $password, $DBname){
-		$this->mysqli = new mysqli($DBhost, $username, $password, $DBname);
+	public function DB($DBhost, $username, $password, $DBname, $DPPort){
+		$this->mysqli = new mysqli($DBhost, $username, $password, $DBname, $DPPort);
 	}
 	/** Get arrays from stmt **/
 	private function getArrayFromSTMT($stmt){
